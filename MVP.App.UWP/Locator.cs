@@ -6,6 +6,7 @@
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api;
+    using MVP.App.Services.Initialization;
     using MVP.App.ViewModels;
 
     /// <summary>
@@ -31,6 +32,8 @@
             SimpleIoc.Default.Register<IMessenger, Messenger>();
 
             SimpleIoc.Default.Register<ApiClient>();
+
+            SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
         }
 
         private static void RegisterViewModels()
