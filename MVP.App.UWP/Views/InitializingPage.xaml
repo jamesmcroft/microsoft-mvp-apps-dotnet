@@ -8,5 +8,34 @@
     DataContext="{Binding InitializingPageViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+    <RelativePanel Background="{ThemeResource MvpBlueThemeBrush}">
+        <StackPanel
+            RelativePanel.AlignHorizontalCenterWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignVerticalCenterWithPanel="True">
+
+            <Image
+                x:Name="MvpLogo"
+                Width="100"
+                Source="..\Assets\MVPLogo.png" />
+
+            <ProgressRing
+                x:Name="LoadingProgressRing"
+                Width="70"
+                Height="70"
+                Margin="0,10"
+                Foreground="#FFFFFFFF"
+                IsActive="True" />
+
+            <TextBlock
+                x:Name="LoadingProgress"
+                Margin="20,0"
+                MaxLines="2"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{x:Bind ViewModel.LoadingProgress, Mode=OneWay, FallbackValue='Loading...'}"
+                TextAlignment="Center"
+                TextWrapping="WrapWholeWords" />
+        </StackPanel>
+    </RelativePanel>
 </views:PageBase>

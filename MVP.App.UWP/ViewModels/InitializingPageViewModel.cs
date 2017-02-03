@@ -11,6 +11,23 @@
     /// </summary>
     public class InitializingPageViewModel : PageBaseViewModel
     {
+        private string loadingProgress;
+
+        /// <summary>
+        /// Gets or sets the progress message for loading.
+        /// </summary>
+        public string LoadingProgress
+        {
+            get
+            {
+                return this.loadingProgress;
+            }
+            set
+            {
+                this.Set(() => this.LoadingProgress, ref this.loadingProgress, value);
+            }
+        }
+
         /// <inheritdoc />
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
