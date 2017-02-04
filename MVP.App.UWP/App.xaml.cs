@@ -53,7 +53,7 @@
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(InitializingPage), e.Arguments);
                 }
 
                 Window.Current.Activate();

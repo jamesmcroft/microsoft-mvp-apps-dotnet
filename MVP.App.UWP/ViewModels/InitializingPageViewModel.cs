@@ -18,6 +18,8 @@
 
         private string loadingProgress;
 
+        private bool isLoading;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializingPageViewModel"/> class.
         /// </summary>
@@ -42,6 +44,21 @@
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the view is loading.
+        /// </summary>
+        public bool IsLoading
+        {
+            get
+            {
+                return this.isLoading;
+            }
+            set
+            {
+                this.Set(() => this.IsLoading, ref this.isLoading, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the progress message for loading.
         /// </summary>
         public string LoadingProgress
@@ -57,8 +74,19 @@
         }
 
         /// <inheritdoc />
-        public override void OnPageNavigatedTo(NavigationEventArgs args)
+        public override async void OnPageNavigatedTo(NavigationEventArgs args)
         {
+            this.IsLoading = true;
+
+            var initializeSuccess = await this.initializer.InitializeAsync();
+            if (initializeSuccess)
+            {
+                this.NavigationService.Navigate(typeof(MainPage));
+            }
+            else
+            {
+                this.IsLoading = false;
+            }
         }
 
         /// <inheritdoc />

@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Extensions.Storage.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
@@ -149,7 +150,9 @@
       <Name>MVP.App.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\Data\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

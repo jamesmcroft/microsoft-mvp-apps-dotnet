@@ -14,13 +14,16 @@
     /// </summary>
     public class Locator
     {
-        public Locator()
+        static Locator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             RegisterServices();
             RegisterViewModels();
         }
+
+        public static ApiClient ApiClient
+            => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey");
 
         public InitializingPageViewModel InitializingPageViewModel
             => ServiceLocator.Current.GetInstance<InitializingPageViewModel>();
@@ -30,9 +33,6 @@
         private static void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
-
-            SimpleIoc.Default.Register<ApiClient>();
-
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
         }
 
