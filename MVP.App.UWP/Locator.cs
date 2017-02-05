@@ -22,9 +22,6 @@
             RegisterViewModels();
         }
 
-        public static ApiClient ApiClient
-            => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey");
-
         public InitializingPageViewModel InitializingPageViewModel
             => ServiceLocator.Current.GetInstance<InitializingPageViewModel>();
 
@@ -33,6 +30,7 @@
         private static void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
+            SimpleIoc.Default.Register(() => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey"));
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
         }
 

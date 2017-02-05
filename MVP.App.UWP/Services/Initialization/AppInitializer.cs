@@ -5,10 +5,14 @@
 
     using GalaSoft.MvvmLight.Messaging;
 
+    using MVP.Api;
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
 
     using Windows.Storage;
+
+    using WinUX.Diagnostics.Tracing;
+    using WinUX.Networking;
 
     /// <summary>
     /// Defines a service for initializing an application.
@@ -19,20 +23,31 @@
 
         private readonly IMessenger messenger;
 
+        private readonly ApiClient apiClient;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInitializer"/> class.
         /// </summary>
         /// <param name="messenger">
         /// The MvvmLight messenger.
         /// </param>
-        public AppInitializer(IMessenger messenger)
+        /// <param name="apiClient">
+        /// The MVP API client.
+        /// </param>
+        public AppInitializer(IMessenger messenger, ApiClient apiClient)
         {
             if (messenger == null)
             {
                 throw new ArgumentNullException(nameof(messenger), "The MvvmLight messenger cannot be null");
             }
 
+            if (apiClient == null)
+            {
+                throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null");
+            }
+
             this.messenger = messenger;
+            this.apiClient = apiClient;
         }
 
         /// <inheritdoc />
@@ -48,6 +63,29 @@
 
             this.SendLoadingProgress("Done!");
             return isSuccess;
+        }
+
+        public async Task SaveCredentialsAsync()
+        {
+            StorageFile file = null;
+
+            try
+            {
+                file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+                           AuthFileName,
+                           CreationCollisionOption.OpenIfExists);
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+#endif
+            }
+
+            if (file != null)
+            {
+                await file.SaveDataAsync(this.apiClient.Credentials);
+            }
         }
 
         private async Task<bool> AttemptAuthenticationAsync()
@@ -82,40 +120,51 @@
                 return false;
             }
 
-            Locator.ApiClient.Credentials = credentials;
+            this.apiClient.Credentials = credentials;
 
-            var profile = await this.TestApiEndpointAsync();
-            if (profile == null)
+            // Check network status.
+            if (NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Disconnected
+                || NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Unknown)
             {
-                // Attempt refresh token exchange.
-                var exchangeErrored = false;
-
-                try
-                {
-                    await Locator.ApiClient.ExchangeRefreshTokenAsync();
-                }
-                catch (Exception ex)
-                {
-#if DEBUG
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
-#endif
-
-                    exchangeErrored = true;
-                }
-
-                if (exchangeErrored)
-                {
-                    await Locator.ApiClient.LogOutAsync();
-                    return false;
-                }
-
-                profile = await this.TestApiEndpointAsync();
+                var profile = await this.TestApiEndpointAsync();
                 if (profile == null)
                 {
-                    await Locator.ApiClient.LogOutAsync();
-                    return false;
+                    // Attempt refresh token exchange.
+                    var exchangeErrored = false;
+
+                    try
+                    {
+                        await this.apiClient.ExchangeRefreshTokenAsync();
+                    }
+                    catch (ApiException aex)
+                    {
+                        EventLogger.Current.WriteWarning(aex.ToString());
+                        exchangeErrored = true;
+                    }
+                    catch (Exception ex)
+                    {
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine(ex.ToString());
+#endif
+                        exchangeErrored = true;
+                    }
+
+                    if (exchangeErrored)
+                    {
+                        await this.apiClient.LogOutAsync();
+                        return false;
+                    }
+
+                    profile = await this.TestApiEndpointAsync();
+                    if (profile == null)
+                    {
+                        await this.apiClient.LogOutAsync();
+                        return false;
+                    }
                 }
             }
+
+            await this.SaveCredentialsAsync();
 
             return true;
         }
@@ -125,7 +174,7 @@
             MVPProfile profile = null;
             try
             {
-                profile = await Locator.ApiClient.GetMyProfileAsync();
+                profile = await this.apiClient.GetMyProfileAsync();
             }
             catch (Exception ex)
             {

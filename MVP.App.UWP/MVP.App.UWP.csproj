@@ -95,11 +95,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Extensions.Network.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
+    <Compile Include="ViewModels\AppShellPageViewModel.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\AppShellPage.xaml.cs">
+      <DependentUpon>AppShellPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
     </Compile>
@@ -116,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\MVPLogo.scale-100.png" />
+    <Content Include="Assets\MVPPerson.scale-100.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -134,6 +140,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\AppShellPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InitializingPage.xaml">
       <SubType>Designer</SubType>

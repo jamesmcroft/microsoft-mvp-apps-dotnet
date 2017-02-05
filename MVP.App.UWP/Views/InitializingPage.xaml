@@ -17,8 +17,8 @@
 
             <Image
                 x:Name="MvpLogo"
-                Width="100"
-                Source="..\Assets\MVPLogo.png" />
+                Width="140"
+                Source="../Assets/MVPLogo.png" />
 
             <ProgressRing
                 x:Name="LoadingProgressRing"
@@ -26,7 +26,8 @@
                 Height="50"
                 Margin="0,20"
                 Foreground="#FFFFFFFF"
-                IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+                IsActive="True"
+                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
             <TextBlock
                 x:Name="LoadingProgress"
@@ -38,6 +39,14 @@
                 TextAlignment="Center"
                 TextWrapping="WrapWholeWords"
                 Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <Button
+                Margin="0,20"
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.SigninCommand, Mode=OneWay}"
+                Content="Sign in with MVP account"
+                Style="{StaticResource MvpSigninButtonStyle}"
+                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
         </StackPanel>
     </RelativePanel>
 </views:PageBase>

@@ -14,5 +14,13 @@
         /// Returns true if initialized; else false.
         /// </returns>
         Task<bool> InitializeAsync();
+
+        /// <summary>
+        /// Saves credentials asynchronously.
+        /// </summary>
+        /// <returns>
+        /// Returns an awaitable task.
+        /// </returns>
+        Task SaveCredentialsAsync();
     }
 }

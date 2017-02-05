@@ -1,6 +1,7 @@
 ﻿namespace MVP.App
 {
     using System;
+    using System.Threading.Tasks;
 
     using MVP.App.Views;
 
@@ -11,6 +12,9 @@
     using Windows.UI.Xaml.Navigation;
 
     using WinUX.ApplicationModel.Lifecycle;
+    using WinUX.Diagnostics;
+    using WinUX.Networking;
+    using WinUX.Xaml;
 
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -24,6 +28,7 @@
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            this.Resuming += this.OnResuming;
         }
 
         /// <summary>
@@ -32,12 +37,14 @@
         /// <param name="e">
         /// Details about the launch request and process.
         /// </param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             var rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
+
+                await this.InitializeServicesAsync();
 
                 rootFrame.NavigationFailed += this.OnNavigationFailed;
 
@@ -60,6 +67,13 @@
             }
         }
 
+        private async Task InitializeServicesAsync()
+        {
+            UIDispatcher.Initialize();
+            await AppDiagnostics.Current.StartAsync();
+            NetworkStatusManager.Current.Initialize();
+        }
+
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -68,6 +82,11 @@
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             await AppLifecycleManager.Current.SuspendAsync(e);
+        }
+
+        private async void OnResuming(object sender, object e)
+        {
+            await AppLifecycleManager.Current.ResumeAsync();
         }
     }
 }
