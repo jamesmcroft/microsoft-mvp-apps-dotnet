@@ -9,6 +9,7 @@
 
     using MVP.Api;
     using MVP.Api.Models.MicrosoftAccount;
+    using MVP.App.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Views;
 
@@ -36,6 +37,8 @@
 
         private bool isLoading;
 
+        private IAppData data;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializingPageViewModel"/> class.
         /// </summary>
@@ -45,7 +48,7 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient)
+        public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient, IAppData data)
         {
             if (initializer == null)
             {
@@ -57,8 +60,14 @@
                 throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null.");
             }
 
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data), "The app data cannot be null.");
+            }
+
             this.initializer = initializer;
             this.apiClient = apiClient;
+            this.data = data;
 
             this.SigninCommand = new RelayCommand(async () => await this.SignInAsync());
 
@@ -113,7 +122,7 @@
             var initializeSuccess = await this.initializer.InitializeAsync();
             if (initializeSuccess)
             {
-                this.NavigateToHome(null);
+                this.NavigateToHome();
             }
 
             this.IsLoading = false;
@@ -176,7 +185,7 @@
                                 var msa = await this.apiClient.ExchangeAuthCodeAsync(authCode);
                                 if (msa != null)
                                 {
-                                    await this.initializer.SaveCredentialsAsync();
+                                    await this.data.UpdateAccountAsync(msa);
                                 }
                             }
                             else
@@ -204,7 +213,16 @@
 
             if (success)
             {
-                this.NavigateToHome(null);
+                var mvpProfile = await this.apiClient.GetMyProfileAsync();
+                if (mvpProfile != null)
+                {
+                    await this.data.UpdateProfileAsync(mvpProfile);
+                    this.NavigateToHome();
+                }
+                else
+                {
+                    // Show error
+                }
             }
             else
             {
@@ -217,10 +235,10 @@
             this.IsLoading = false;
         }
 
-        private void NavigateToHome(object parameter)
+        private void NavigateToHome()
         {
             // Get profile and pass onto main page.
-            this.NavigationService.Navigate(typeof(MainPage), parameter);
+            this.NavigationService.Navigate(typeof(MainPage), this.data.CurrentProfile);
 
             var rootFrame = Window.Current.Content as Frame;
             rootFrame?.Navigate(typeof(AppShellPage));

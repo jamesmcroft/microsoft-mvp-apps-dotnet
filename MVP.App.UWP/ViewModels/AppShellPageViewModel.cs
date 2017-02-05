@@ -30,6 +30,8 @@
             this.PrimaryMenuButtons = new ObservableCollection<AppMenuButton>();
             this.SecondaryMenuButtons = new ObservableCollection<AppMenuButton>();
             this.FlyoutMenuButtons = new ObservableCollection<FlyoutAppMenuButton>();
+
+            this.Initialize();
         }
 
         /// <summary>

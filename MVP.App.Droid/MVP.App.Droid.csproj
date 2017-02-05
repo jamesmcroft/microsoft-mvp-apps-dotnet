@@ -61,8 +61,8 @@
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="MVP.Api, Version=1.1.17033.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MVP.Api.1.1.17033.2\lib\portable-net451+win81+MonoAndroid10+xamarinios10+MonoTouch10\MVP.Api.dll</HintPath>
+    <Reference Include="MVP.Api, Version=1.2.17036.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MVP.Api.1.2.17036.3\lib\portable-net451+win81+MonoAndroid10+xamarinios10+MonoTouch10\MVP.Api.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

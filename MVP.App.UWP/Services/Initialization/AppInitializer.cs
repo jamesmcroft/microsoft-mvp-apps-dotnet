@@ -7,9 +7,7 @@
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.Api.Models.MicrosoftAccount;
-
-    using Windows.Storage;
+    using MVP.App.Data;
 
     using WinUX.Diagnostics.Tracing;
     using WinUX.Networking;
@@ -19,11 +17,11 @@
     /// </summary>
     public class AppInitializer : IAppInitializer
     {
-        private const string AuthFileName = "init.data";
-
         private readonly IMessenger messenger;
 
         private readonly ApiClient apiClient;
+
+        private IAppData data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInitializer"/> class.
@@ -34,7 +32,7 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        public AppInitializer(IMessenger messenger, ApiClient apiClient)
+        public AppInitializer(IMessenger messenger, ApiClient apiClient, IAppData data)
         {
             if (messenger == null)
             {
@@ -46,8 +44,14 @@
                 throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null");
             }
 
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data), "The app data cannot be null");
+            }
+
             this.messenger = messenger;
             this.apiClient = apiClient;
+            this.data = data;
         }
 
         /// <inheritdoc />
@@ -65,62 +69,16 @@
             return isSuccess;
         }
 
-        public async Task SaveCredentialsAsync()
-        {
-            StorageFile file = null;
-
-            try
-            {
-                file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                           AuthFileName,
-                           CreationCollisionOption.OpenIfExists);
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-#endif
-            }
-
-            if (file != null)
-            {
-                await file.SaveDataAsync(this.apiClient.Credentials);
-            }
-        }
-
         private async Task<bool> AttemptAuthenticationAsync()
         {
-            StorageFile file;
+            await this.data.LoadAsync();
 
-            try
+            if (this.data.CurrentAccount == null)
             {
-                file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                           AuthFileName,
-                           CreationCollisionOption.OpenIfExists);
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-#endif
                 return false;
             }
 
-            MSACredentials credentials;
-
-            try
-            {
-                credentials = await file.GetDataAsync<MSACredentials>();
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-#endif
-                return false;
-            }
-
-            this.apiClient.Credentials = credentials;
+            this.apiClient.Credentials = this.data.CurrentAccount;
 
             // Check network status.
             if (NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Disconnected
@@ -161,10 +119,16 @@
                         await this.apiClient.LogOutAsync();
                         return false;
                     }
+
+                    await this.data.UpdateProfileAsync(profile);
+                }
+                else
+                {
+                    await this.data.UpdateProfileAsync(profile);
                 }
             }
 
-            await this.SaveCredentialsAsync();
+            await this.data.UpdateAccountAsync(this.apiClient.Credentials);
 
             return true;
         }

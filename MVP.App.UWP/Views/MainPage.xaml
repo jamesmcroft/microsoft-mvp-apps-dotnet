@@ -6,7 +6,60 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:WinUX.MvvmLight.Xaml.Views"
     DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}"
+    RequestedTheme="Light"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <RelativePanel
+            x:Name="ProfileHero"
+            Padding="10"
+            Background="{StaticResource MvpBlueThemeBrush}"
+            RequestedTheme="Dark">
+            <Border
+                x:Name="ProfileImage"
+                Width="70"
+                Height="70"
+                CornerRadius="35"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True">
+                <Border.Background>
+                    <ImageBrush ImageSource="{x:Bind ViewModel.ProfileImage, Mode=OneWay, FallbackValue='../Assets/MVPPerson.png'}" Stretch="Uniform" />
+                </Border.Background>
+            </Border>
+            <TextBlock
+                x:Name="ProfileName"
+                Margin="10,0,0,0"
+                FontWeight="Light"
+                MaxLines="1"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.RightOf="ProfileImage"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{x:Bind ViewModel.Profile.DisplayName, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis" />
+        </RelativePanel>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProfileHero.Padding" Value="58,10,10,10" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
 </views:PageBase>
