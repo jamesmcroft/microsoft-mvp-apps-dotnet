@@ -17,15 +17,14 @@
 
         <RelativePanel
             x:Name="ProfileHero"
-            Padding="10"
+            Padding="20"
             Background="{StaticResource MvpBlueThemeBrush}"
             RequestedTheme="Dark">
             <Border
                 x:Name="ProfileImage"
-                Width="70"
-                Height="70"
-                CornerRadius="35"
-                RelativePanel.AlignBottomWithPanel="True"
+                Width="100"
+                Height="100"
+                CornerRadius="50"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True">
                 <Border.Background>
@@ -34,14 +33,88 @@
             </Border>
             <TextBlock
                 x:Name="ProfileName"
-                Margin="10,0,0,0"
                 FontWeight="Light"
                 MaxLines="1"
+                RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.RightOf="ProfileImage"
-                Style="{StaticResource SubtitleTextBlockStyle}"
+                Style="{StaticResource SubheaderTextBlockStyle}"
                 Text="{x:Bind ViewModel.Profile.DisplayName, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis" />
+
+            <Grid
+                x:Name="ProfileDetailContainer"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="Category" />
+                    <TextBlock
+                        MaxLines="2"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Profile.AwardCategoryDisplay}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="WrapWholeWords" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,20,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="Awarded" />
+                    <TextBlock
+                        MaxLines="1"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Profile.FirstAwardYear}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,20,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="Awards" />
+                    <TextBlock
+                        MaxLines="1"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Profile.YearsAsMvp}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                </StackPanel>
+            </Grid>
+        </RelativePanel>
+
+        <RelativePanel
+            x:Name="ProfileContainer"
+            Grid.Row="1"
+            Padding="20">
+            <StackPanel
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True">
+                <TextBlock
+                    Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Text="Biography" />
+                <TextBlock
+                    Margin="0,20,0,0"
+                    Foreground="{StaticResource DarkGrayThemeBrush}"
+                    Style="{StaticResource BodyTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.Biography}"
+                    TextWrapping="WrapWholeWords" />
+            </StackPanel>
         </RelativePanel>
 
         <VisualStateManager.VisualStateGroups>
@@ -51,13 +124,32 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProfileHero.Padding" Value="58,10,10,10" />
+                        <Setter Target="ProfileHero.Padding" Value="68,20,20,20" />
+
+                        <Setter Target="ProfileImage.Width" Value="50" />
+                        <Setter Target="ProfileImage.Height" Value="50" />
+                        <Setter Target="ProfileImage.CornerRadius" Value="25" />
+
+                        <Setter Target="ProfileName.Margin" Value="20,8,0,0" />
+                        <Setter Target="ProfileName.Style" Value="{StaticResource TitleTextBlockStyle}" />
+
+                        <Setter Target="ProfileDetailContainer.(RelativePanel.Below)" Value="ProfileImage" />
+                        <Setter Target="ProfileDetailContainer.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="ProfileDetailContainer.Margin" Value="0,20,0,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NormalState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProfileName.Margin" Value="20,0,0,0" />
+
+                        <Setter Target="ProfileDetailContainer.(RelativePanel.AlignBottomWithPanel)" Value="True" />
+                        <Setter Target="ProfileDetailContainer.(RelativePanel.Below)" Value="ProfileName" />
+                        <Setter Target="ProfileDetailContainer.(RelativePanel.RightOf)" Value="ProfileImage" />
+                        <Setter Target="ProfileDetailContainer.Margin" Value="20,10,0,0" />
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>

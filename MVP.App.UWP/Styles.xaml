@@ -9,8 +9,10 @@
 
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
     <Color x:Key="BlackColor">#FF000000</Color>
+    <Color x:Key="DarkGrayColor">#FF505050</Color>
     <SolidColorBrush x:Key="WhiteThemeBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="BlackThemeBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="DarkGrayThemeBrush" Color="{StaticResource DarkGrayColor}" />
 
     <Color x:Key="MvpBlueLightestColor">#FF8EE6FF</Color>
     <Color x:Key="MvpBlueLightColor">#FF28CFFF</Color>

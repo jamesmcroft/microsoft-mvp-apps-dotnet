@@ -63,6 +63,8 @@
                             this.OnProfileUpdated(args.Profile);
                         }
                     });
+
+            this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshProfileData);
         }
 
         /// <summary>
@@ -110,6 +112,31 @@
         /// <inheritdoc />
         public override void OnPageNavigatingFrom(NavigatingCancelEventArgs args)
         {
+        }
+
+        private async void RefreshProfileData(RefreshDataMessage obj)
+        {
+            if (!NetworkStatusManager.Current.IsConnected())
+            {
+                return;
+            }
+
+            if (obj != null && (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile))
+            {
+                try
+                {
+                    var newProfile = await this.apiClient.GetMyProfileAsync();
+                    if (newProfile != null)
+                    {
+                        await this.data.UpdateProfileAsync(newProfile);
+                    }
+                }
+                catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                {
+                    // Show dialog, unauthorized user detect.
+                    Application.Current.Exit();
+                }
+            }
         }
 
         private async void OnProfileUpdated(MVPProfile profile)

@@ -2,14 +2,14 @@
 {
     using System.Collections.ObjectModel;
 
-    using Windows.Devices.Bluetooth.Advertisement;
-    using Windows.UI.Xaml;
-    using Windows.UI.Xaml.Controls;
-
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
 
+    using MVP.App.Events;
     using MVP.App.Views;
+
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
 
     using WinUX.MvvmLight.Common.ViewModels;
     using WinUX.Xaml.Controls;
@@ -82,6 +82,7 @@
 
         private void RefreshData()
         {
+            this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.All));
         }
 
         private static AppMenuButton CreateHomeButton()
