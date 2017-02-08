@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Data\IAppData.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
+    <Compile Include="Events\RefreshDataCompleteMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
     <Compile Include="Events\RefreshDataMode.cs" />
     <Compile Include="Services\Initialization\AppInitializerMessage.cs" />

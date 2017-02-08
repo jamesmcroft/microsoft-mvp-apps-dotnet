@@ -13,10 +13,38 @@
             x:Name="AppMenu"
             AccentColor="{StaticResource MvpBlueColor}"
             FlyoutButtons="{x:Bind ViewModel.FlyoutMenuButtons}"
+            IsOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}"
             PaneBackground="{StaticResource MvpBlueDarkestThemeBrush}"
             PrimaryButtons="{x:Bind ViewModel.PrimaryMenuButtons}"
             SecondaryButtons="{x:Bind ViewModel.SecondaryMenuButtons}"
             VisualStateNarrowMinWidth="0"
             VisualStateNormalMinWidth="720" />
+
+        <Grid
+            Height="60"
+            Padding="20,10"
+            VerticalAlignment="Bottom"
+            Background="{StaticResource MvpBlueDarkestThemeBrush}"
+            Visibility="{x:Bind ViewModel.IsBusyMessageVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="{StaticResource WhiteThemeBrush}"
+                MaxLines="1"
+                Text="{x:Bind ViewModel.BusyMessage, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis" />
+
+            <ProgressRing
+                Grid.Column="1"
+                Width="40"
+                Height="40"
+                Foreground="{StaticResource WhiteThemeBrush}"
+                IsActive="True" />
+        </Grid>
     </Grid>
 </Page>

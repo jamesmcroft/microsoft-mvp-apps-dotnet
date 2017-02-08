@@ -18,6 +18,12 @@
     {
         private bool isInitialized;
 
+        private bool isPaneOpen;
+
+        private bool isBusyMessageVisible;
+
+        private string busyMessage;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppShellPageViewModel"/> class.
         /// </summary>
@@ -32,6 +38,10 @@
             this.FlyoutMenuButtons = new ObservableCollection<FlyoutAppMenuButton>();
 
             this.Initialize();
+
+            this.MessengerInstance.Register<RefreshDataCompleteMessage>(
+                this,
+                x => this.UpdateBusyIndicator(string.Empty, !x.IsComplete));
         }
 
         /// <summary>
@@ -48,6 +58,42 @@
         /// Gets the flyout menu buttons displayed above the secondary menu buttons.
         /// </summary>
         public ObservableCollection<FlyoutAppMenuButton> FlyoutMenuButtons { get; }
+
+        public bool IsPaneOpen
+        {
+            get
+            {
+                return this.isPaneOpen;
+            }
+            set
+            {
+                this.Set(() => this.IsPaneOpen, ref this.isPaneOpen, value);
+            }
+        }
+
+        public string BusyMessage
+        {
+            get
+            {
+                return this.busyMessage;
+            }
+            set
+            {
+                this.Set(() => this.BusyMessage, ref this.busyMessage, value);
+            }
+        }
+
+        public bool IsBusyMessageVisible
+        {
+            get
+            {
+                return this.isBusyMessageVisible;
+            }
+            set
+            {
+                this.Set(() => this.IsBusyMessageVisible, ref this.isBusyMessageVisible, value);
+            }
+        }
 
         public void Initialize()
         {
@@ -83,6 +129,23 @@
         private void RefreshData()
         {
             this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.All));
+            this.IsPaneOpen = false;
+
+            this.UpdateBusyIndicator("Refreshing...");
+        }
+
+        public void UpdateBusyIndicator(string message, bool show = true)
+        {
+            if (show && !string.IsNullOrWhiteSpace(message))
+            {
+                this.BusyMessage = message;
+                this.IsBusyMessageVisible = true;
+            }
+            else
+            {
+                this.IsBusyMessageVisible = false;
+                this.BusyMessage = string.Empty;
+            }
         }
 
         private static AppMenuButton CreateHomeButton()

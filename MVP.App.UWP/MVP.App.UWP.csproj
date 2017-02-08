@@ -103,10 +103,13 @@
     <Compile Include="Extensions\Extensions.Image.cs" />
     <Compile Include="Extensions\Extensions.Network.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />
+    <Compile Include="Models\ContributionCustomFlyoutViewModel.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="ViewModels\AppShellPageViewModel.cs" />
+    <Compile Include="Models\Common\CustomFlyoutViewModel.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
+    <Compile Include="Models\Common\ItemCustomFlyoutViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\AppShellPage.xaml.cs">
       <DependentUpon>AppShellPage.xaml</DependentUpon>

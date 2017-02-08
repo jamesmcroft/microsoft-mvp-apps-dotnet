@@ -27,6 +27,7 @@
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
 
     <Style x:Key="MvpSigninButtonStyle" TargetType="Button">
         <Setter Property="Height" Value="60" />

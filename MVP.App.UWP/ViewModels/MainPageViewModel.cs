@@ -1,8 +1,11 @@
 ﻿namespace MVP.App.ViewModels
 {
     using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using System.Windows.Input;
 
     using MVP.Api;
     using MVP.Api.Models;
@@ -14,6 +17,11 @@
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
 
+    using GalaSoft.MvvmLight.Command;
+
+    using MVP.App.Models;
+
+    using WinUX;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;
 
@@ -26,9 +34,11 @@
 
         private readonly ApiClient apiClient;
 
-        private IAppData data;
+        private readonly IAppData data;
 
         private BitmapSource profileImage;
+
+        private bool isRecentActivitiesVisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
@@ -54,6 +64,11 @@
             this.apiClient = apiClient;
             this.data = data;
 
+            this.RecentContributions = new ObservableCollection<Contribution>();
+            this.ContributionFlyoutViewModel = new ContributionCustomFlyoutViewModel();
+
+            this.ActivityClickedCommand = new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
+
             this.MessengerInstance.Register<ProfileUpdatedMessage>(
                 this,
                 args =>
@@ -66,6 +81,16 @@
 
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshProfileData);
         }
+
+        /// <summary>
+        /// Gets the custom fly-out view model for the contributions.
+        /// </summary>
+        public ContributionCustomFlyoutViewModel ContributionFlyoutViewModel { get; }
+
+        /// <summary>
+        /// Gets the recent activities of the current MVP profile.
+        /// </summary>
+        public ObservableCollection<Contribution> RecentContributions { get; }
 
         /// <summary>
         /// Gets or sets the current MVP profile.
@@ -137,43 +162,97 @@
                     Application.Current.Exit();
                 }
             }
+
+            this.MessengerInstance.Send(new RefreshDataCompleteMessage(true));
         }
+
+        private void UpdateSectionVisibility()
+        {
+            this.IsRecentActivitiesVisible = this.RecentContributions != null && this.RecentContributions.Any();
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the recent activities section is visible.
+        /// </summary>
+        public bool IsRecentActivitiesVisible
+        {
+            get
+            {
+                return this.isRecentActivitiesVisible;
+            }
+            set
+            {
+                this.Set(() => this.IsRecentActivitiesVisible, ref this.isRecentActivitiesVisible, value);
+            }
+        }
+
+        public ICommand ActivityClickedCommand { get; }
 
         private async void OnProfileUpdated(MVPProfile profile)
         {
             if (profile != null)
             {
                 this.Profile = profile;
+                await this.UpdateProfilePicAsync();
+                await this.UpdateRecentContributionsAsync();
+            }
 
-                if (!string.IsNullOrWhiteSpace(this.data.CurrentProfileImage))
+            this.UpdateSectionVisibility();
+        }
+
+        private async Task UpdateRecentContributionsAsync()
+        {
+            if (!NetworkStatusManager.Current.IsConnected())
+            {
+                return;
+            }
+
+            try
+            {
+                var recentContributions = await this.apiClient.GetContributionsAsync(0, 10);
+                if (recentContributions?.Items != null)
                 {
-                    await this.SetProfileImageSourceAsync(this.data.CurrentProfileImage);
+                    this.RecentContributions.Clear();
+                    this.RecentContributions.AddRange(recentContributions.Items);
                 }
-                else
-                {
-                    if (!NetworkStatusManager.Current.IsConnected())
-                    {
-                        return;
-                    }
+            }
+            catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+            {
+                // Show dialog, unauthorized user detected.
+                Application.Current.Exit();
+            }
+        }
 
-                    try
-                    {
-                        var image = await this.apiClient.GetMyProfileImageAsync();
-                        await this.SetProfileImageSourceAsync(image);
-                        await this.data.UpdateProfileImageAsync(image);
-                    }
-                    catch (HttpRequestException hre) when (hre.Message.Contains("401"))
-                    {
-                        // Show dialog, unauthorized user detected.
-                        Application.Current.Exit();
-                    }
+        private async Task UpdateProfilePicAsync()
+        {
+            if (!string.IsNullOrWhiteSpace(this.data.CurrentProfileImage))
+            {
+                await this.SetProfileImageSourceAsync(this.data.CurrentProfileImage);
+            }
+            else
+            {
+                if (!NetworkStatusManager.Current.IsConnected())
+                {
+                    return;
+                }
+
+                try
+                {
+                    var image = await this.apiClient.GetMyProfileImageAsync();
+                    await this.SetProfileImageSourceAsync(image);
+                    await this.data.UpdateProfileImageAsync(image);
+                }
+                catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                {
+                    // Show dialog, unauthorized user detected.
+                    Application.Current.Exit();
                 }
             }
         }
 
-        private async Task SetProfileImageSourceAsync(string image)
+        private async Task SetProfileImageSourceAsync(string base64String)
         {
-            this.ProfileImage = await image.ToImageSourceAsync();
+            this.ProfileImage = await base64String.ToImageSourceAsync();
         }
     }
 }
