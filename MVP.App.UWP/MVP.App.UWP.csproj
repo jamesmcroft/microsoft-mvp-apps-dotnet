@@ -106,6 +106,7 @@
     <Compile Include="Models\ContributionCustomFlyoutViewModel.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
+    <Compile Include="Services\Input\KeyboardCharacterService.cs" />
     <Compile Include="ViewModels\AppShellPageViewModel.cs" />
     <Compile Include="Models\Common\CustomFlyoutViewModel.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
@@ -145,6 +146,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Controls\PageHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

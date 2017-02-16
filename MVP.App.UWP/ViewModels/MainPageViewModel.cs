@@ -7,19 +7,18 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using GalaSoft.MvvmLight.Command;
+
     using MVP.Api;
     using MVP.Api.Models;
     using MVP.App.Data;
     using MVP.App.Events;
+    using MVP.App.Models;
     using MVP.App.Views;
 
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
-
-    using GalaSoft.MvvmLight.Command;
-
-    using MVP.App.Models;
 
     using WinUX;
     using WinUX.MvvmLight.Xaml.Views;
@@ -141,25 +140,25 @@
 
         private async void RefreshProfileData(RefreshDataMessage obj)
         {
-            if (!NetworkStatusManager.Current.IsConnected())
-            {
-                return;
-            }
+            this.ContributionFlyoutViewModel.Close();
 
-            if (obj != null && (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile))
+            if (NetworkStatusManager.Current.IsConnected())
             {
-                try
+                if (obj != null && (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile))
                 {
-                    var newProfile = await this.apiClient.GetMyProfileAsync();
-                    if (newProfile != null)
+                    try
                     {
-                        await this.data.UpdateProfileAsync(newProfile);
+                        var newProfile = await this.apiClient.GetMyProfileAsync();
+                        if (newProfile != null)
+                        {
+                            await this.data.UpdateProfileAsync(newProfile);
+                        }
                     }
-                }
-                catch (HttpRequestException hre) when (hre.Message.Contains("401"))
-                {
-                    // Show dialog, unauthorized user detect.
-                    Application.Current.Exit();
+                    catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                    {
+                        // Show dialog, unauthorized user detect.
+                        Application.Current.Exit();
+                    }
                 }
             }
 

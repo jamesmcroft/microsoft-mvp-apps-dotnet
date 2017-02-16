@@ -9,9 +9,11 @@
 
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
     <Color x:Key="BlackColor">#FF000000</Color>
+    <Color x:Key="LightGrayColor">#FFEFEFEF</Color>
     <Color x:Key="DarkGrayColor">#FF505050</Color>
     <SolidColorBrush x:Key="WhiteThemeBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="BlackThemeBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="LightGrayThemeBrush" Color="{StaticResource LightGrayColor}" />
     <SolidColorBrush x:Key="DarkGrayThemeBrush" Color="{StaticResource DarkGrayColor}" />
 
     <Color x:Key="MvpBlueLightestColor">#FF8EE6FF</Color>
@@ -28,6 +30,16 @@
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
+    <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+
+    <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <ItemsPanelTemplate x:Key="ItemsStackPanelTemplate">
+        <ItemsStackPanel />
+    </ItemsPanelTemplate>
 
     <Style x:Key="MvpSigninButtonStyle" TargetType="Button">
         <Setter Property="Height" Value="60" />

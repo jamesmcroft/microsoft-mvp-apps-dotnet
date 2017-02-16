@@ -2,6 +2,7 @@
     x:Class="MVP.App.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WinUX.Xaml.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:listViewBase="using:WinUX.Controls.ListViewBase"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,25 +14,11 @@
 
     <views:PageBase.Resources>
         <ResourceDictionary>
-
-            <ItemsPanelTemplate x:Key="ItemsStackPanelTemplate">
-                <ItemsStackPanel />
-            </ItemsPanelTemplate>
-
             <DataTemplate x:Key="MVPActivityItemTemplate" x:DataType="models:Contribution">
                 <RelativePanel>
-                    <TextBlock
-                        FontSize="18"
-                        Foreground="{StaticResource MvpBlueThemeBrush}"
-                        Style="{StaticResource SubtitleTextBlockStyle}"
-                        Text="{x:Bind Title}" />
+                    <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{x:Bind Title}" />
                 </RelativePanel>
             </DataTemplate>
-
-            <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-            </Style>
         </ResourceDictionary>
     </views:PageBase.Resources>
 
@@ -125,47 +112,30 @@
         <ScrollViewer
             x:Name="ContentScroller"
             Grid.Row="1"
-            Padding="20">
+            Padding="20"
+            Background="{StaticResource LightGrayThemeBrush}">
             <RelativePanel x:Name="ProfileContainer">
-                <StackPanel
+                <controls:HeaderedTextBlock
                     x:Name="Biography"
+                    Header="Biography"
                     RelativePanel.AlignLeftWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
-                    RelativePanel.AlignTopWithPanel="True">
-                    <TextBlock
-                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        Text="Biography" />
-                    <TextBlock
-                        Margin="0,20,0,0"
-                        Foreground="{StaticResource DarkGrayThemeBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Profile.Biography, Converter={StaticResource EmptyStringFormatConverter}}"
-                        TextWrapping="WrapWholeWords" />
+                    RelativePanel.AlignTopWithPanel="True"
+                    Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.Biography, Converter={StaticResource EmptyStringFormatConverter}}" />
 
-                    <Rectangle
-                        Height="2"
-                        Margin="0,10,0,0"
-                        Fill="{StaticResource MvpBlueThemeBrush}"
-                        Opacity="0.1" />
-                </StackPanel>
                 <StackPanel
                     x:Name="RecentActivities"
                     Margin="0,20,0,0"
                     RelativePanel.AlignLeftWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
                     RelativePanel.Below="Biography">
-                    <TextBlock
-                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        Text="Recent activities" />
+
+                    <TextBlock Style="{StaticResource HeaderedTextBlockHeaderStyle}" Text="Recent activities" />
 
                     <TextBlock
-                        Margin="0,20,0,0"
-                        Foreground="{StaticResource DarkGrayThemeBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
+                        Style="{StaticResource HeaderedTextBlockTextStyle}"
                         Text="No data available."
-                        TextWrapping="WrapWholeWords"
                         Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
 
                     <GridView
@@ -200,7 +170,7 @@
             Padding="20"
             Background="#50000000"
             Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid MaxWidth="600" Background="White">
+            <Grid MaxWidth="720" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -232,8 +202,47 @@
                         Label="Close" />
                 </Grid>
 
-                <ScrollViewer Grid.Row="1">
-                    <RelativePanel />
+                <ScrollViewer
+                    Grid.Row="1"
+                    Padding="20"
+                    Background="{StaticResource LightGrayThemeBrush}">
+                    <RelativePanel>
+                        <controls:HeaderedTextBlock
+                            x:Name="ActivityType"
+                            Header="Activity type"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.AlignTopWithPanel="True"
+                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.TypeName, Mode=OneWay}" />
+
+                        <controls:HeaderedTextBlock
+                            x:Name="ContributionArea"
+                            Header="Contribution area"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.Below="ActivityType"
+                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Technology.Name, Mode=OneWay}" />
+
+                        <controls:HeaderedTextBlock
+                            x:Name="DateOfActivity"
+                            Header="Date of activity"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.Below="ContributionArea"
+                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+
+                        <controls:HeaderedTextBlock
+                            x:Name="ContributionDescription"
+                            Header="Description"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.Below="DateOfActivity"
+                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Description, Mode=OneWay}" />
+                    </RelativePanel>
                 </ScrollViewer>
             </Grid>
         </Grid>

@@ -11,6 +11,10 @@
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
 
+    using Microsoft.Practices.ServiceLocation;
+
+    using MVP.App.Services.Input;
+
     using WinUX.ApplicationModel.Lifecycle;
     using WinUX.Diagnostics;
     using WinUX.Networking;
@@ -72,6 +76,7 @@
             UIDispatcher.Initialize();
             await AppDiagnostics.Current.StartAsync();
             NetworkStatusManager.Current.Initialize();
+            ServiceLocator.Current.GetInstance<KeyboardCharacterService>().Start();
         }
 
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
