@@ -109,11 +109,15 @@
     <Compile Include="Services\Input\KeyboardCharacterService.cs" />
     <Compile Include="ViewModels\AppShellPageViewModel.cs" />
     <Compile Include="Models\Common\CustomFlyoutViewModel.cs" />
+    <Compile Include="ViewModels\ContributionsPageViewModel.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
     <Compile Include="Models\Common\ItemCustomFlyoutViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\AppShellPage.xaml.cs">
       <DependentUpon>AppShellPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContributionsPage.xaml.cs">
+      <DependentUpon>ContributionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
@@ -161,6 +165,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\AppShellPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ContributionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -109,6 +109,7 @@
             this.FlyoutMenuButtons.Clear();
 
             this.PrimaryMenuButtons.Add(CreateHomeButton());
+            this.PrimaryMenuButtons.Add(CreateContributionsButton());
             this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
         }
 
@@ -153,11 +154,23 @@
             var btn = new AppMenuButton
                           {
                               ClearNavigationStack = true,
-                              Content = GenerateButtonContent(Symbol.Home, "Home"),
+                              Content = GenerateButtonContent(Symbol.Contact, "Profile"),
                               IsGrouped = true,
                               Page = typeof(MainPage),
-                              ToolTip = "View profile"
+                              ToolTip = "View my profile"
                           };
+            return btn;
+        }
+
+        private AppMenuButton CreateContributionsButton()
+        {
+            var btn = new AppMenuButton
+            {
+                Content = GenerateButtonContent(Symbol.Library, "Contributions"),
+                IsGrouped = true,
+                Page = typeof(ContributionsPage),
+                ToolTip = "View my current community activity contributions"
+            };
             return btn;
         }
 

@@ -32,6 +32,9 @@
 
         public MainPageViewModel MainPageViewModel => ServiceLocator.Current.GetInstance<MainPageViewModel>();
 
+        public ContributionsPageViewModel ContributionsPageViewModel
+            => ServiceLocator.Current.GetInstance<ContributionsPageViewModel>();
+
         private static void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
@@ -46,6 +49,7 @@
             SimpleIoc.Default.Register<InitializingPageViewModel>();
             SimpleIoc.Default.Register<AppShellPageViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<ContributionsPageViewModel>();
         }
     }
 }
