@@ -21,7 +21,8 @@
             VisualStateNormalMinWidth="720" />
 
         <Grid
-            Height="60"
+            x:Name="BusyIndicator"
+            Height="48"
             Padding="20,10"
             VerticalAlignment="Bottom"
             Background="{StaticResource MvpBlueDarkestThemeBrush}"
@@ -41,10 +42,28 @@
 
             <ProgressRing
                 Grid.Column="1"
-                Width="40"
-                Height="40"
+                Width="20"
+                Height="20"
                 Foreground="{StaticResource WhiteThemeBrush}"
                 IsActive="True" />
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BusyIndicator.Margin" Value="48,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

@@ -96,6 +96,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\Base64StringImageSourceBehavior.cs" />
+    <Compile Include="Controls\ItemFlyoutControl.xaml.cs">
+      <DependentUpon>ItemFlyoutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,9 @@
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Services\Input\KeyboardCharacterService.cs" />
+    <Compile Include="Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AppShellPageViewModel.cs" />
     <Compile Include="Models\Common\CustomFlyoutViewModel.cs" />
     <Compile Include="ViewModels\ContributionsPageViewModel.cs" />
@@ -154,6 +160,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Controls\ItemFlyoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PageHeader.xaml">
       <SubType>Designer</SubType>

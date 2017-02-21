@@ -100,6 +100,7 @@
             {
                 return this.profile;
             }
+
             set
             {
                 this.Set(() => this.Profile, ref this.profile, value);
@@ -115,6 +116,7 @@
             {
                 return this.profileImage;
             }
+
             set
             {
                 this.Set(() => this.ProfileImage, ref this.profileImage, value);
@@ -179,6 +181,7 @@
             {
                 return this.isRecentActivitiesVisible;
             }
+
             set
             {
                 this.Set(() => this.IsRecentActivitiesVisible, ref this.isRecentActivitiesVisible, value);

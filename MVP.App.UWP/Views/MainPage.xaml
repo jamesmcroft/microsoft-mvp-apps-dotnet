@@ -2,19 +2,21 @@
     x:Class="MVP.App.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:WinUX.Xaml.Controls"
+    xmlns:apiModels="using:MVP.Api.Models"
+    xmlns:appModels="using:MVP.App.Models"
+    xmlns:controls="using:MVP.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:listViewBase="using:WinUX.Controls.ListViewBase"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:MVP.Api.Models"
     xmlns:views="using:WinUX.MvvmLight.Xaml.Views"
+    xmlns:winuxControls="using:WinUX.Xaml.Controls"
     DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}"
     RequestedTheme="Light"
     mc:Ignorable="d">
 
     <views:PageBase.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="MVPActivityItemTemplate" x:DataType="models:Contribution">
+            <DataTemplate x:Key="MVPActivityItemTemplate" x:DataType="apiModels:Contribution">
                 <RelativePanel>
                     <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{x:Bind Title}" />
                 </RelativePanel>
@@ -115,7 +117,7 @@
             Padding="20"
             Background="{StaticResource LightGrayThemeBrush}">
             <RelativePanel x:Name="ProfileContainer">
-                <controls:HeaderedTextBlock
+                <winuxControls:HeaderedTextBlock
                     x:Name="Biography"
                     Header="Biography"
                     RelativePanel.AlignLeftWithPanel="True"
@@ -163,90 +165,54 @@
             </RelativePanel>
         </ScrollViewer>
 
-        <!--  Design consideration to animate this visible  -->
-        <Grid
-            x:Name="ActivityLayover"
+        <controls:ItemFlyoutControl
+            Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
             Grid.Row="1"
-            Padding="20"
-            Background="#50000000"
+            CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
+            DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid MaxWidth="720" Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        x:Name="ActivityTitle"
-                        Margin="20,10,10,10"
-                        VerticalAlignment="Center"
-                        FontWeight="Light"
-                        Foreground="{StaticResource MvpBlueThemeBrush}"
-                        MaxLines="2"
-                        Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="WrapWholeWords" />
-
-                    <AppBarButton
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
-                        Icon="Cancel"
-                        Label="Close" />
-                </Grid>
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    Padding="20"
-                    Background="{StaticResource LightGrayThemeBrush}">
+            <controls:ItemFlyoutControl.ContentTemplate>
+                <DataTemplate x:DataType="appModels:ContributionCustomFlyoutViewModel">
                     <RelativePanel>
-                        <controls:HeaderedTextBlock
+                        <winuxControls:HeaderedTextBlock
                             x:Name="ActivityType"
                             Header="Activity type"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.AlignTopWithPanel="True"
                             Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.TypeName, Mode=OneWay}" />
+                            Text="{Binding Item.TypeName, Mode=OneWay}" />
 
-                        <controls:HeaderedTextBlock
+                        <winuxControls:HeaderedTextBlock
                             x:Name="ContributionArea"
                             Header="Contribution area"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.Below="ActivityType"
                             Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Technology.Name, Mode=OneWay}" />
+                            Text="{Binding Item.Technology.Name, Mode=OneWay}" />
 
-                        <controls:HeaderedTextBlock
+                        <winuxControls:HeaderedTextBlock
                             x:Name="DateOfActivity"
                             Header="Date of activity"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.Below="ContributionArea"
                             Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+                            Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
 
-                        <controls:HeaderedTextBlock
+                        <winuxControls:HeaderedTextBlock
                             x:Name="ContributionDescription"
                             Header="Description"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.Below="DateOfActivity"
                             Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Description, Mode=OneWay}" />
+                            Text="{Binding Item.Description, Mode=OneWay}" />
                     </RelativePanel>
-                </ScrollViewer>
-            </Grid>
-        </Grid>
-
+                </DataTemplate>
+            </controls:ItemFlyoutControl.ContentTemplate>
+        </controls:ItemFlyoutControl>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
@@ -268,9 +234,6 @@
                         <Setter Target="ProfileDetailContainer.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="ProfileDetailContainer.Margin" Value="0,20,0,0" />
 
-                        <Setter Target="ActivityTitle.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <Setter Target="ActivityTitle.FontSize" Value="20" />
-
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NormalState">
@@ -284,8 +247,6 @@
                         <Setter Target="ProfileDetailContainer.(RelativePanel.Below)" Value="ProfileName" />
                         <Setter Target="ProfileDetailContainer.(RelativePanel.RightOf)" Value="ProfileImage" />
                         <Setter Target="ProfileDetailContainer.Margin" Value="20,10,0,0" />
-
-                        <Setter Target="ActivityTitle.FontSize" Value="24" />
 
                     </VisualState.Setters>
                 </VisualState>

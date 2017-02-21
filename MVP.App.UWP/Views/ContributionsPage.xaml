@@ -20,9 +20,10 @@
             Grid.Row="1"
             IsDynamicOverflowEnabled="True">
             <AppBarButton
+                x:Name="AddContributionBtn"
                 Command="{x:Bind ViewModel.AddNewContributionCommand, Mode=OneWay}"
                 Icon="Add"
-                Label="New contribution" />
+                Label="Contribution" />
         </CommandBar>
 
         <VisualStateManager.VisualStateGroups>
