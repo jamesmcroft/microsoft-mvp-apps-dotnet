@@ -106,7 +106,10 @@
     <Compile Include="Extensions\Extensions.Image.cs" />
     <Compile Include="Extensions\Extensions.Network.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />
+    <Compile Include="Models\Common\ItemViewModelBase.cs" />
     <Compile Include="Models\ContributionCustomFlyoutViewModel.cs" />
+    <Compile Include="Models\ContributionViewModel.cs" />
+    <Compile Include="Services\Data\ContributionTypeContainer.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Services\Input\KeyboardCharacterService.cs" />

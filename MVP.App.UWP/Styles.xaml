@@ -2,12 +2,13 @@
     x:Class="MVP.App.Styles"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:apiModels="using:MVP.Api.Models"
+    xmlns:appModels="using:MVP.App.Models"
     xmlns:controls="using:WinUX.Xaml.Controls"
     xmlns:converters="using:WinUX.Xaml.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ignore="http://www.ignore.com"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:MVP.App.Models"
     mc:Ignorable="d ignore">
 
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
@@ -131,5 +132,50 @@
         </Setter>
     </Style>
 
+    <DataTemplate x:Key="ContributionFlyoutTemplate" x:DataType="appModels:ContributionCustomFlyoutViewModel">
+        <RelativePanel>
+            <controls:HeaderedTextBlock
+                x:Name="ActivityType"
+                Header="Activity type"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.TypeName, Mode=OneWay}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionArea"
+                Header="Contribution area"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ActivityType"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.Technology.Name, Mode=OneWay}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="DateOfActivity"
+                Header="Date of activity"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionArea"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionDescription"
+                Header="Description"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="DateOfActivity"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.Description, Mode=OneWay}" />
+        </RelativePanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
+        <RelativePanel>
+            <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{x:Bind Title}" />
+        </RelativePanel>
+    </DataTemplate>
 
 </ResourceDictionary>

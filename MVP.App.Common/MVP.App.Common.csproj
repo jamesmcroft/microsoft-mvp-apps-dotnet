@@ -35,10 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Data\IAppData.cs" />
+    <Compile Include="Data\IServiceDataContainer.cs" />
+    <Compile Include="Data\IValidate.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
     <Compile Include="Events\RefreshDataCompleteMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
     <Compile Include="Events\RefreshDataMode.cs" />
+    <Compile Include="Models\ContributionTypeContainerWrapper.cs" />
     <Compile Include="Services\Initialization\AppInitializerMessage.cs" />
     <Compile Include="Services\Initialization\IAppInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

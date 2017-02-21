@@ -239,7 +239,7 @@
                 }
 
                 try
-                {
+                { 
                     var image = await this.apiClient.GetMyProfileImageAsync();
                     await this.SetProfileImageSourceAsync(image);
                     await this.data.UpdateProfileImageAsync(image);

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:listViewBase="using:WinUX.Controls.ListViewBase"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:WinUX.MvvmLight.Xaml.Views"
     DataContext="{Binding ContributionsPageViewModel, Source={StaticResource Locator}}"
@@ -11,13 +12,54 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <RelativePanel
+            x:Name="ContributionHero"
+            Padding="20"
+            Background="{StaticResource MvpBlueThemeBrush}"
+            RequestedTheme="Dark">
+            <TextBlock
+                x:Name="PageName"
+                FontWeight="Light"
+                MaxLines="1"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                Style="{StaticResource SubheaderTextBlockStyle}"
+                Text="Your contributions"
+                TextTrimming="CharacterEllipsis" />
+
+        </RelativePanel>
+
+        <Grid Grid.Row="1" Margin="20,0">
+            <TextBlock
+                Style="{StaticResource HeaderedTextBlockTextStyle}"
+                Text="No contributions available."
+                Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+
+            <GridView
+                listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ContributionClickedCommand, Mode=OneWay}"
+                IsItemClickEnabled="True"
+                ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
+                ItemTemplate="{StaticResource ContributionListTileTemplate}"
+                ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
+                ItemsSource="{x:Bind ViewModel.Contributions, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.HorizontalScrollMode=" Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollMode=" Disabled"
+                ScrollViewer.ZoomMode="Disabled"
+                SelectionMode="None"
+                Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
+
         <CommandBar
             x:Name="ContributionBar"
-            Grid.Row="1"
+            Grid.Row="2"
             IsDynamicOverflowEnabled="True">
             <AppBarButton
                 x:Name="AddContributionBtn"
@@ -33,6 +75,11 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="ContributionHero.Padding" Value="68,20,20,20" />
+
+                        <Setter Target="PageName.Margin" Value="20,8,0,0" />
+                        <Setter Target="PageName.Style" Value="{StaticResource TitleTextBlockStyle}" />
+
                         <Setter Target="ContributionBar.DefaultLabelPosition" Value="Bottom" />
                     </VisualState.Setters>
                 </VisualState>
@@ -41,6 +88,8 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="PageName.Margin" Value="20,0,0,0" />
+
                         <Setter Target="ContributionBar.DefaultLabelPosition" Value="Right" />
                     </VisualState.Setters>
                 </VisualState>

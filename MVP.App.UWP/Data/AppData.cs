@@ -31,11 +31,6 @@
         [PreferredConstructor]
         public AppData(IMessenger messenger)
         {
-            if (messenger == null)
-            {
-                throw new ArgumentNullException(nameof(messenger), "The MvvmLight messenger cannot be null");
-            }
-
             this.messenger = messenger;
         }
 

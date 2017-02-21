@@ -15,13 +15,7 @@
     mc:Ignorable="d">
 
     <views:PageBase.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="MVPActivityItemTemplate" x:DataType="apiModels:Contribution">
-                <RelativePanel>
-                    <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{x:Bind Title}" />
-                </RelativePanel>
-            </DataTemplate>
-        </ResourceDictionary>
+        <ResourceDictionary />
     </views:PageBase.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -145,7 +139,7 @@
                         listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ActivityClickedCommand, Mode=OneWay}"
                         IsItemClickEnabled="True"
                         ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
-                        ItemTemplate="{StaticResource MVPActivityItemTemplate}"
+                        ItemTemplate="{StaticResource ContributionListTileTemplate}"
                         ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
                         ItemsSource="{x:Bind ViewModel.RecentContributions, Mode=OneWay}"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -169,50 +163,9 @@
             Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
             Grid.Row="1"
             CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
+            ContentTemplate="{StaticResource ContributionFlyoutTemplate}"
             DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
-            Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <controls:ItemFlyoutControl.ContentTemplate>
-                <DataTemplate x:DataType="appModels:ContributionCustomFlyoutViewModel">
-                    <RelativePanel>
-                        <winuxControls:HeaderedTextBlock
-                            x:Name="ActivityType"
-                            Header="Activity type"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.AlignTopWithPanel="True"
-                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{Binding Item.TypeName, Mode=OneWay}" />
-
-                        <winuxControls:HeaderedTextBlock
-                            x:Name="ContributionArea"
-                            Header="Contribution area"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.Below="ActivityType"
-                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{Binding Item.Technology.Name, Mode=OneWay}" />
-
-                        <winuxControls:HeaderedTextBlock
-                            x:Name="DateOfActivity"
-                            Header="Date of activity"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.Below="ContributionArea"
-                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
-
-                        <winuxControls:HeaderedTextBlock
-                            x:Name="ContributionDescription"
-                            Header="Description"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.Below="DateOfActivity"
-                            Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                            Text="{Binding Item.Description, Mode=OneWay}" />
-                    </RelativePanel>
-                </DataTemplate>
-            </controls:ItemFlyoutControl.ContentTemplate>
-        </controls:ItemFlyoutControl>
+            Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
