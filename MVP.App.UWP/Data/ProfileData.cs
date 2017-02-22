@@ -16,7 +16,7 @@
 
     using Windows.Storage;
 
-    public class AppData : IAppData
+    public class ProfileData : IProfileData
     {
         private readonly IMessenger messenger;
 
@@ -24,12 +24,12 @@
 
         private const string AuthFileName = "data.mvp";
 
-        public AppData()
+        public ProfileData()
         {
         }
 
         [PreferredConstructor]
-        public AppData(IMessenger messenger)
+        public ProfileData(IMessenger messenger)
         {
             this.messenger = messenger;
         }
@@ -67,7 +67,7 @@
 
                 try
                 {
-                    var data = await file.GetDataAsync<AppData>();
+                    var data = await file.GetDataAsync<ProfileData>();
                     if (data != null)
                     {
                         this.CurrentAccount = data.CurrentAccount;

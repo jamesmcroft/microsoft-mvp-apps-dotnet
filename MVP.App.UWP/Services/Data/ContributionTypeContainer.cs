@@ -1,16 +1,22 @@
 ﻿namespace MVP.App.Services.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
 
     using MVP.Api;
+    using MVP.Api.Models;
     using MVP.App.Data;
     using MVP.App.Models;
 
     using Windows.Storage;
+    using Windows.UI.Xaml;
 
-    public class ContributionTypeContainer : IServiceDataContainer
+    using WinUX.Networking;
+
+    public class ContributionTypeContainer : IContributionTypeContainer
     {
         private const string FileName = "ContributionTypes.mvp";
 
@@ -25,40 +31,85 @@
             this.client = client;
         }
 
+        /// <inheritdoc />
+        public TimeSpan TimeBetweenUpdates => TimeSpan.FromDays(30);
+
+        /// <inheritdoc />
         public DateTime LastDateChecked { get; set; }
 
+        /// <inheritdoc />
+        public bool Loaded { get; private set; }
+
+        /// <inheritdoc />
+        public bool RequiresUpdate => this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates;
+
+        /// <inheritdoc />
         public async Task UpdateAsync()
         {
             await this.LoadAsync();
 
-            // ToDo; get data
+            if (!NetworkStatusManager.Current.IsConnected())
+            {
+                return;
+            }
+
+            if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates)
+            {
+                IEnumerable<ContributionType> serviceTypes = null;
+
+                try
+                {
+                    serviceTypes = await this.client.GetContributionTypesAsync();
+                }
+                catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                {
+                    // Show dialog, unauthorized user detected.
+                    Application.Current.Exit();
+                }
+
+                if (serviceTypes != null)
+                {
+                    if (this.contributionTypes == null)
+                    {
+                        this.contributionTypes = new ContributionTypeContainerWrapper();
+                    }
+
+                    this.LastDateChecked = DateTime.UtcNow;
+                    this.contributionTypes.LastDateChecked = this.LastDateChecked;
+
+                    this.contributionTypes.ContributionTypes.Clear();
+                    this.contributionTypes.ContributionTypes.AddRange(serviceTypes);
+
+                    await this.SaveAsync();
+                }
+            }
         }
 
+        /// <inheritdoc />
         public async Task LoadAsync()
         {
-            if (this.contributionTypes != null)
+            if (this.contributionTypes != null || this.Loaded)
             {
                 return;
             }
 
             await this.fileAccessSemaphore.WaitAsync();
 
+            this.Loaded = true;
+
             try
             {
-                try
-                {
-                    var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                                   FileName,
-                                   CreationCollisionOption.OpenIfExists);
+                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+                               FileName,
+                               CreationCollisionOption.OpenIfExists);
 
-                    this.contributionTypes = await file.GetDataAsync<ContributionTypeContainerWrapper>();
-                }
-                catch (Exception ex)
-                {
+                this.contributionTypes = await file.GetDataAsync<ContributionTypeContainerWrapper>();
+            }
+            catch (Exception ex)
+            {
 #if DEBUG
-                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
 #endif
-                }
             }
             finally
             {
@@ -71,12 +122,11 @@
 
                 await this.SaveAsync();
             }
-            else
-            {
-                this.LastDateChecked = this.contributionTypes.LastDateChecked;
-            }
+
+            this.LastDateChecked = this.contributionTypes.LastDateChecked;
         }
 
+        /// <inheritdoc />
         public async Task SaveAsync()
         {
             await this.fileAccessSemaphore.WaitAsync();
@@ -107,6 +157,12 @@
             {
                 this.fileAccessSemaphore.Release();
             }
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ContributionType> GetAllTypes()
+        {
+            return this.contributionTypes?.ContributionTypes;
         }
     }
 }

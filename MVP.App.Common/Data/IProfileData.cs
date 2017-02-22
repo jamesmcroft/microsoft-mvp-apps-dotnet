@@ -1,12 +1,11 @@
 ﻿namespace MVP.App.Data
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
 
-    public interface IAppData
+    public interface IProfileData
     {
         MSACredentials CurrentAccount { get; }
 

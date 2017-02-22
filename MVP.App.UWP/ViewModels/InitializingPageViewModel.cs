@@ -37,7 +37,7 @@
 
         private bool isLoading;
 
-        private IAppData data;
+        private IProfileData data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializingPageViewModel"/> class.
@@ -48,7 +48,7 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient, IAppData data)
+        public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient, IProfileData data)
         {
             if (initializer == null)
             {

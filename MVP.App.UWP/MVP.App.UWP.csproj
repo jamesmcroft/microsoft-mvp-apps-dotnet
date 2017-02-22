@@ -102,7 +102,7 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\AppData.cs" />
+    <Compile Include="Data\ProfileData.cs" />
     <Compile Include="Extensions\Extensions.Image.cs" />
     <Compile Include="Extensions\Extensions.Network.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />

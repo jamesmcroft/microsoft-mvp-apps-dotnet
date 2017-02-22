@@ -7,6 +7,7 @@
 
     using MVP.Api;
     using MVP.App.Data;
+    using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;
     using MVP.App.ViewModels;
@@ -40,8 +41,10 @@
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register<KeyboardCharacterService>();
             SimpleIoc.Default.Register(() => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey"));
-            SimpleIoc.Default.Register<IAppData, AppData>();
+            SimpleIoc.Default.Register<IProfileData, ProfileData>();
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
+            SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();
+            SimpleIoc.Default.Register<IServiceDataContainerManager, ServiceDataContainerManager>();
         }
 
         private static void RegisterViewModels()

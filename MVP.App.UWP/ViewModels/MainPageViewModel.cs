@@ -33,7 +33,7 @@
 
         private readonly ApiClient apiClient;
 
-        private readonly IAppData data;
+        private readonly IProfileData data;
 
         private BitmapSource profileImage;
 
@@ -48,7 +48,7 @@
         /// <param name="data">
         /// The application's data.
         /// </param>
-        public MainPageViewModel(ApiClient apiClient, IAppData data)
+        public MainPageViewModel(ApiClient apiClient, IProfileData data)
         {
             if (apiClient == null)
             {

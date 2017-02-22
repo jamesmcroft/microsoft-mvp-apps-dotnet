@@ -22,11 +22,11 @@
     {
         private ApiClient apiClient;
 
-        private IAppData data;
+        private IProfileData data;
 
         private bool isContributionsVisible;
 
-        public ContributionsPageViewModel(ApiClient apiClient, IAppData data)
+        public ContributionsPageViewModel(ApiClient apiClient, IProfileData data)
         {
             if (apiClient == null)
             {

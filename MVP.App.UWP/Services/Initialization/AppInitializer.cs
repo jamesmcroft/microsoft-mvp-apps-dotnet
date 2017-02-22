@@ -21,7 +21,9 @@
 
         private readonly ApiClient apiClient;
 
-        private IAppData data;
+        private readonly IProfileData data;
+
+        private IServiceDataContainerManager containerManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInitializer"/> class.
@@ -32,37 +34,35 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        public AppInitializer(IMessenger messenger, ApiClient apiClient, IAppData data)
+        /// <param name="data">
+        /// The cached profile data.
+        /// </param>
+        public AppInitializer(IMessenger messenger, ApiClient apiClient, IServiceDataContainerManager containerManager, IProfileData data)
         {
-            if (messenger == null)
-            {
-                throw new ArgumentNullException(nameof(messenger), "The MvvmLight messenger cannot be null");
-            }
-
-            if (apiClient == null)
-            {
-                throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data), "The app data cannot be null");
-            }
-
             this.messenger = messenger;
             this.apiClient = apiClient;
+            this.containerManager = containerManager;
             this.data = data;
         }
 
         /// <inheritdoc />
         public async Task<bool> InitializeAsync()
         {
-            bool isSuccess = true;
+            var isSuccess = true;
 
             this.SendLoadingProgress("Attempting login...");
             if (!await this.AttemptAuthenticationAsync())
             {
                 isSuccess = false;
+            }
+
+            this.SendLoadingProgress("Loading cached data...");
+            await this.containerManager.LoadAsync();
+
+            if (this.containerManager.RequiresUpdate)
+            {
+                this.SendLoadingProgress("Updating cached data...");
+                await this.containerManager.UpdateAsync();
             }
 
             this.SendLoadingProgress("Done!");

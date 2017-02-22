@@ -34,9 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data\IAppData.cs" />
+    <Compile Include="Data\IProfileData.cs" />
+    <Compile Include="Data\IContributionTypeContainer.cs" />
     <Compile Include="Data\IServiceDataContainer.cs" />
+    <Compile Include="Data\IServiceDataContainerManager.cs" />
     <Compile Include="Data\IValidate.cs" />
+    <Compile Include="Data\ServiceDataContainerManager.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
     <Compile Include="Events\RefreshDataCompleteMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
