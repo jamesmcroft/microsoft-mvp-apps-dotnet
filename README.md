@@ -1,9 +1,22 @@
 Microsoft MVP Applications
 ===========
 
-This project is designed to create applications for UWP, Android and iOS (using Xamarin) that leverage the Microsoft MVP API. 
+This project is designed to create applications for UWP, Android and iOS (using Xamarin) that take advantage of the Microsoft MVP API.  
 
-## <a id="build">Builds</a>
+## Contributing
+All MVPs are welcome to contribute towards these MVP applications. If you are an experienced native Xamarin developer, your expertise may be useful in fleshing out the iOS and Android applications!
+
+You can take a look at the project backlogs here:
+
+| Platform |
+| ------ |
+| [UWP](https://github.com/jamesmcroft/MS-MVP-Apps/projects/1) |
+| [Android](https://github.com/jamesmcroft/MS-MVP-Apps/projects/2) |
+| [iOS](https://github.com/jamesmcroft/MS-MVP-Apps/projects/3) |
+
+If you find an issue in any variant of the applications, please could you raise it in the [issues](https://github.com/jamesmcroft/mvp-api-app/issues) section with appropriate tags and it would be fantastic if you could have a look at rectifying the issue and submitting a pull request too!
+
+## Builds
 
 | Branch | Status |
 | ------ | ------ |
@@ -17,7 +30,3 @@ This project is designed to create applications for UWP, Android and iOS (using 
 | Android | Coming soon. |
 | iOS | Coming soon. |
 
-## <a id="contributing">Contributing</a>
-All MVPs are welcome to contribute towards the MVP applications. If you are an experienced native Xamarin developer, your expertise may be useful in fleshing out the iOS and Android applications.
-
-If you find an issue, please could you raise it in the [issues](https://github.com/jamesmcroft/mvp-api-app/issues) section or it would be fantastic if you could have a look at rectifying the issue and submitting a pull request. 
