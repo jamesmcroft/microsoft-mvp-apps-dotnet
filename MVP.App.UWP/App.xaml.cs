@@ -50,8 +50,6 @@
 
                 await this.InitializeServicesAsync();
 
-                rootFrame.NavigationFailed += this.OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     // TODO: Load state from previously suspended application
@@ -77,11 +75,6 @@
             await AppDiagnostics.Current.StartAsync();
             NetworkStatusManager.Current.Initialize();
             ServiceLocator.Current.GetInstance<KeyboardCharacterService>().Start();
-        }
-
-        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)

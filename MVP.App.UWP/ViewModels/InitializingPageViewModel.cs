@@ -50,21 +50,6 @@
         /// </param>
         public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient, IProfileData data)
         {
-            if (initializer == null)
-            {
-                throw new ArgumentNullException(nameof(initializer), "The application initializer cannot be null.");
-            }
-
-            if (apiClient == null)
-            {
-                throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null.");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data), "The app data cannot be null.");
-            }
-
             this.initializer = initializer;
             this.apiClient = apiClient;
             this.data = data;

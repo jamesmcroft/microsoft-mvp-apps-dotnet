@@ -9,7 +9,7 @@
     <Grid>
         <Grid
             x:Name="Layover"
-            Padding="20"
+            Padding="20,68"
             Background="#50000000">
             <Grid MaxWidth="720" Background="White">
                 <Grid.RowDefinitions>

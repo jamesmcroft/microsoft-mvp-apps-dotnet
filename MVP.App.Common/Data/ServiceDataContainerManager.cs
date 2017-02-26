@@ -11,9 +11,9 @@
 
         private readonly SemaphoreSlim containerSemaphore = new SemaphoreSlim(1, 1);
 
-        public ServiceDataContainerManager(IContributionTypeContainer contributionContainer)
+        public ServiceDataContainerManager(IContributionTypeContainer typeContainer, IContributionAreaContainer areaContainer)
         {
-            this.containers = new List<IServiceDataContainer> { contributionContainer };
+            this.containers = new List<IServiceDataContainer> { typeContainer, areaContainer };
         }
 
         public IReadOnlyList<IServiceDataContainer> Containers => this.containers;

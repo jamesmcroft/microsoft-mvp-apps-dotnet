@@ -44,6 +44,7 @@
             SimpleIoc.Default.Register<IProfileData, ProfileData>();
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
             SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();
+            SimpleIoc.Default.Register<IContributionAreaContainer, ContributionAreaContainer>();
             SimpleIoc.Default.Register<IServiceDataContainerManager, ServiceDataContainerManager>();
         }
 

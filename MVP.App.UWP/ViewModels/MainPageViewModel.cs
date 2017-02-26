@@ -1,6 +1,5 @@
 ﻿namespace MVP.App.ViewModels
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Net.Http;
@@ -50,21 +49,11 @@
         /// </param>
         public MainPageViewModel(ApiClient apiClient, IProfileData data)
         {
-            if (apiClient == null)
-            {
-                throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null.");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data), "The app data cannot be null.");
-            }
-
             this.apiClient = apiClient;
             this.data = data;
 
             this.RecentContributions = new ObservableCollection<Contribution>();
-            this.ContributionFlyoutViewModel = new ContributionCustomFlyoutViewModel();
+            this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
 
             this.ActivityClickedCommand = new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
 
@@ -84,7 +73,7 @@
         /// <summary>
         /// Gets the custom fly-out view model for the contributions.
         /// </summary>
-        public ContributionCustomFlyoutViewModel ContributionFlyoutViewModel { get; }
+        public ContributionFlyoutViewModel ContributionFlyoutViewModel { get; }
 
         /// <summary>
         /// Gets the recent activities of the current MVP profile.

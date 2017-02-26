@@ -8,7 +8,11 @@
     xmlns:converters="using:WinUX.Xaml.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ignore="http://www.ignore.com"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rules="using:WinUX.Data.Validation.Rules"
+    xmlns:textBox="using:WinUX.Xaml.Behaviors.TextBox"
+    xmlns:validation="using:WinUX.Data.Validation"
     mc:Ignorable="d ignore">
 
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
@@ -34,7 +38,20 @@
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
+    <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+
+    <validation:ValidationRules x:Key="UrlValidationRules">
+        <validation:ValidationRules.Rules>
+            <rules:UrlValidationRule ErrorMessage="The value is not a valid URL." />
+        </validation:ValidationRules.Rules>
+    </validation:ValidationRules>
+
+    <validation:ValidationRules x:Key="NumericValidationRules">
+        <validation:ValidationRules.Rules>
+            <rules:PositiveIntValidationRule ErrorMessage="The value is not a valid number." />
+        </validation:ValidationRules.Rules>
+    </validation:ValidationRules>
 
     <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -132,7 +149,7 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="ContributionFlyoutTemplate" x:DataType="appModels:ContributionCustomFlyoutViewModel">
+    <DataTemplate x:Key="ContributionFlyoutTemplate" x:DataType="appModels:ContributionFlyoutViewModel">
         <RelativePanel>
             <controls:HeaderedTextBlock
                 x:Name="ActivityType"
@@ -168,13 +185,123 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="DateOfActivity"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                Text="{Binding Item.Description, Mode=OneWay}" />
+                Text="{Binding Item.Description, Mode=OneWay}"
+                Visibility="{Binding Item.Description, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+        </RelativePanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EditableContributionFlyoutTemplate" x:DataType="appModels:EditableContributionFlyoutViewModel">
+        <RelativePanel>
+            <controls:ValidatingComboBox
+                x:Name="ContributionType"
+                Margin="0,0,0,10"
+                Header="Type"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True" />
+
+            <controls:ValidatingComboBox
+                x:Name="ContributionArea"
+                Margin="0,0,0,10"
+                Header="Area"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsTechnologyInvalid, Mode=TwoWay}"
+                IsMandatory="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionType" />
+
+            <CalendarDatePicker
+                x:Name="ContributionDate"
+                Margin="0,0,0,10"
+                Date="{Binding Item.StartDate, Mode=TwoWay}"
+                Header="Date"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                MaxDate="{Binding MaxDateOfActivity}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionArea" />
+
+            <controls:ValidatingTextBox
+                x:Name="ContributionTitle"
+                Margin="0,0,0,10"
+                Header="Title"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsTitleInvalid, Mode=TwoWay}"
+                IsMandatory="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionDate">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.Title, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
+
+            <controls:ValidatingTextBox
+                x:Name="ContributionUrl"
+                Margin="0,0,0,10"
+                Header="URL"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsReferenceUrlInvalid, Mode=TwoWay}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionTitle"
+                ValidationRules="{StaticResource UrlValidationRules}">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.ReferenceUrl, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
+
+            <controls:ValidatingTextBox
+                x:Name="ContributionDescription"
+                Margin="0,0,0,10"
+                Header="Description"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                MaxLength="5000"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionUrl">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.Description, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
+
+            <controls:ValidatingTextBox
+                x:Name="ContributionQuantity"
+                Margin="0,0,0,10"
+                Header="Quantity"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsAnnualQuantityInvalid, Mode=TwoWay}"
+                IsMandatory="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionDescription"
+                ValidationRules="{StaticResource NumericValidationRules}">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.AnnualQuantityValue, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
+
+            <controls:ValidatingTextBox
+                x:Name="ContributionReach"
+                Margin="0,0,0,10"
+                Header="Reach"
+                IsInvalid="{Binding Item.IsAnnualReachInvalid, Mode=TwoWay}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionQuantity"
+                ValidationRules="{StaticResource NumericValidationRules}">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.AnnualReachValue, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
         </RelativePanel>
     </DataTemplate>
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
         <RelativePanel>
-            <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{x:Bind Title}" />
+            <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{Binding Title, Mode=OneWay}" />
         </RelativePanel>
     </DataTemplate>
 

@@ -7,15 +7,13 @@
     using GalaSoft.MvvmLight.Command;
 
     using MVP.Api;
-    using MVP.App.Data;
-
-    using Windows.UI.Xaml.Navigation;
-
     using MVP.Api.Models;
+    using MVP.App.Data;
     using MVP.App.Events;
     using MVP.App.Models;
 
-    using WinUX.Collections.ObjectModel;
+    using Windows.UI.Xaml.Navigation;
+
     using WinUX.MvvmLight.Xaml.Views;
 
     public class ContributionsPageViewModel : PageBaseViewModel
@@ -28,26 +26,18 @@
 
         public ContributionsPageViewModel(ApiClient apiClient, IProfileData data)
         {
-            if (apiClient == null)
-            {
-                throw new ArgumentNullException(nameof(apiClient), "The MVP API client cannot be null.");
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data), "The app data cannot be null.");
-            }
-
             this.apiClient = apiClient;
             this.data = data;
 
             this.Contributions = new ObservableCollection<Contribution>();
-            this.ReadonlyContributionFlyoutViewModel = new ContributionCustomFlyoutViewModel();
+            this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
+            this.EditableContributionFlyoutViewModel = new EditableContributionFlyoutViewModel();
 
             this.ContributionClickedCommand =
-                new RelayCommand<Contribution>(c => this.ReadonlyContributionFlyoutViewModel.Show(c));
+                new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
 
-            this.AddNewContributionCommand = new RelayCommand(this.AddNewContribution);
+            this.AddNewContributionCommand =
+                new RelayCommand(() => this.EditableContributionFlyoutViewModel.Show(default(Contribution)));
 
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshContributions);
         }
@@ -55,7 +45,9 @@
         /// <summary>
         /// Gets the custom fly-out view model for the contributions.
         /// </summary>
-        public ContributionCustomFlyoutViewModel ReadonlyContributionFlyoutViewModel { get; }
+        public ContributionFlyoutViewModel ContributionFlyoutViewModel { get; }
+
+        public EditableContributionFlyoutViewModel EditableContributionFlyoutViewModel { get; }
 
         public ICommand AddNewContributionCommand { get; }
 
@@ -85,11 +77,6 @@
 
         public override void OnPageNavigatingFrom(NavigatingCancelEventArgs args)
         {
-        }
-
-        private void AddNewContribution()
-        {
-            // Show dialog for edit mode.
         }
 
         private void RefreshContributions(RefreshDataMessage obj)
