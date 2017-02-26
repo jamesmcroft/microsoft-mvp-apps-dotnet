@@ -15,33 +15,20 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                        x:Name="ControlTitle"
-                        Margin="20,10,10,10"
-                        VerticalAlignment="Center"
-                        FontWeight="Light"
-                        Foreground="{StaticResource MvpBlueThemeBrush}"
-                        MaxLines="2"
-                        Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text="{x:Bind Title, Mode=OneWay}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="WrapWholeWords" />
-
-                    <AppBarButton
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind CloseCommand, Mode=OneWay}"
-                        Icon="Cancel"
-                        Label="Close" />
-                </Grid>
+                <TextBlock
+                    x:Name="ControlTitle"
+                    Margin="20,10,10,10"
+                    VerticalAlignment="Center"
+                    FontWeight="Light"
+                    Foreground="{StaticResource MvpBlueThemeBrush}"
+                    MaxLines="2"
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    Text="{x:Bind Title, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="WrapWholeWords" />
 
                 <ScrollViewer
                     Grid.Row="1"
@@ -50,6 +37,18 @@
 
                     <ContentPresenter ContentTemplate="{x:Bind ContentTemplate, Mode=OneWay}" />
                 </ScrollViewer>
+
+                <CommandBar Grid.Row="2">
+                    <AppBarButton
+                        Command="{x:Bind SaveCommand, Mode=OneWay}"
+                        Icon="Save"
+                        Label="Save"
+                        Visibility="{x:Bind SaveButtonVisibility, Mode=OneWay}" />
+                    <AppBarButton
+                        Command="{x:Bind CloseCommand, Mode=OneWay}"
+                        Icon="Cancel"
+                        Label="Close" />
+                </CommandBar>
             </Grid>
         </Grid>
 

@@ -8,12 +8,9 @@
     using MVP.App.Events;
     using MVP.App.Views;
 
-    using Windows.System;
-    using Windows.UI.Core;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 
-    using WinUX;
     using WinUX.MvvmLight.Common.ViewModels;
     using WinUX.Xaml.Controls;
 
@@ -114,16 +111,6 @@
             this.PrimaryMenuButtons.Add(CreateHomeButton());
             this.PrimaryMenuButtons.Add(CreateContributionsButton());
             this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
-
-            this.MessengerInstance.Register<CharacterReceivedEventArgs>(
-                this,
-                args =>
-                    {
-                        if (args.VirtualKeyReceived() == VirtualKey.F5)
-                        {
-                            this.RefreshData();
-                        }
-                    });
         }
 
         private AppMenuButton CreateRefreshButton()

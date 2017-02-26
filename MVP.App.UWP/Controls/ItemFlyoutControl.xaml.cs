@@ -26,6 +26,19 @@
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
 
+        public static readonly DependencyProperty SaveCommandProperty = DependencyProperty.Register(
+            nameof(SaveCommand),
+            typeof(ICommand),
+            typeof(ItemFlyoutControl),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty SaveButtonVisibilityProperty =
+            DependencyProperty.Register(
+                nameof(SaveButtonVisibility),
+                typeof(Visibility),
+                typeof(ItemFlyoutControl),
+                new PropertyMetadata(Visibility.Collapsed));
+
         public ItemFlyoutControl()
         {
             this.InitializeComponent();
@@ -67,6 +80,32 @@
             set
             {
                 this.SetValue(CloseCommandProperty, value);
+            }
+        }
+
+        public Visibility SaveButtonVisibility
+        {
+            get
+            {
+                return (Visibility)this.GetValue(SaveButtonVisibilityProperty);
+            }
+
+            set
+            {
+                this.SetValue(SaveButtonVisibilityProperty, value);
+            }
+        }
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                return (ICommand)this.GetValue(SaveCommandProperty);
+            }
+
+            set
+            {
+                this.SetValue(SaveCommandProperty, value);
             }
         }
     }

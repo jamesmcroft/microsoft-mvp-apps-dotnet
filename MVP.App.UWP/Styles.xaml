@@ -9,6 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ignore="http://www.ignore.com"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:localConverters="using:MVP.App.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rules="using:WinUX.Data.Validation.Rules"
     xmlns:textBox="using:WinUX.Xaml.Behaviors.TextBox"
@@ -40,6 +41,7 @@
     <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
     <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+    <localConverters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
 
     <validation:ValidationRules x:Key="UrlValidationRules">
         <validation:ValidationRules.Rules>
@@ -195,27 +197,34 @@
             <controls:ValidatingComboBox
                 x:Name="ContributionType"
                 Margin="0,0,0,10"
+                DisplayMemberPath="Name"
                 Header="Type"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                ItemsSource="{Binding Types, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.AlignTopWithPanel="True" />
+                RelativePanel.AlignTopWithPanel="True"
+                SelectedItem="{Binding Item.Type, Mode=TwoWay}" />
 
             <controls:ValidatingComboBox
                 x:Name="ContributionArea"
                 Margin="0,0,0,10"
+                DisplayMemberPath="Name"
                 Header="Area"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsTechnologyInvalid, Mode=TwoWay}"
                 IsMandatory="True"
+                ItemsSource="{Binding Areas, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.Below="ContributionType" />
+                RelativePanel.Below="ContributionType"
+                SelectedItem="{Binding Item.Technology, Mode=TwoWay}" />
 
             <CalendarDatePicker
                 x:Name="ContributionDate"
                 Margin="0,0,0,10"
-                Date="{Binding Item.StartDate, Mode=TwoWay}"
+                HorizontalAlignment="Stretch"
+                Date="{Binding Item.StartDate, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"
                 Header="Date"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 MaxDate="{Binding MaxDateOfActivity}"
@@ -287,6 +296,7 @@
                 x:Name="ContributionReach"
                 Margin="0,0,0,10"
                 Header="Reach"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsAnnualReachInvalid, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"

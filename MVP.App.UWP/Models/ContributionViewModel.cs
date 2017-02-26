@@ -1,15 +1,9 @@
 ﻿namespace MVP.App.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
 
-    using GalaSoft.MvvmLight.Ioc;
-
-    using Microsoft.Practices.ServiceLocation;
-
     using MVP.Api.Models;
-    using MVP.App.Data;
     using MVP.App.Models.Common;
 
     using WinUX.Common;
@@ -22,7 +16,7 @@
 
         private ContributionType type;
 
-        private ContributionTechnology technology;
+        private ActivityTechnology technology;
 
         private DateTime? startDate;
 
@@ -55,24 +49,9 @@
         private bool isReferenceUrlInvalid;
 
         public ContributionViewModel()
-            : this(
-                ServiceLocator.Current.GetInstance<IContributionAreaContainer>(),
-                ServiceLocator.Current.GetInstance<IContributionTypeContainer>())
         {
-        }
-
-        [PreferredConstructor]
-        public ContributionViewModel(IContributionAreaContainer areaContainer, IContributionTypeContainer typeContainer)
-        {
-            this.Areas = areaContainer.GetAllAreas();
-            this.Types = typeContainer.GetAllTypes();
-
             this.PropertyChanged += this.OnPropertyChanged;
         }
-
-        public IEnumerable<ContributionType> Types { get; }
-
-        public IEnumerable<AwardContribution> Areas { get; }
 
         public int? Id
         {
@@ -113,7 +92,7 @@
             }
         }
 
-        public ContributionTechnology Technology
+        public ActivityTechnology Technology
         {
             get
             {
@@ -322,6 +301,14 @@
             }
         }
 
+        public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology)
+        {
+            this.Populate(null);
+
+            this.Type = contributionType;
+            this.Technology = contributionTechnology;
+        }
+
         /// <inheritdoc />
         public override void Populate(Contribution model)
         {
@@ -330,7 +317,7 @@
                 this.Id = model.Id;
                 this.TypeName = model.TypeName;
                 this.Type = model.Type;
-                this.Technology = model.Technology;
+                this.Technology = model.Technology.ToActivityTechnology();
                 this.StartDate = model.StartDate;
                 this.Title = model.Title;
                 this.Description = model.Description;
@@ -342,7 +329,7 @@
             }
             else
             {
-                this.Id = null;
+                this.Id = 0;
                 this.TypeName = string.Empty;
                 this.Type = null;
                 this.Technology = null;
@@ -353,7 +340,7 @@
                 this.SecondAnnualQuantity = null;
                 this.AnnualReach = null;
                 this.ReferenceUrl = string.Empty;
-                this.Visibility = null;
+                this.Visibility = ContributionVisibilities.Public;
             }
         }
 
@@ -366,20 +353,20 @@
             }
 
             var contribution = new Contribution
-                                   {
-                                       Id = this.Id,
-                                       TypeName = this.TypeName,
-                                       Type = this.Type,
-                                       Technology = this.Technology,
-                                       StartDate = this.StartDate,
-                                       Title = this.Title,
-                                       Description = this.Description,
-                                       AnnualQuantity = this.AnnualQuantity,
-                                       SecondAnnualQuantity = this.SecondAnnualQuantity,
-                                       AnnualReach = this.AnnualReach,
-                                       ReferenceUrl = this.ReferenceUrl,
-                                       Visibility = this.Visibility
-                                   };
+            {
+                Id = this.Id,
+                TypeName = this.TypeName,
+                Type = this.Type,
+                Technology = this.Technology.ToContributionTechnology(),
+                StartDate = this.StartDate,
+                Title = this.Title,
+                Description = this.Description,
+                AnnualQuantity = this.AnnualQuantity,
+                SecondAnnualQuantity = this.SecondAnnualQuantity,
+                AnnualReach = this.AnnualReach,
+                ReferenceUrl = this.ReferenceUrl,
+                Visibility = this.Visibility
+            };
 
             return contribution;
         }

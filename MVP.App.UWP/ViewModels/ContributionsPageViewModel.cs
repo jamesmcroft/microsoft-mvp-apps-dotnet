@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight.Command;
@@ -36,8 +37,11 @@
             this.ContributionClickedCommand =
                 new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
 
-            this.AddNewContributionCommand =
-                new RelayCommand(() => this.EditableContributionFlyoutViewModel.Show(default(Contribution)));
+            this.AddNewContributionCommand = new RelayCommand(() => this.EditableContributionFlyoutViewModel.ShowNew());
+
+            this.SaveContributionCommand = new RelayCommand(
+                async () => await this.SaveContributionAsync(),
+                () => this.EditableContributionFlyoutViewModel.IsValid());
 
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshContributions);
         }
@@ -50,6 +54,8 @@
         public EditableContributionFlyoutViewModel EditableContributionFlyoutViewModel { get; }
 
         public ICommand AddNewContributionCommand { get; }
+
+        public ICommand SaveContributionCommand { get; }
 
         public bool IsContributionsVisible
         {
@@ -82,6 +88,33 @@
         private void RefreshContributions(RefreshDataMessage obj)
         {
 
+        }
+
+        private async Task SaveContributionAsync()
+        {
+            if (this.EditableContributionFlyoutViewModel != null && this.EditableContributionFlyoutViewModel.IsValid())
+            {
+                var contribution = this.EditableContributionFlyoutViewModel.Item.Save();
+                if (contribution != null)
+                {
+                    if (contribution.Id == 0)
+                    {
+                        var added = await this.apiClient.AddContributionAsync(contribution);
+                        if (added != null)
+                        {
+                            // ToDo;
+                        }
+                    }
+                    else
+                    {
+                        var updated = await this.apiClient.UpdateContributionAsync(contribution);
+                        if (updated)
+                        {
+                            // ToDo;
+                        }
+                    }
+                }
+            }
         }
     }
 }

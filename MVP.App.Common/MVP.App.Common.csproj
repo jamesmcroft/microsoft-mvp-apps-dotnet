@@ -47,6 +47,7 @@
     <Compile Include="Events\RefreshDataMode.cs" />
     <Compile Include="Models\ContributionAreaContainerWrapper.cs" />
     <Compile Include="Models\ContributionTypeContainerWrapper.cs" />
+    <Compile Include="Models\ContributionVisibilities.cs" />
     <Compile Include="Services\Initialization\AppInitializerMessage.cs" />
     <Compile Include="Services\Initialization\IAppInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

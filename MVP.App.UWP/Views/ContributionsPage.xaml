@@ -77,6 +77,8 @@
             CloseCommand="{x:Bind ViewModel.EditableContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
             ContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
             DataContext="{Binding EditableContributionFlyoutViewModel, Mode=OneWay}"
+            SaveButtonVisibility="Visible"
+            SaveCommand="{x:Bind ViewModel.SaveContributionCommand, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.EditableContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
 

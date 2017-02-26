@@ -102,8 +102,10 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Data\ProfileData.cs" />
     <Compile Include="Extensions\Extensions.Image.cs" />
+    <Compile Include="Extensions\Extensions.MvpApi.cs" />
     <Compile Include="Extensions\Extensions.Network.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />
     <Compile Include="Models\Common\ItemViewModelBase.cs" />
