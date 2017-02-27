@@ -136,7 +136,7 @@
 
             if (NetworkStatusManager.Current.IsConnected())
             {
-                if (obj != null && (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile))
+                if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile)
                 {
                     try
                     {
@@ -154,7 +154,7 @@
                 }
             }
 
-            this.MessengerInstance.Send(new RefreshDataCompleteMessage(true));
+            this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
         }
 
         private void UpdateSectionVisibility()

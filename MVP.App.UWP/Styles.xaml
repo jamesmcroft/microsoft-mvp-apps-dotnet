@@ -57,6 +57,7 @@
     </validation:ValidationRules>
 
     <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
+        <Setter Property="Margin" Value="0,20,0,0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>

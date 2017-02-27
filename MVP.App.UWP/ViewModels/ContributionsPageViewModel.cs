@@ -1,6 +1,6 @@
 ﻿namespace MVP.App.ViewModels
 {
-    using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -8,6 +8,7 @@
 
     using MVP.Api;
     using MVP.Api.Models;
+    using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Models;
 
@@ -17,7 +18,7 @@
 
     public class ContributionsPageViewModel : PageBaseViewModel
     {
-        private ApiClient apiClient;
+        private readonly ApiClient apiClient;
 
         private bool isContributionsVisible;
 
@@ -25,7 +26,7 @@
         {
             this.apiClient = apiClient;
 
-            this.Contributions = new ObservableCollection<Contribution>();
+            this.Contributions = new LazyLoadItemCollection<Contribution, ContributionItemLoader>();
             this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
             this.EditableContributionFlyoutViewModel = new EditableContributionFlyoutViewModel();
 
@@ -38,8 +39,13 @@
                 async () => await this.SaveContributionAsync(),
                 () => this.EditableContributionFlyoutViewModel.IsValid());
 
-            this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshContributions);
+            this.MessengerInstance.Register<RefreshDataMessage>(this, this.OnRefreshMessage);
+
+            this.Contributions.CollectionChanged +=
+                (sender, args) => this.IsContributionsVisible = this.Contributions.Any();
         }
+
+        public LazyLoadItemCollection<Contribution, ContributionItemLoader> Contributions { get; }
 
         /// <summary>
         /// Gets the custom fly-out view model for the contributions.
@@ -66,10 +72,9 @@
 
         public ICommand ContributionClickedCommand { get; }
 
-        public ObservableCollection<Contribution> Contributions { get; }
-
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
+            this.RefreshContributions();
         }
 
         public override void OnPageNavigatedFrom(NavigationEventArgs args)
@@ -80,9 +85,17 @@
         {
         }
 
-        private void RefreshContributions(RefreshDataMessage obj)
+        private void OnRefreshMessage(RefreshDataMessage obj)
         {
+            if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Contributions)
+            {
+                this.RefreshContributions();
+            }
+        }
 
+        private async void RefreshContributions()
+        {
+            // ToDo
         }
 
         private async Task SaveContributionAsync()
@@ -90,24 +103,24 @@
             if (this.EditableContributionFlyoutViewModel != null && this.EditableContributionFlyoutViewModel.IsValid())
             {
                 var contribution = this.EditableContributionFlyoutViewModel.Item.Save();
+
+                this.EditableContributionFlyoutViewModel.Close();
                 if (contribution != null)
                 {
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
+
                     if (contribution.Id == 0)
                     {
-                        var added = await this.apiClient.AddContributionAsync(contribution);
-                        if (added != null)
-                        {
-                            // ToDo;
-                        }
+                        await this.apiClient.AddContributionAsync(contribution);
                     }
                     else
                     {
-                        var updated = await this.apiClient.UpdateContributionAsync(contribution);
-                        if (updated)
-                        {
-                            // ToDo;
-                        }
+                        await this.apiClient.UpdateContributionAsync(contribution);
                     }
+
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
+
+                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
                 }
             }
         }

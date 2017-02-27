@@ -4,6 +4,8 @@
     {
         All,
 
-        Profile
+        Profile,
+
+        Contributions
     }
 }

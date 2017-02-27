@@ -44,7 +44,7 @@
     <Compile Include="Data\IValidate.cs" />
     <Compile Include="Services\Data\ServiceDataContainerManager.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
-    <Compile Include="Events\RefreshDataCompleteMessage.cs" />
+    <Compile Include="Events\UpdateBusyIndicatorMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
     <Compile Include="Events\RefreshDataMode.cs" />
     <Compile Include="Models\ContributionAreaContainerWrapper.cs" />

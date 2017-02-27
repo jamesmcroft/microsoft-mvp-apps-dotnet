@@ -39,9 +39,9 @@
 
             this.Initialize();
 
-            this.MessengerInstance.Register<RefreshDataCompleteMessage>(
+            this.MessengerInstance.Register<UpdateBusyIndicatorMessage>(
                 this,
-                x => this.UpdateBusyIndicator(string.Empty, !x.IsComplete));
+                x => this.UpdateBusyIndicator(x.IsBusy, x.BusyMessage));
         }
 
         /// <summary>
@@ -135,10 +135,20 @@
             this.UpdateBusyIndicator("Refreshing...");
         }
 
-        public void UpdateBusyIndicator(string message, bool show = true)
+        public void UpdateBusyIndicator(string message)
+        {
+            this.UpdateBusyIndicator(true, message);
+        }
+
+        public void UpdateBusyIndicator(bool show, string message)
         {
             if (show && !string.IsNullOrWhiteSpace(message))
             {
+                if (this.IsBusyMessageVisible)
+                {
+                    return;
+                }
+
                 this.BusyMessage = message;
                 this.IsBusyMessageVisible = true;
             }

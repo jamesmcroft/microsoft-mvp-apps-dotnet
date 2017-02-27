@@ -36,27 +36,22 @@
 
         </RelativePanel>
 
-        <Grid Grid.Row="1" Margin="20,0">
-            <TextBlock
-                Style="{StaticResource HeaderedTextBlockTextStyle}"
-                Text="No contributions available."
-                Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+        <TextBlock
+            Grid.Row="1"
+            Margin="20,0"
+            Style="{StaticResource HeaderedTextBlockTextStyle}"
+            Text="No contributions available."
+            Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
 
-            <GridView
-                listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ContributionClickedCommand, Mode=OneWay}"
-                IsItemClickEnabled="True"
-                ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
-                ItemTemplate="{StaticResource ContributionListTileTemplate}"
-                ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
-                ItemsSource="{x:Bind ViewModel.Contributions, Mode=OneWay}"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.HorizontalScrollMode=" Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollMode=" Disabled"
-                ScrollViewer.ZoomMode="Disabled"
-                SelectionMode="None"
-                Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        </Grid>
+        <ListView
+            Grid.Row="1"
+            listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ContributionClickedCommand, Mode=OneWay}"
+            IsItemClickEnabled="True"
+            ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
+            ItemTemplate="{StaticResource ContributionListTileTemplate}"
+            ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
+            ItemsSource="{x:Bind ViewModel.Contributions, Mode=OneWay}"
+            SelectionMode="None" />
 
         <CommandBar
             x:Name="ContributionBar"
@@ -69,7 +64,6 @@
                 Label="Contribution" />
         </CommandBar>
 
-
         <controls:ItemFlyoutControl
             Title="Add/edit contribution"
             Grid.Row="0"
@@ -80,7 +74,6 @@
             SaveButtonVisibility="Visible"
             SaveCommand="{x:Bind ViewModel.SaveContributionCommand, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.EditableContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
-
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">

@@ -128,8 +128,8 @@
                         Text="No data available."
                         Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
 
-                    <GridView
-                        Margin="0,20,0,0"
+                    <ListView
+                        Margin="-20,0"
                         listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ActivityClickedCommand, Mode=OneWay}"
                         IsItemClickEnabled="True"
                         ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
