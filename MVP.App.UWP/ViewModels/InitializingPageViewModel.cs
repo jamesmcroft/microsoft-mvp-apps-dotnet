@@ -1,25 +1,18 @@
 ﻿namespace MVP.App.ViewModels
 {
-    using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight.Command;
 
-    using MVP.Api;
-    using MVP.Api.Models.MicrosoftAccount;
-    using MVP.App.Data;
+    using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Views;
 
-    using Windows.Security.Authentication.Web;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
 
-    using WinUX;
-    using WinUX.Diagnostics.Tracing;
     using WinUX.Messaging.Dialogs;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;
@@ -31,13 +24,11 @@
     {
         private readonly IAppInitializer initializer;
 
-        private readonly ApiClient apiClient;
-
         private string loadingProgress;
 
         private bool isLoading;
 
-        private IProfileData data;
+        private readonly IProfileDataContainer profileData;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializingPageViewModel"/> class.
@@ -45,14 +36,15 @@
         /// <param name="initializer">
         /// The application initializer.
         /// </param>
-        /// <param name="apiClient">
-        /// The MVP API client.
+        /// <param name="profileData">
+        /// The profile Data.
         /// </param>
-        public InitializingPageViewModel(IAppInitializer initializer, ApiClient apiClient, IProfileData data)
+        public InitializingPageViewModel(
+            IAppInitializer initializer,
+            IProfileDataContainer profileData)
         {
             this.initializer = initializer;
-            this.apiClient = apiClient;
-            this.data = data;
+            this.profileData = profileData;
 
             this.SigninCommand = new RelayCommand(async () => await this.SignInAsync());
 
@@ -127,93 +119,27 @@
         {
             if (!NetworkStatusManager.Current.IsConnected())
             {
-                // Dialog
                 return;
             }
 
             this.LoadingProgress = "Signing in...";
             this.IsLoading = true;
 
-            var success = true;
-            var errorMessage = string.Empty;
+            var authMsg = await this.initializer.AuthenticateAsync();
 
-            try
+            if (authMsg.IsSuccess)
             {
-                var scopes = new List<MSAScope>
-                                 {
-                                     MSAScope.Basic,
-                                     MSAScope.Emails,
-                                     MSAScope.OfflineAccess,
-                                     MSAScope.SignIn
-                                 };
-
-                var authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
-
-                var result = await WebAuthenticationBroker.AuthenticateAsync(
-                                 WebAuthenticationOptions.None,
-                                 new Uri(authUri),
-                                 new Uri(ApiClient.RedirectUri));
-
-                if (result.ResponseStatus == WebAuthenticationStatus.Success)
+                var initialized = await this.initializer.InitializeAsync();
+                if (initialized)
                 {
-                    if (!string.IsNullOrWhiteSpace(result.ResponseData))
-                    {
-                        var responseUri = new Uri(result.ResponseData);
-                        if (responseUri.LocalPath.StartsWith("/oauth20_desktop.srf", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var error = responseUri.ExtractQueryValue("error");
-
-                            if (string.IsNullOrWhiteSpace(error))
-                            {
-                                var authCode = responseUri.ExtractQueryValue("code");
-
-                                var msa = await this.apiClient.ExchangeAuthCodeAsync(authCode);
-                                if (msa != null)
-                                {
-                                    await this.data.UpdateAccountAsync(msa);
-                                }
-                            }
-                            else
-                            {
-                                errorMessage = error;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (result.ResponseStatus != WebAuthenticationStatus.UserCancel)
-                    {
-                        errorMessage = "Sign in was not successful. Please try again.";
-                    }
-
-                    success = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                EventLogger.Current.WriteWarning(ex.ToString());
-                success = false;
-            }
-
-            if (success)
-            {
-                var mvpProfile = await this.apiClient.GetMyProfileAsync();
-                if (mvpProfile != null)
-                {
-                    await this.data.UpdateProfileAsync(mvpProfile);
                     this.NavigateToHome();
-                }
-                else
-                {
-                    // Show error
                 }
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(errorMessage))
+                if (!string.IsNullOrWhiteSpace(authMsg.ErrorMessage))
                 {
-                    await MessageDialogManager.Current.ShowAsync("Sign in error", errorMessage);
+                    await MessageDialogManager.Current.ShowAsync("Sign in error", authMsg.ErrorMessage);
                 }
             }
 
@@ -223,7 +149,7 @@
         private void NavigateToHome()
         {
             // Get profile and pass onto main page.
-            this.NavigationService.Navigate(typeof(MainPage), this.data.CurrentProfile);
+            this.NavigationService.Navigate(typeof(MainPage), this.profileData.Profile);
 
             var rootFrame = Window.Current.Content as Frame;
             rootFrame?.Navigate(typeof(AppShellPage));

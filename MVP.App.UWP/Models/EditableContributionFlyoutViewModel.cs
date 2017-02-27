@@ -11,6 +11,7 @@
     using MVP.Api.Models;
     using MVP.App.Data;
     using MVP.App.Models.Common;
+    using MVP.App.Services.Data;
 
     public class EditableContributionFlyoutViewModel : ItemCustomFlyoutViewModel<ContributionViewModel>, IValidate
     {

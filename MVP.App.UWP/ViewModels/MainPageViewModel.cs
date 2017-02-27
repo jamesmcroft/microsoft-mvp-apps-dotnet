@@ -10,7 +10,6 @@
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.App.Data;
     using MVP.App.Events;
     using MVP.App.Models;
     using MVP.App.Views;
@@ -18,6 +17,8 @@
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
+
+    using MVP.App.Services.Data;
 
     using WinUX;
     using WinUX.MvvmLight.Xaml.Views;
@@ -32,7 +33,7 @@
 
         private readonly ApiClient apiClient;
 
-        private readonly IProfileData data;
+        private readonly IProfileDataContainer profileData;
 
         private BitmapSource profileImage;
 
@@ -44,13 +45,13 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        /// <param name="data">
+        /// <param name="profileData">
         /// The application's data.
         /// </param>
-        public MainPageViewModel(ApiClient apiClient, IProfileData data)
+        public MainPageViewModel(ApiClient apiClient, IProfileDataContainer profileData)
         {
             this.apiClient = apiClient;
-            this.data = data;
+            this.profileData = profileData;
 
             this.RecentContributions = new ObservableCollection<Contribution>();
             this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
@@ -142,7 +143,7 @@
                         var newProfile = await this.apiClient.GetMyProfileAsync();
                         if (newProfile != null)
                         {
-                            await this.data.UpdateProfileAsync(newProfile);
+                            await this.profileData.SetProfileAsync(newProfile);
                         }
                     }
                     catch (HttpRequestException hre) when (hre.Message.Contains("401"))
@@ -216,9 +217,9 @@
 
         private async Task UpdateProfilePicAsync()
         {
-            if (!string.IsNullOrWhiteSpace(this.data.CurrentProfileImage))
+            if (!string.IsNullOrWhiteSpace(this.profileData.ProfileImage))
             {
-                await this.SetProfileImageSourceAsync(this.data.CurrentProfileImage);
+                await this.SetProfileImageSourceAsync(this.profileData.ProfileImage);
             }
             else
             {
@@ -228,10 +229,10 @@
                 }
 
                 try
-                { 
+                {
                     var image = await this.apiClient.GetMyProfileImageAsync();
                     await this.SetProfileImageSourceAsync(image);
-                    await this.data.UpdateProfileImageAsync(image);
+                    await this.profileData.SetProfileImageAsync(image);
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {

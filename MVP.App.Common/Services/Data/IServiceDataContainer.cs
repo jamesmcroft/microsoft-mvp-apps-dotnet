@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Data
+﻿namespace MVP.App.Services.Data
 {
     using System;
     using System.Threading.Tasks;
@@ -32,6 +32,17 @@
         /// Returns an await-able task.
         /// </returns>
         Task UpdateAsync();
+
+        /// <summary>
+        /// Updates the local cached data asynchronously with the option to force update.
+        /// </summary>
+        /// <param name="forceUpdate">
+        /// A value indicating whether to force the update.
+        /// </param>
+        /// <returns>
+        /// Returns an await-able task.
+        /// </returns>
+        Task UpdateAsync(bool forceUpdate);
 
         /// <summary>
         /// Loads the local cached data asynchronously.

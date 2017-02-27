@@ -34,13 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data\IContributionAreaContainer.cs" />
-    <Compile Include="Data\IProfileData.cs" />
-    <Compile Include="Data\IContributionTypeContainer.cs" />
-    <Compile Include="Data\IServiceDataContainer.cs" />
-    <Compile Include="Data\IServiceDataContainerManager.cs" />
+    <Compile Include="Events\AuthenticationMessage.cs" />
+    <Compile Include="Models\ProfileDataContainerWrapper.cs" />
+    <Compile Include="Services\Data\IContributionAreaContainer.cs" />
+    <Compile Include="Services\Data\IContributionTypeContainer.cs" />
+    <Compile Include="Services\Data\IProfileDataContainer.cs" />
+    <Compile Include="Services\Data\IServiceDataContainer.cs" />
+    <Compile Include="Services\Data\IServiceDataContainerManager.cs" />
     <Compile Include="Data\IValidate.cs" />
-    <Compile Include="Data\ServiceDataContainerManager.cs" />
+    <Compile Include="Services\Data\ServiceDataContainerManager.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
     <Compile Include="Events\RefreshDataCompleteMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
@@ -82,9 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

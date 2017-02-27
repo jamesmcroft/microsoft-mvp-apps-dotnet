@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Data
+﻿namespace MVP.App.Services.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

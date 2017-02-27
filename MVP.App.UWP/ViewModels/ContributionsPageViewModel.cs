@@ -1,6 +1,5 @@
 ﻿namespace MVP.App.ViewModels
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
@@ -9,7 +8,6 @@
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.App.Data;
     using MVP.App.Events;
     using MVP.App.Models;
 
@@ -21,14 +19,11 @@
     {
         private ApiClient apiClient;
 
-        private IProfileData data;
-
         private bool isContributionsVisible;
 
-        public ContributionsPageViewModel(ApiClient apiClient, IProfileData data)
+        public ContributionsPageViewModel(ApiClient apiClient)
         {
             this.apiClient = apiClient;
-            this.data = data;
 
             this.Contributions = new ObservableCollection<Contribution>();
             this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();

@@ -6,7 +6,6 @@
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api;
-    using MVP.App.Data;
     using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;
@@ -41,8 +40,8 @@
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register<KeyboardCharacterService>();
             SimpleIoc.Default.Register(() => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey"));
-            SimpleIoc.Default.Register<IProfileData, ProfileData>();
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
+            SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
             SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();
             SimpleIoc.Default.Register<IContributionAreaContainer, ContributionAreaContainer>();
             SimpleIoc.Default.Register<IServiceDataContainerManager, ServiceDataContainerManager>();

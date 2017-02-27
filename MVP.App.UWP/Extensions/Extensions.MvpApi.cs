@@ -6,6 +6,7 @@
 
     using MVP.Api.Models;
     using MVP.App.Data;
+    using MVP.App.Services.Data;
 
     public static partial class Extensions
     {

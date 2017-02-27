@@ -8,7 +8,6 @@
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.App.Data;
     using MVP.App.Models;
 
     using Windows.Storage;
@@ -39,7 +38,12 @@
 
         public bool RequiresUpdate => this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates;
 
-        public async Task UpdateAsync()
+        public Task UpdateAsync()
+        {
+            return this.UpdateAsync(false);
+        }
+
+        public async Task UpdateAsync(bool forceUpdate)
         {
             await this.LoadAsync();
 
@@ -48,7 +52,7 @@
                 return;
             }
 
-            if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates)
+            if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates || forceUpdate)
             {
                 IEnumerable<AwardContribution> serviceAreas = null;
 

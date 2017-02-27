@@ -14,6 +14,7 @@
     xmlns:rules="using:WinUX.Data.Validation.Rules"
     xmlns:textBox="using:WinUX.Xaml.Behaviors.TextBox"
     xmlns:validation="using:WinUX.Data.Validation"
+    xmlns:validationRules="using:MVP.App.ValidationRules"
     mc:Ignorable="d ignore">
 
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
@@ -51,7 +52,7 @@
 
     <validation:ValidationRules x:Key="NumericValidationRules">
         <validation:ValidationRules.Rules>
-            <rules:PositiveIntValidationRule ErrorMessage="The value is not a valid number." />
+            <validationRules:PositiveIntValidationRule ErrorMessage="The value is not a valid number." />
         </validation:ValidationRules.Rules>
     </validation:ValidationRules>
 

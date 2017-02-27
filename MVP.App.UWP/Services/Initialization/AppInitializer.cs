@@ -1,14 +1,21 @@
 ﻿namespace MVP.App.Services.Initialization
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.Api;
     using MVP.Api.Models;
+    using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Data;
+    using MVP.App.Events;
+    using MVP.App.Services.Data;
 
+    using Windows.Security.Authentication.Web;
+
+    using WinUX;
     using WinUX.Diagnostics.Tracing;
     using WinUX.Networking;
 
@@ -21,7 +28,7 @@
 
         private readonly ApiClient apiClient;
 
-        private readonly IProfileData data;
+        private readonly IProfileDataContainer profileData;
 
         private IServiceDataContainerManager containerManager;
 
@@ -34,15 +41,15 @@
         /// <param name="apiClient">
         /// The MVP API client.
         /// </param>
-        /// <param name="data">
+        /// <param name="profileData">
         /// The cached profile data.
         /// </param>
-        public AppInitializer(IMessenger messenger, ApiClient apiClient, IServiceDataContainerManager containerManager, IProfileData data)
+        public AppInitializer(IMessenger messenger, ApiClient apiClient, IServiceDataContainerManager containerManager, IProfileDataContainer profileData)
         {
             this.messenger = messenger;
             this.apiClient = apiClient;
             this.containerManager = containerManager;
-            this.data = data;
+            this.profileData = profileData;
         }
 
         /// <inheritdoc />
@@ -59,7 +66,8 @@
             this.SendLoadingProgress("Loading cached data...");
             await this.containerManager.LoadAsync();
 
-            if (this.containerManager.RequiresUpdate)
+            // If authentication wasn't successful due to any reason, we don't want to attempt to update data as we know this will fail.
+            if (isSuccess && this.containerManager.RequiresUpdate)
             {
                 this.SendLoadingProgress("Updating cached data...");
                 await this.containerManager.UpdateAsync();
@@ -69,16 +77,88 @@
             return isSuccess;
         }
 
+        public async Task<AuthenticationMessage> AuthenticateAsync()
+        {
+            var success = true;
+            var errorMessage = string.Empty;
+
+            if (!NetworkStatusManager.Current.IsConnected())
+            {
+                return new AuthenticationMessage(false, "There appears to be no network connection!");
+            }
+
+            try
+            {
+                var scopes = new List<MSAScope>
+                                 {
+                                     MSAScope.Basic,
+                                     MSAScope.Emails,
+                                     MSAScope.OfflineAccess,
+                                     MSAScope.SignIn
+                                 };
+
+                var authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
+
+                var result = await WebAuthenticationBroker.AuthenticateAsync(
+                                 WebAuthenticationOptions.None,
+                                 new Uri(authUri),
+                                 new Uri(ApiClient.RedirectUri));
+
+                if (result.ResponseStatus == WebAuthenticationStatus.Success)
+                {
+                    if (!string.IsNullOrWhiteSpace(result.ResponseData))
+                    {
+                        var responseUri = new Uri(result.ResponseData);
+                        if (responseUri.LocalPath.StartsWith("/oauth20_desktop.srf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var error = responseUri.ExtractQueryValue("error");
+
+                            if (string.IsNullOrWhiteSpace(error))
+                            {
+                                var authCode = responseUri.ExtractQueryValue("code");
+
+                                var msa = await this.apiClient.ExchangeAuthCodeAsync(authCode);
+                                if (msa != null)
+                                {
+                                    await this.profileData.SetAccountAsync(msa);
+                                }
+                            }
+                            else
+                            {
+                                errorMessage = error;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (result.ResponseStatus != WebAuthenticationStatus.UserCancel)
+                    {
+                        errorMessage = "Sign in was not successful. Please try again.";
+                    }
+
+                    success = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLogger.Current.WriteWarning(ex.ToString());
+                success = false;
+            }
+
+            return new AuthenticationMessage(success, errorMessage);
+        }
+
         private async Task<bool> AttemptAuthenticationAsync()
         {
-            await this.data.LoadAsync();
+            await this.profileData.LoadAsync();
 
-            if (this.data.CurrentAccount == null)
+            if (this.profileData.Account == null)
             {
                 return false;
             }
 
-            this.apiClient.Credentials = this.data.CurrentAccount;
+            this.apiClient.Credentials = this.profileData.Account;
 
             // Check network status.
             if (NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Disconnected
@@ -120,15 +200,15 @@
                         return false;
                     }
 
-                    await this.data.UpdateProfileAsync(profile);
+                    await this.profileData.SetProfileAsync(profile);
                 }
                 else
                 {
-                    await this.data.UpdateProfileAsync(profile);
+                    await this.profileData.SetProfileAsync(profile);
                 }
             }
 
-            await this.data.UpdateAccountAsync(this.apiClient.Credentials);
+            await this.profileData.SetAccountAsync(this.apiClient.Credentials);
 
             return true;
         }

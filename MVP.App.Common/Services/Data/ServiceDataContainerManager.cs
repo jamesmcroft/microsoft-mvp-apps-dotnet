@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Data
+﻿namespace MVP.App.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -11,9 +11,12 @@
 
         private readonly SemaphoreSlim containerSemaphore = new SemaphoreSlim(1, 1);
 
-        public ServiceDataContainerManager(IContributionTypeContainer typeContainer, IContributionAreaContainer areaContainer)
+        public ServiceDataContainerManager(
+            IProfileDataContainer profileContainer,
+            IContributionTypeContainer typeContainer,
+            IContributionAreaContainer areaContainer)
         {
-            this.containers = new List<IServiceDataContainer> { typeContainer, areaContainer };
+            this.containers = new List<IServiceDataContainer> { profileContainer, typeContainer, areaContainer };
         }
 
         public IReadOnlyList<IServiceDataContainer> Containers => this.containers;

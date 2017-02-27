@@ -128,6 +128,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="XamarinApiToolkit.Common, Version=1.0.17058.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.0.17058.3\lib\Xamarin.iOS10\XamarinApiToolkit.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="XamarinApiToolkit.iOS, Version=1.0.17058.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.0.17058.3\lib\Xamarin.iOS10\XamarinApiToolkit.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entitlements.plist" />

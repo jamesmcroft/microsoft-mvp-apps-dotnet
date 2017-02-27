@@ -1,5 +1,7 @@
-﻿namespace WinUX.Data.Validation.Rules
+﻿namespace MVP.App.ValidationRules
 {
+    using WinUX.Data.Validation;
+
     public class PositiveIntValidationRule : ValidationRule
     {
         /// <inheritdoc />

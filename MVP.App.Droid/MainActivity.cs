@@ -16,4 +16,3 @@ namespace MVP.App.Droid
         }
     }
 }
-
