@@ -27,17 +27,14 @@
             this.contributionService = contributionService;
 
             this.Contributions = new LazyLoadItemCollection<Contribution, ContributionItemLoader>();
-            this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
             this.EditableContributionFlyoutViewModel = new EditableContributionFlyoutViewModel();
 
             this.ContributionClickedCommand =
-                new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
+                new RelayCommand<Contribution>(c => this.EditableContributionFlyoutViewModel.ShowEdit(c));
 
             this.AddNewContributionCommand = new RelayCommand(() => this.EditableContributionFlyoutViewModel.ShowNew());
 
-            this.SaveContributionCommand = new RelayCommand(
-                async () => await this.SaveContributionAsync(),
-                () => this.EditableContributionFlyoutViewModel.IsValid());
+            this.SaveContributionCommand = new RelayCommand(async () => await this.SaveContributionAsync());
 
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.OnRefreshMessage);
 
@@ -46,11 +43,6 @@
         }
 
         public LazyLoadItemCollection<Contribution, ContributionItemLoader> Contributions { get; }
-
-        /// <summary>
-        /// Gets the custom fly-out view model for the contributions.
-        /// </summary>
-        public ContributionFlyoutViewModel ContributionFlyoutViewModel { get; }
 
         public EditableContributionFlyoutViewModel EditableContributionFlyoutViewModel { get; }
 
@@ -109,7 +101,7 @@
                 {
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
 
-                    await this.contributionService.SubmitContributionAsync(contribution);
+                    bool success = await this.contributionService.SubmitContributionAsync(contribution);
 
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
 

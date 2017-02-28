@@ -11,7 +11,6 @@
     using MVP.Api.Models;
     using MVP.App.Common;
     using MVP.App.Models.Common;
-    using MVP.App.Services.Data;
     using MVP.App.Services.MvpApi.DataContainers;
 
     public class EditableContributionFlyoutViewModel : ItemCustomFlyoutViewModel<ContributionViewModel>, IValidate
@@ -60,6 +59,8 @@
         {
             this.MaxDateOfActivity = DateTimeOffset.UtcNow;
 
+            this.Title = "Add new contribution";
+
             var contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(this.Types.FirstOrDefault(), this.Areas.FirstOrDefault());
             this.Show(contributionViewModel);
@@ -71,6 +72,9 @@
 
             var contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(model);
+
+            this.Title = contributionViewModel.Title;
+
             this.Show(contributionViewModel);
         }
 

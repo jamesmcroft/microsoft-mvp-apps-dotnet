@@ -129,7 +129,7 @@
                         Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
 
                     <ListView
-                        Margin="-20,0"
+                        Margin="-10,0"
                         listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ActivityClickedCommand, Mode=OneWay}"
                         IsItemClickEnabled="True"
                         ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
@@ -157,8 +157,12 @@
             Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
             Grid.Row="1"
             CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
-            ContentTemplate="{StaticResource ContributionFlyoutTemplate}"
             DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
+            EditCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.EditCommand, Mode=OneWay}"
+            EditContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
+            IsInEdit="{x:Bind ViewModel.ContributionFlyoutViewModel.IsInEdit, Mode=TwoWay}"
+            ReadonlyContentTemplate="{StaticResource ContributionFlyoutTemplate}"
+            SaveCommand="{x:Bind ViewModel.SaveContributionCommand, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <VisualStateManager.VisualStateGroups>

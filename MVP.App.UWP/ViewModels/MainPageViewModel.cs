@@ -12,14 +12,13 @@
     using MVP.Api.Models;
     using MVP.App.Events;
     using MVP.App.Models;
+    using MVP.App.Services.MvpApi;
+    using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.Views;
 
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
-
-    using MVP.App.Services.Data;
-    using MVP.App.Services.MvpApi.DataContainers;
 
     using WinUX;
     using WinUX.MvvmLight.Xaml.Views;
@@ -40,6 +39,8 @@
 
         private bool isRecentActivitiesVisible;
 
+        private readonly IContributionSubmissionService contributionService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPageViewModel"/> class.
         /// </summary>
@@ -49,15 +50,22 @@
         /// <param name="profileData">
         /// The application's data.
         /// </param>
-        public MainPageViewModel(ApiClient apiClient, IProfileDataContainer profileData)
+        public MainPageViewModel(
+            ApiClient apiClient,
+            IContributionSubmissionService contributionService,
+            IProfileDataContainer profileData)
         {
             this.apiClient = apiClient;
+            this.contributionService = contributionService;
             this.profileData = profileData;
 
             this.RecentContributions = new ObservableCollection<Contribution>();
-            this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
+            this.ContributionFlyoutViewModel = new EditableContributionFlyoutViewModel();
 
-            this.ActivityClickedCommand = new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.Show(c));
+            this.ActivityClickedCommand =
+                new RelayCommand<Contribution>(c => this.ContributionFlyoutViewModel.ShowEdit(c));
+
+            this.SaveContributionCommand = new RelayCommand(async () => await this.SaveContributionAsync());
 
             this.MessengerInstance.Register<ProfileUpdatedMessage>(
                 this,
@@ -72,15 +80,37 @@
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshProfileData);
         }
 
+        private async Task SaveContributionAsync()
+        {
+            if (this.ContributionFlyoutViewModel != null && this.ContributionFlyoutViewModel.IsValid())
+            {
+                var contribution = this.ContributionFlyoutViewModel.Item.Save();
+
+                this.ContributionFlyoutViewModel.Close();
+                if (contribution != null)
+                {
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
+
+                    bool success = await this.contributionService.SubmitContributionAsync(contribution);
+
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
+
+                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the custom fly-out view model for the contributions.
         /// </summary>
-        public ContributionFlyoutViewModel ContributionFlyoutViewModel { get; }
+        public EditableContributionFlyoutViewModel ContributionFlyoutViewModel { get; }
 
         /// <summary>
         /// Gets the recent activities of the current MVP profile.
         /// </summary>
         public ObservableCollection<Contribution> RecentContributions { get; }
+
+        public ICommand SaveContributionCommand { get; }
 
         /// <summary>
         /// Gets or sets the current MVP profile.
@@ -153,7 +183,13 @@
                         Application.Current.Exit();
                     }
                 }
+                else if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Contributions)
+                {
+                    await this.UpdateRecentContributionsAsync();
+                }
             }
+
+            this.UpdateSectionVisibility();
 
             this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
         }

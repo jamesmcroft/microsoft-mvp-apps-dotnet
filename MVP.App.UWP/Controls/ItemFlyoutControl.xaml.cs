@@ -19,12 +19,25 @@
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ContentTemplateProperty =
+        public static readonly DependencyProperty ReadonlyContentTemplateProperty =
             DependencyProperty.Register(
-                nameof(ContentTemplate),
+                nameof(ReadonlyContentTemplate),
                 typeof(DataTemplate),
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
+
+        public static readonly DependencyProperty EditContentTemplateProperty =
+            DependencyProperty.Register(
+                nameof(EditContentTemplate),
+                typeof(DataTemplate),
+                typeof(ItemFlyoutControl),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty IsInEditProperty = DependencyProperty.Register(
+            nameof(IsInEdit),
+            typeof(bool),
+            typeof(ItemFlyoutControl),
+            new PropertyMetadata(false));
 
         public static readonly DependencyProperty SaveCommandProperty = DependencyProperty.Register(
             nameof(SaveCommand),
@@ -32,28 +45,48 @@
             typeof(ItemFlyoutControl),
             new PropertyMetadata(null));
 
-        public static readonly DependencyProperty SaveButtonVisibilityProperty =
-            DependencyProperty.Register(
-                nameof(SaveButtonVisibility),
-                typeof(Visibility),
-                typeof(ItemFlyoutControl),
-                new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty EditCommandProperty = DependencyProperty.Register(nameof(EditCommand), typeof(ICommand), typeof(ItemFlyoutControl), new PropertyMetadata(default(ICommand)));
 
         public ItemFlyoutControl()
         {
             this.InitializeComponent();
         }
 
-        public DataTemplate ContentTemplate
+        public ICommand EditCommand
         {
             get
             {
-                return (DataTemplate)this.GetValue(ContentTemplateProperty);
+                return (ICommand)GetValue(EditCommandProperty);
+            }
+            set
+            {
+                SetValue(EditCommandProperty, value);
+            }
+        }
+
+        public DataTemplate EditContentTemplate
+        {
+            get
+            {
+                return (DataTemplate)this.GetValue(EditContentTemplateProperty);
             }
 
             set
             {
-                this.SetValue(ContentTemplateProperty, value);
+                this.SetValue(EditContentTemplateProperty, value);
+            }
+        }
+
+        public DataTemplate ReadonlyContentTemplate
+        {
+            get
+            {
+                return (DataTemplate)this.GetValue(ReadonlyContentTemplateProperty);
+            }
+
+            set
+            {
+                this.SetValue(ReadonlyContentTemplateProperty, value);
             }
         }
 
@@ -83,19 +116,6 @@
             }
         }
 
-        public Visibility SaveButtonVisibility
-        {
-            get
-            {
-                return (Visibility)this.GetValue(SaveButtonVisibilityProperty);
-            }
-
-            set
-            {
-                this.SetValue(SaveButtonVisibilityProperty, value);
-            }
-        }
-
         public ICommand SaveCommand
         {
             get
@@ -106,6 +126,19 @@
             set
             {
                 this.SetValue(SaveCommandProperty, value);
+            }
+        }
+
+        public bool IsInEdit
+        {
+            get
+            {
+                return (bool)this.GetValue(IsInEditProperty);
+            }
+
+            set
+            {
+                this.SetValue(IsInEditProperty, value);
             }
         }
     }

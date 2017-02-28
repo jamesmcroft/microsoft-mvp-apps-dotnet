@@ -65,13 +65,15 @@
         </CommandBar>
 
         <controls:ItemFlyoutControl
-            Title="Add/edit contribution"
+            Title="{x:Bind ViewModel.EditableContributionFlyoutViewModel.Title, Mode=OneWay}"
             Grid.Row="0"
             Grid.RowSpan="3"
             CloseCommand="{x:Bind ViewModel.EditableContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
-            ContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
             DataContext="{Binding EditableContributionFlyoutViewModel, Mode=OneWay}"
-            SaveButtonVisibility="Visible"
+            EditCommand="{x:Bind ViewModel.EditableContributionFlyoutViewModel.EditCommand, Mode=OneWay}"
+            EditContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
+            IsInEdit="{x:Bind ViewModel.EditableContributionFlyoutViewModel.IsInEdit, Mode=TwoWay}"
+            ReadonlyContentTemplate="{StaticResource ContributionFlyoutTemplate}"
             SaveCommand="{x:Bind ViewModel.SaveContributionCommand, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.EditableContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 

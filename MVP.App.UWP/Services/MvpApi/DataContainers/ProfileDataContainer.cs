@@ -1,7 +1,7 @@
 ﻿namespace MVP.App.Services.MvpApi.DataContainers
 {
 #if WINDOWS_UWP
-    using Windows.Storage
+    using Windows.Storage;
     using WinUX.Networking;
     using Windows.UI.Xaml;
 #elif ANDROID

@@ -35,7 +35,10 @@
                     Padding="20"
                     Background="{StaticResource LightGrayThemeBrush}">
 
-                    <ContentPresenter ContentTemplate="{x:Bind ContentTemplate, Mode=OneWay}" />
+                    <Grid>
+                        <ContentPresenter ContentTemplate="{x:Bind EditContentTemplate, Mode=OneWay}" Visibility="{x:Bind IsInEdit, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ContentPresenter ContentTemplate="{x:Bind ReadonlyContentTemplate, Mode=OneWay}" Visibility="{x:Bind IsInEdit, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    </Grid>
                 </ScrollViewer>
 
                 <CommandBar Grid.Row="2">
@@ -43,7 +46,12 @@
                         Command="{x:Bind SaveCommand, Mode=OneWay}"
                         Icon="Save"
                         Label="Save"
-                        Visibility="{x:Bind SaveButtonVisibility, Mode=OneWay}" />
+                        Visibility="{x:Bind IsInEdit, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <AppBarButton
+                        Command="{x:Bind EditCommand, Mode=OneWay}"
+                        Icon="Edit"
+                        Label="Edit"
+                        Visibility="{x:Bind IsInEdit, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                     <AppBarButton
                         Command="{x:Bind CloseCommand, Mode=OneWay}"
                         Icon="Cancel"
