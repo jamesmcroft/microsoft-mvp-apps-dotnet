@@ -9,6 +9,7 @@
     using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;
+    using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.ViewModels;
 
@@ -46,6 +47,7 @@
             SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();
             SimpleIoc.Default.Register<IContributionAreaContainer, ContributionAreaContainer>();
             SimpleIoc.Default.Register<IServiceDataContainerManager, ServiceDataContainerManager>();
+            SimpleIoc.Default.Register<IContributionSubmissionService, ContributionSubmissionService>();
         }
 
         private static void RegisterViewModels()

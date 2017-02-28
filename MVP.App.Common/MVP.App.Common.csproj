@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Events\AuthenticationMessage.cs" />
+    <Compile Include="Services\MvpApi\ContributionSubmissionService.cs" />
     <Compile Include="Services\MvpApi\DataContainers\ProfileDataContainerWrapper.cs" />
     <Compile Include="Services\MvpApi\DataContainers\IContributionAreaContainer.cs" />
     <Compile Include="Services\MvpApi\DataContainers\IContributionTypeContainer.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Services\Initialization\AppInitializerMessage.cs" />
     <Compile Include="Services\Initialization\IAppInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MvpApi\IContributionSubmissionService.cs" />
     <Compile Include="ValidationRules\PositiveIntValidationRule.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,11 +6,11 @@
 
     using GalaSoft.MvvmLight.Command;
 
-    using MVP.Api;
     using MVP.Api.Models;
     using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Models;
+    using MVP.App.Services.MvpApi;
 
     using Windows.UI.Xaml.Navigation;
 
@@ -18,13 +18,13 @@
 
     public class ContributionsPageViewModel : PageBaseViewModel
     {
-        private readonly ApiClient apiClient;
-
         private bool isContributionsVisible;
 
-        public ContributionsPageViewModel(ApiClient apiClient)
+        private readonly IContributionSubmissionService contributionService;
+
+        public ContributionsPageViewModel(IContributionSubmissionService contributionService)
         {
-            this.apiClient = apiClient;
+            this.contributionService = contributionService;
 
             this.Contributions = new LazyLoadItemCollection<Contribution, ContributionItemLoader>();
             this.ContributionFlyoutViewModel = new ContributionFlyoutViewModel();
@@ -109,14 +109,7 @@
                 {
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
 
-                    if (contribution.Id == 0)
-                    {
-                        await this.apiClient.AddContributionAsync(contribution);
-                    }
-                    else
-                    {
-                        await this.apiClient.UpdateContributionAsync(contribution);
-                    }
+                    await this.contributionService.SubmitContributionAsync(contribution);
 
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
 
