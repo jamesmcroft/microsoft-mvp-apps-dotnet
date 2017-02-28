@@ -1,26 +1,23 @@
-﻿namespace MVP.App.Services.Data
+﻿namespace MVP.App.Services.MvpApi.DataContainers
 {
 #if WINDOWS_UWP
-    using Windows.Storage;
-    using Windows.UI.Xaml;
-
+    using Windows.Storage
     using WinUX.Networking;
+    using Windows.UI.Xaml;
 #elif ANDROID
     using XamarinApiToolkit.Storage;
 #endif
-
     using System;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-
+    
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.Api;
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Events;
-    using MVP.App.Models;
 
     public class ProfileDataContainer : IProfileDataContainer
     {
@@ -74,7 +71,7 @@
                 return;
             }
 #elif ANDROID
-// Check network connectivity
+            // Check network connectivity
 #endif
 
             if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates || forceUpdate)

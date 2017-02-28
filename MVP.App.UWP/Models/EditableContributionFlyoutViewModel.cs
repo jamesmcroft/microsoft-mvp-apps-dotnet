@@ -9,9 +9,10 @@
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api.Models;
-    using MVP.App.Data;
+    using MVP.App.Common;
     using MVP.App.Models.Common;
     using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     public class EditableContributionFlyoutViewModel : ItemCustomFlyoutViewModel<ContributionViewModel>, IValidate
     {

@@ -6,7 +6,7 @@ namespace MVP.App
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api;
-    using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     public class Locator
     {

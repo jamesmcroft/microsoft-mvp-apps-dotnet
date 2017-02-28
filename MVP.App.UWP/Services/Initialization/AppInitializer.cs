@@ -9,11 +9,12 @@
     using MVP.Api;
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
-    using MVP.App.Data;
     using MVP.App.Events;
     using MVP.App.Services.Data;
 
     using Windows.Security.Authentication.Web;
+
+    using MVP.App.Services.MvpApi.DataContainers;
 
     using WinUX;
     using WinUX.Diagnostics.Tracing;
@@ -30,7 +31,7 @@
 
         private readonly IProfileDataContainer profileData;
 
-        private IServiceDataContainerManager containerManager;
+        private readonly IServiceDataContainerManager containerManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInitializer"/> class.

@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Models
+﻿namespace MVP.App.Services.MvpApi
 {
     using MVP.Api.Models;
 

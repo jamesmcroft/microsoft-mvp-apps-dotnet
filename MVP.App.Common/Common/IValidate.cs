@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Data
+﻿namespace MVP.App.Common
 {
     public interface IValidate
     {

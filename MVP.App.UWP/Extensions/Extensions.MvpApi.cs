@@ -5,8 +5,8 @@
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api.Models;
-    using MVP.App.Data;
     using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     public static partial class Extensions
     {

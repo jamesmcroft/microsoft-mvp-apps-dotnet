@@ -19,6 +19,7 @@
     using Windows.UI.Xaml.Navigation;
 
     using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     using WinUX;
     using WinUX.MvvmLight.Xaml.Views;

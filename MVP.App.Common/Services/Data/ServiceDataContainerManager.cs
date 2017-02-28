@@ -5,6 +5,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using MVP.App.Services.MvpApi.DataContainers;
+
     public class ServiceDataContainerManager : IServiceDataContainerManager
     {
         private readonly List<IServiceDataContainer> containers;

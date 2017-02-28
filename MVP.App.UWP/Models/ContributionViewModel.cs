@@ -5,6 +5,7 @@
 
     using MVP.Api.Models;
     using MVP.App.Models.Common;
+    using MVP.App.Services.MvpApi;
 
     using WinUX.Common;
 

@@ -1,4 +1,4 @@
-﻿namespace MVP.App.Services.Data
+﻿namespace MVP.App.Services.MvpApi.DataContainers
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,6 @@
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.App.Models;
 
     using Windows.Storage;
     using Windows.UI.Xaml;

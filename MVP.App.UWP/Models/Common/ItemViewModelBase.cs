@@ -2,7 +2,7 @@
 {
     using GalaSoft.MvvmLight;
 
-    using MVP.App.Data;
+    using MVP.App.Common;
 
     public abstract class ItemViewModelBase<TModel> : ViewModelBase, IValidate
     {

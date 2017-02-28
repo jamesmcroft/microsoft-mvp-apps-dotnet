@@ -114,9 +114,9 @@
     <Compile Include="Models\ContributionFlyoutViewModel.cs" />
     <Compile Include="Models\ContributionViewModel.cs" />
     <Compile Include="Models\EditableContributionFlyoutViewModel.cs" />
-    <Compile Include="Services\Data\ContributionAreaContainer.cs" />
-    <Compile Include="Services\Data\ContributionTypeContainer.cs" />
-    <Compile Include="Services\Data\ProfileDataContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ContributionAreaContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ContributionTypeContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ProfileDataContainer.cs" />
     <Compile Include="Services\Initialization\AppInitializer.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="Services\Input\KeyboardCharacterService.cs" />

@@ -9,6 +9,7 @@
     using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;
+    using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.ViewModels;
 
     /// <summary>

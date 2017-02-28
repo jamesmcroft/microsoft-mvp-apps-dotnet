@@ -4,9 +4,9 @@ namespace MVP.App.ViewModels
 
     using MVP.Api;
     using MVP.App.Common;
-    using MVP.App.Data;
     using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     public class InitializingActivityViewModel : BaseActivityViewModel
     {

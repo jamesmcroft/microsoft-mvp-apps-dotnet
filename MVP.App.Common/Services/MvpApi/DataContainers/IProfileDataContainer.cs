@@ -1,9 +1,10 @@
-﻿namespace MVP.App.Services.Data
+﻿namespace MVP.App.Services.MvpApi.DataContainers
 {
     using System.Threading.Tasks;
 
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
+    using MVP.App.Services.Data;
 
     public interface IProfileDataContainer : IServiceDataContainer
     {

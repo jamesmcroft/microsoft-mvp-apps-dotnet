@@ -13,6 +13,8 @@
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
 
+    using MVP.App.Services.MvpApi.DataContainers;
+
     using WinUX.Messaging.Dialogs;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;

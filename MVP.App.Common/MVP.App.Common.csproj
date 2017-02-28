@@ -35,21 +35,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Events\AuthenticationMessage.cs" />
-    <Compile Include="Models\ProfileDataContainerWrapper.cs" />
-    <Compile Include="Services\Data\IContributionAreaContainer.cs" />
-    <Compile Include="Services\Data\IContributionTypeContainer.cs" />
-    <Compile Include="Services\Data\IProfileDataContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ProfileDataContainerWrapper.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\IContributionAreaContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\IContributionTypeContainer.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\IProfileDataContainer.cs" />
     <Compile Include="Services\Data\IServiceDataContainer.cs" />
     <Compile Include="Services\Data\IServiceDataContainerManager.cs" />
-    <Compile Include="Data\IValidate.cs" />
+    <Compile Include="Common\IValidate.cs" />
     <Compile Include="Services\Data\ServiceDataContainerManager.cs" />
     <Compile Include="Events\ProfileUpdatedMessage.cs" />
     <Compile Include="Events\UpdateBusyIndicatorMessage.cs" />
     <Compile Include="Events\RefreshDataMessage.cs" />
     <Compile Include="Events\RefreshDataMode.cs" />
-    <Compile Include="Models\ContributionAreaContainerWrapper.cs" />
-    <Compile Include="Models\ContributionTypeContainerWrapper.cs" />
-    <Compile Include="Models\ContributionVisibilities.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ContributionAreaContainerWrapper.cs" />
+    <Compile Include="Services\MvpApi\DataContainers\ContributionTypeContainerWrapper.cs" />
+    <Compile Include="Services\MvpApi\ContributionVisibilities.cs" />
     <Compile Include="Services\Initialization\AppInitializerMessage.cs" />
     <Compile Include="Services\Initialization\IAppInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
