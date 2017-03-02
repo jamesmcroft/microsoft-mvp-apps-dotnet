@@ -267,12 +267,14 @@
             <controls:ValidatingTextBox
                 x:Name="ContributionDescription"
                 Margin="0,0,0,10"
+                AcceptsReturn="True"
                 Header="Description"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 MaxLength="5000"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.Below="ContributionUrl">
+                RelativePanel.Below="ContributionUrl"
+                TextWrapping="Wrap">
                 <interactivity:Interaction.Behaviors>
                     <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.Description, Mode=TwoWay}" />
                 </interactivity:Interaction.Behaviors>

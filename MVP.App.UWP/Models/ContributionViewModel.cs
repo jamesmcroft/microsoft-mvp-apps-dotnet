@@ -327,6 +327,10 @@
                 this.AnnualReach = model.AnnualReach;
                 this.ReferenceUrl = model.ReferenceUrl;
                 this.Visibility = model.Visibility;
+
+                this.AnnualQuantityValue = model.AnnualQuantity == null ? string.Empty : model.AnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null ? string.Empty : model.SecondAnnualQuantity.ToString();
+                this.AnnualReachValue = model.AnnualReach == null ? string.Empty : model.AnnualReach.ToString();
             }
             else
             {
@@ -342,6 +346,10 @@
                 this.AnnualReach = null;
                 this.ReferenceUrl = string.Empty;
                 this.Visibility = ContributionVisibilities.Public;
+
+                this.AnnualQuantityValue = string.Empty;
+                this.SecondAnnualQuantityValue = string.Empty;
+                this.AnnualReachValue = string.Empty;
             }
         }
 
