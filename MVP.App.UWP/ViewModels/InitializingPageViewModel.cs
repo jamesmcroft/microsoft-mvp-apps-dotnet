@@ -5,15 +5,13 @@
 
     using GalaSoft.MvvmLight.Command;
 
-    using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
+    using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.Views;
 
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
-
-    using MVP.App.Services.MvpApi.DataContainers;
 
     using WinUX.Messaging.Dialogs;
     using WinUX.MvvmLight.Xaml.Views;

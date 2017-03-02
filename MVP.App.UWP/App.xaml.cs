@@ -1,19 +1,16 @@
 ﻿namespace MVP.App
 {
-    using System;
     using System.Threading.Tasks;
 
+    using Microsoft.Practices.ServiceLocation;
+
+    using MVP.App.Services.Input;
     using MVP.App.Views;
 
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Activation;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
-    using Windows.UI.Xaml.Navigation;
-
-    using Microsoft.Practices.ServiceLocation;
-
-    using MVP.App.Services.Input;
 
     using WinUX.ApplicationModel.Lifecycle;
     using WinUX.Diagnostics;

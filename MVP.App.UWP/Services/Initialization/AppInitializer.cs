@@ -11,10 +11,9 @@
     using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Events;
     using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi.DataContainers;
 
     using Windows.Security.Authentication.Web;
-
-    using MVP.App.Services.MvpApi.DataContainers;
 
     using WinUX;
     using WinUX.Diagnostics.Tracing;
