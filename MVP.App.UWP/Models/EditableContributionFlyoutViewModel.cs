@@ -61,6 +61,8 @@
 
             this.Title = "Add new contribution";
 
+            this.IsInEdit = true;
+
             var contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(this.Types.FirstOrDefault(), this.Areas.FirstOrDefault());
             this.Show(contributionViewModel);

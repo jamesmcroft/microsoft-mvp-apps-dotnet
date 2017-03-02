@@ -9,6 +9,7 @@
     using MVP.Api;
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
+    using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Services.Data;
     using MVP.App.Services.MvpApi.DataContainers;
@@ -193,7 +194,7 @@
                         return false;
                     }
 
-                    profile = await this.TestApiEndpointAsync();
+                    profile = await TimeoutAction.ExecuteAsync(this.TestApiEndpointAsync());
                     if (profile == null)
                     {
                         await this.apiClient.LogOutAsync();
