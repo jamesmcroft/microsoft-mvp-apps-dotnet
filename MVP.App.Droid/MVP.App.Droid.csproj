@@ -96,12 +96,12 @@
       <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="XamarinApiToolkit.Android, Version=1.0.17058.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.0.17058.3\lib\MonoAndroid10\XamarinApiToolkit.Android.dll</HintPath>
+    <Reference Include="XPlat.API.Android, Version=1.1.17062.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.1.17062.1\lib\MonoAndroid10\XPlat.API.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="XamarinApiToolkit.Common, Version=1.0.17058.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.0.17058.3\lib\MonoAndroid10\XamarinApiToolkit.Common.dll</HintPath>
+    <Reference Include="XPlat.API.Common, Version=1.1.17062.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.1.17062.1\lib\MonoAndroid10\XPlat.API.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
