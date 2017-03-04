@@ -2,6 +2,7 @@
 {
     using System.Windows.Input;
 
+    using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Ioc;
     using GalaSoft.MvvmLight.Messaging;
 
@@ -9,8 +10,6 @@
 
     using Windows.System;
     using Windows.UI.Core;
-
-    using GalaSoft.MvvmLight.Command;
 
     using WinUX;
 
@@ -21,6 +20,8 @@
         private string title;
 
         private bool isInEdit;
+
+        private bool canDelete;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemCustomFlyoutViewModel{TItem}"/> class.
@@ -41,6 +42,7 @@
             : base(messenger)
         {
             this.EditCommand = new RelayCommand(() => this.IsInEdit = true);
+            this.DeleteCommand = new RelayCommand(this.Delete);
         }
 
         public TItem Item
@@ -56,6 +58,8 @@
         }
 
         public ICommand EditCommand { get; }
+
+        public ICommand DeleteCommand { get; }
 
         /// <summary>
         /// Gets or sets the title of the fly-out.
@@ -81,6 +85,18 @@
             set
             {
                 this.Set(() => this.IsInEdit, ref this.isInEdit, value);
+            }
+        }
+
+        public bool CanDelete
+        {
+            get
+            {
+                return this.canDelete;
+            }
+            set
+            {
+                this.Set(() => this.CanDelete, ref this.canDelete, value);
             }
         }
 
@@ -111,14 +127,16 @@
                     });
         }
 
+        public virtual void Delete()
+        {
+        }
+
         /// <inheritdoc />
         public override void Close()
         {
             base.Close();
 
             this.Item = default(TItem);
-
-            this.IsInEdit = false;
 
             this.MessengerInstance.Unregister<CharacterReceivedEventArgs>(this);
         }

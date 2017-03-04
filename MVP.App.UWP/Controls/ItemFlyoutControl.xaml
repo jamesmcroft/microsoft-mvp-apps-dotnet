@@ -56,6 +56,13 @@
                         Command="{x:Bind CloseCommand, Mode=OneWay}"
                         Icon="Cancel"
                         Label="Close" />
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Command="{x:Bind DeleteCommand, Mode=OneWay}"
+                            Icon="Delete"
+                            Label="Delete"
+                            Visibility="{x:Bind CanDelete, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
         </Grid>
