@@ -26,8 +26,8 @@ namespace MVP.App
 		
 		public static void UpdateIdValues()
 		{
-			global::XamarinApiToolkit.Resource.String.ApplicationName = global::MVP.App.Resource.String.ApplicationName;
-			global::XamarinApiToolkit.Resource.String.Hello = global::MVP.App.Resource.String.Hello;
+			global::XPlat.API.Resource.String.ApplicationName = global::MVP.App.Resource.String.ApplicationName;
+			global::XPlat.API.Resource.String.Hello = global::MVP.App.Resource.String.Hello;
 		}
 		
 		public partial class Animation
