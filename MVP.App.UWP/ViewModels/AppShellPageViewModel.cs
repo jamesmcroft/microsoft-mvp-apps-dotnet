@@ -24,6 +24,8 @@
 
         private string busyMessage;
 
+        private bool isBusyMessageBlocking;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppShellPageViewModel"/> class.
         /// </summary>
@@ -41,7 +43,7 @@
 
             this.MessengerInstance.Register<UpdateBusyIndicatorMessage>(
                 this,
-                x => this.UpdateBusyIndicator(x.IsBusy, x.BusyMessage));
+                x => this.UpdateBusyIndicator(x.IsBusy, x.BusyMessage, x.IsBlocking));
         }
 
         /// <summary>
@@ -80,6 +82,18 @@
             set
             {
                 this.Set(() => this.BusyMessage, ref this.busyMessage, value);
+            }
+        }
+
+        public bool IsBusyMessageBlocking
+        {
+            get
+            {
+                return this.isBusyMessageBlocking;
+            }
+            set
+            {
+                this.Set(() => this.IsBusyMessageBlocking, ref this.isBusyMessageBlocking, value);
             }
         }
 
@@ -142,6 +156,11 @@
 
         public void UpdateBusyIndicator(bool show, string message)
         {
+            this.UpdateBusyIndicator(show, message, false);
+        }
+
+        public void UpdateBusyIndicator(bool show, string message, bool isBlocking)
+        {
             if (show && !string.IsNullOrWhiteSpace(message))
             {
                 if (this.IsBusyMessageVisible)
@@ -150,12 +169,14 @@
                 }
 
                 this.BusyMessage = message;
+                this.IsBusyMessageBlocking = isBlocking;
                 this.IsBusyMessageVisible = true;
             }
             else
             {
                 this.IsBusyMessageVisible = false;
                 this.BusyMessage = string.Empty;
+                this.IsBusyMessageBlocking = false;
             }
         }
 

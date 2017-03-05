@@ -156,8 +156,10 @@
         <controls:ItemFlyoutControl
             Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
             Grid.Row="1"
+            CanDelete="{x:Bind ViewModel.ContributionFlyoutViewModel.CanDelete, Mode=OneWay}"
             CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
             DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
+            DeleteCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.DeleteCommand, Mode=OneWay}"
             EditCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.EditCommand, Mode=OneWay}"
             EditContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
             IsInEdit="{x:Bind ViewModel.ContributionFlyoutViewModel.IsInEdit, Mode=TwoWay}"

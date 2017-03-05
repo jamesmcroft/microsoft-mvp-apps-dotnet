@@ -180,7 +180,7 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionArea"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+                Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=d}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionDescription"
@@ -314,8 +314,40 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
-        <RelativePanel>
-            <TextBlock Style="{StaticResource HeaderedTextBlockSubheaderStyle}" Text="{Binding Title, Mode=OneWay}" />
+        <RelativePanel Background="{StaticResource MvpBlueDarkestThemeBrush}">
+
+            <Image
+                x:Name="ContributionImage"
+                Width="70"
+                Height="70"
+                Stretch="UniformToFill" />
+
+            <TextBlock
+                x:Name="Title"
+                Margin="10,10,0,0"
+                Foreground="{StaticResource WhiteThemeBrush}"
+                MaxLines="1"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignTopWithPanel="True"
+                RelativePanel.RightOf="ContributionImage"
+                Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
+                Text="{Binding Title, Mode=OneWay, FallbackValue='Unknown title'}"
+                TextTrimming="CharacterEllipsis" />
+
+            <TextBlock
+                x:Name="Date"
+                Margin="10,0,0,10"
+                VerticalAlignment="Bottom"
+                FontSize="14"
+                Foreground="{StaticResource WhiteThemeBrush}"
+                MaxLines="1"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="Title"
+                RelativePanel.RightOf="ContributionImage"
+                Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
+                Text="{Binding StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=d}"
+                TextTrimming="CharacterEllipsis" />
         </RelativePanel>
     </DataTemplate>
 

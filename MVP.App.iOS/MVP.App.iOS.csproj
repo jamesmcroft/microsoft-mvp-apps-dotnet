@@ -128,12 +128,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="XPlat.API.Common, Version=1.1.17062.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.1.17062.1\lib\Xamarin.iOS10\XPlat.API.Common.dll</HintPath>
+    <Reference Include="XPlat.API.Common, Version=1.2.17063.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.2.17063.1\lib\Xamarin.iOS10\XPlat.API.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="XPlat.API.iOS, Version=1.1.17062.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.1.17062.1\lib\Xamarin.iOS10\XPlat.API.iOS.dll</HintPath>
+    <Reference Include="XPlat.API.iOS, Version=1.2.17063.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlatApis.1.2.17063.1\lib\Xamarin.iOS10\XPlat.API.iOS.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

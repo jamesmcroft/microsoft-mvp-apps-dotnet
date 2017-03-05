@@ -93,7 +93,7 @@
 
                     bool success = await this.contributionService.SubmitContributionAsync(contribution);
 
-                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
 
                     this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
                 }
@@ -191,7 +191,7 @@
 
             this.UpdateSectionVisibility();
 
-            this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
+            this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
         }
 
         private void UpdateSectionVisibility()

@@ -45,11 +45,43 @@
             typeof(ItemFlyoutControl),
             new PropertyMetadata(null));
 
+        public static readonly DependencyProperty CanDeleteProperty = DependencyProperty.Register(
+            nameof(CanDelete),
+            typeof(bool),
+            typeof(ItemFlyoutControl),
+            new PropertyMetadata(false));
+
         public static readonly DependencyProperty EditCommandProperty = DependencyProperty.Register(nameof(EditCommand), typeof(ICommand), typeof(ItemFlyoutControl), new PropertyMetadata(default(ICommand)));
+
+        public static readonly DependencyProperty DeleteCommandProperty = DependencyProperty.Register(nameof(DeleteCommand), typeof(ICommand), typeof(ItemFlyoutControl), new PropertyMetadata(default(ICommand)));
 
         public ItemFlyoutControl()
         {
             this.InitializeComponent();
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return (ICommand)GetValue(DeleteCommandProperty);
+            }
+            set
+            {
+                SetValue(DeleteCommandProperty, value);
+            }
+        }
+
+        public bool CanDelete
+        {
+            get
+            {
+                return (bool)GetValue(CanDeleteProperty);
+            }
+            set
+            {
+                SetValue(CanDeleteProperty, value);
+            }
         }
 
         public ICommand EditCommand

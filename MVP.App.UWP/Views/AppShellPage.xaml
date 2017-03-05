@@ -20,6 +20,8 @@
             VisualStateNarrowMinWidth="0"
             VisualStateNormalMinWidth="720" />
 
+        <Grid Background="#50000000" Visibility="{x:Bind ViewModel.IsBusyMessageBlocking, Mode=OneWay}" />
+
         <Grid
             x:Name="BusyIndicator"
             Height="48"

@@ -5,7 +5,7 @@
     using WinUX.Networking;
     using Windows.UI.Xaml;
 #elif ANDROID
-    using XamarinApiToolkit.Storage;
+    using XPlat.API.Storage;
 #endif
     using System;
     using System.Net.Http;
@@ -18,6 +18,7 @@
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Events;
+
 
     public class ProfileDataContainer : IProfileDataContainer
     {
@@ -127,16 +128,10 @@
 
             try
             {
-#if WINDOWS_UWP
                 var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                                FileName,
                                CreationCollisionOption.OpenIfExists);
-#elif ANDROID || iOS
-                var file = await AppData.Current.LocalFolder.CreateFileAsync(
-                               FileName,
-                               FileStoreCreationOption.OpenIfExists);
-#endif
-
+                
                 this.profileData = await file.GetDataAsync<ProfileDataContainerWrapper>();
             }
             catch (Exception ex)
@@ -169,21 +164,15 @@
             {
 #if WINDOWS_UWP
                 StorageFile file = null;
-#elif ANDROID || iOS
-                IAppFile file = null;
+#elif ANDROID || IOS
+                IStorageFile file = null;
 #endif
 
                 try
                 {
-#if WINDOWS_UWP
                     file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                                FileName,
                                CreationCollisionOption.OpenIfExists);
-#elif ANDROID || iOS
-                    file = await AppData.Current.LocalFolder.CreateFileAsync(
-                               FileName,
-                               FileStoreCreationOption.OpenIfExists);
-#endif
                 }
                 catch (Exception ex)
                 {
