@@ -80,6 +80,7 @@
 
         public override void OnPageNavigatedFrom(NavigationEventArgs args)
         {
+            this.EditableContributionFlyoutViewModel?.Close();
         }
 
         public override void OnPageNavigatingFrom(NavigatingCancelEventArgs args)

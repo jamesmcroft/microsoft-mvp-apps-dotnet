@@ -55,47 +55,23 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Margin="0,0,20,0">
-                    <TextBlock
-                        Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Category" />
-                    <TextBlock
-                        MaxLines="2"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Profile.AwardCategoryDisplay}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="WrapWholeWords" />
-                </StackPanel>
-
-                <StackPanel Grid.Column="1" Margin="0,0,20,0">
-                    <TextBlock
-                        Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Awarded" />
-                    <TextBlock
-                        MaxLines="1"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Profile.FirstAwardYear}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap" />
-                </StackPanel>
-
-                <StackPanel Grid.Column="2" Margin="0,0,20,0">
-                    <TextBlock
-                        Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Awards" />
-                    <TextBlock
-                        MaxLines="1"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ViewModel.Profile.YearsAsMvp}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap" />
-                </StackPanel>
+                <winuxControls:HeaderedTextBlock
+                    Foreground="White"
+                    Header="Category"
+                    Style="{StaticResource LightHeaderedTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.AwardCategoryDisplay}" />
+                <winuxControls:HeaderedTextBlock
+                    Grid.Column="1"
+                    Foreground="White"
+                    Header="Awarded"
+                    Style="{StaticResource LightHeaderedTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.FirstAwardYear}" />
+                <winuxControls:HeaderedTextBlock
+                    Grid.Column="2"
+                    Foreground="White"
+                    Header="Awards"
+                    Style="{StaticResource LightHeaderedTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.YearsAsMvp}" />
             </Grid>
         </RelativePanel>
 
@@ -155,7 +131,8 @@
 
         <controls:ItemFlyoutControl
             Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
-            Grid.Row="1"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             CanDelete="{x:Bind ViewModel.ContributionFlyoutViewModel.CanDelete, Mode=OneWay}"
             CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
             DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
@@ -174,7 +151,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProfileHero.Padding" Value="68,20,20,20" />
+                        <Setter Target="ProfileHero.Padding" Value="20,50,20,20" />
 
                         <Setter Target="ProfileImage.Width" Value="50" />
                         <Setter Target="ProfileImage.Height" Value="50" />

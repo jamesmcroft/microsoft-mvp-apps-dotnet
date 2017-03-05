@@ -19,6 +19,26 @@
     </Style>
 
     <Style
+        x:Key="HeaderedTextBlockLightHeaderStyle"
+        BasedOn="{StaticResource SubtitleTextBlockStyle}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteThemeBrush}" />
+    </Style>
+
+    <Style
+        x:Key="HeaderedTextBlockLightTextStyle"
+        BasedOn="{StaticResource BodyTextBlockStyle}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteThemeBrush}" />
+        <Setter Property="Opacity" Value="0.7" />
+        <Setter Property="Margin" Value="0,5,0,0" />
+        <Setter Property="TextWrapping" Value="WrapWholeWords" />
+    </Style>
+
+
+    <Style
         x:Key="HeaderedTextBlockTextStyle"
         BasedOn="{StaticResource BodyTextBlockStyle}"
         TargetType="TextBlock">
@@ -38,6 +58,54 @@
         <Setter Property="TextStyle" Value="{StaticResource HeaderedTextBlockTextStyle}" />
         <Setter Property="HeaderStyle" Value="{StaticResource HeaderedTextBlockHeaderStyle}" />
         <Setter Property="Margin" Value="0,0,0,20" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:HeaderedTextBlock">
+                    <Grid x:Name="Container">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel x:Name="Panel" Orientation="{TemplateBinding Orientation}">
+                            <TextBlock
+                                x:Name="HeaderContent"
+                                Style="{TemplateBinding HeaderStyle}"
+                                Text="{TemplateBinding Header}" />
+
+                            <TextBlock
+                                x:Name="TextContent"
+                                Style="{TemplateBinding TextStyle}"
+                                Text="{TemplateBinding Text}" />
+                        </StackPanel>
+
+                        <Rectangle
+                            Grid.Row="1"
+                            Height="2"
+                            Margin="0,10,0,0"
+                            Fill="{StaticResource MvpBlueThemeBrush}"
+                            Opacity="0.1" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="OrientationStates">
+                                <VisualState x:Name="Vertical" />
+                                <VisualState x:Name="Horizontal">
+                                    <VisualState.Setters>
+                                        <Setter Target="TextContent.Margin" Value="20,0,0,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LightHeaderedTextBlockStyle" TargetType="controls:HeaderedTextBlock">
+        <Setter Property="TextStyle" Value="{StaticResource HeaderedTextBlockLightTextStyle}" />
+        <Setter Property="HeaderStyle" Value="{StaticResource HeaderedTextBlockLightHeaderStyle}" />
+        <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:HeaderedTextBlock">

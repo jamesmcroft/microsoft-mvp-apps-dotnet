@@ -175,6 +175,7 @@
         /// <inheritdoc />
         public override void OnPageNavigatedFrom(NavigationEventArgs args)
         {
+            this.ContributionFlyoutViewModel?.Close();
         }
 
         /// <inheritdoc />
