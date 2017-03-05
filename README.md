@@ -8,7 +8,9 @@ This app has been made for the purpose of use by current Microsoft MVPs who have
 
 To submit a contribution via URI, the format is:
 
+```
 mvpapp://contribution?title={title}&date={date}&description={description}&quantity={quantity}&reach={reach}&url={url}
+```
 
 The query parameters are optional and calling without them will start a new blank contribution.
 
