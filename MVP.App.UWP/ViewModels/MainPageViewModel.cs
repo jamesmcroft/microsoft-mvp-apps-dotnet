@@ -87,17 +87,36 @@
             if (this.ContributionFlyoutViewModel != null && this.ContributionFlyoutViewModel.IsValid())
             {
                 var contribution = this.ContributionFlyoutViewModel.Item.Save();
-
-                this.ContributionFlyoutViewModel.Close();
                 if (contribution != null)
                 {
-                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution...", true));
 
-                    bool success = await this.contributionService.SubmitContributionAsync(contribution);
+                    bool success = false;
+
+                    try
+                    {
+                        success = await this.contributionService.SubmitContributionAsync(contribution);
+                    }
+                    catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                    {
+                        Application.Current.Exit();
+                    }
+                    catch (Exception ex)
+                    {
+                        EventLogger.Current.WriteError(ex.ToString());
+                    }
+
+                    if (success)
+                    {
+                        this.ContributionFlyoutViewModel.Close();
+                    }
 
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
 
-                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                    if (success)
+                    {
+                        this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                    }
                 }
             }
         }

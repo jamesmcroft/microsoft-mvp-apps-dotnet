@@ -44,6 +44,12 @@
             return AsyncInfo.Run(this.LoadMoreItemsAsync);
         }
 
+        public void Reset()
+        {
+            this.Clear();
+            this.HasMoreItems = true;
+        }
+
         private async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken ct)
         {
             uint resultCount = 0;

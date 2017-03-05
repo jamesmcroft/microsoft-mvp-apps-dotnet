@@ -38,7 +38,7 @@
 
         <TextBlock
             Grid.Row="1"
-            Margin="20,0"
+            Margin="10"
             Style="{StaticResource HeaderedTextBlockTextStyle}"
             Text="No contributions available."
             Visibility="{x:Bind ViewModel.IsContributionsVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />

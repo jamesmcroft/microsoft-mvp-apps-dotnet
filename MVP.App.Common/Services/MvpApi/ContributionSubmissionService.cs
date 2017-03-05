@@ -1,5 +1,6 @@
 ﻿namespace MVP.App.Services.MvpApi
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
 
     using MVP.Api;

@@ -73,19 +73,13 @@
         {
             if (this.Item?.Id != null)
             {
+                this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Deleting...", true));
+
+                bool deleted = false;
+
                 try
                 {
-                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Deleting...", true));
-
-                    var deleted = await this.client.DeleteContributionAsync(this.Item.Id.Value);
-                    if (deleted)
-                    {
-                        this.Close();
-                    }
-
-                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
-
-                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                    deleted = await this.client.DeleteContributionAsync(this.Item.Id.Value);
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
@@ -94,6 +88,18 @@
                 catch (Exception ex)
                 {
                     EventLogger.Current.WriteError(ex.ToString());
+                }
+
+                if (deleted)
+                {
+                    this.Close();
+                }
+
+                this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
+
+                if (deleted)
+                {
+                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
                 }
             }
         }

@@ -17,6 +17,10 @@
     xmlns:validationRules="using:MVP.App.ValidationRules"
     mc:Ignorable="d ignore">
 
+    <localConverters:BackgroundToForegroundBrushConverter
+        x:Key="BackgroundToForegroundBrushConverter"
+        DarkForegroundBrush="{StaticResource BlackThemeBrush}"
+        LightForegroundBrush="{StaticResource WhiteThemeBrush}" />
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
@@ -51,7 +55,7 @@
     </validation:ValidationRules>
 
     <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
-        <Setter Property="Margin" Value="0,20,0,0" />
+        <Setter Property="Margin" Value="0,10,0,0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
@@ -320,7 +324,7 @@
             <TextBlock
                 x:Name="Title"
                 Margin="10,10,0,0"
-                Foreground="{StaticResource WhiteThemeBrush}"
+                Foreground="{Binding Source={StaticResource MvpBlueLightestThemeBrush}, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
@@ -334,7 +338,7 @@
                 Margin="10,0,0,10"
                 VerticalAlignment="Bottom"
                 FontSize="14"
-                Foreground="{StaticResource WhiteThemeBrush}"
+                Foreground="{Binding Source={StaticResource MvpBlueLightestThemeBrush}, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"

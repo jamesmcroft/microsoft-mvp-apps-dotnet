@@ -1,6 +1,8 @@
 ﻿namespace MVP.App.ViewModels
 {
+    using System;
     using System.Linq;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -12,9 +14,12 @@
     using MVP.App.Models;
     using MVP.App.Services.MvpApi;
 
+    using Windows.UI.Xaml;
     using Windows.UI.Xaml.Navigation;
 
+    using WinUX.Diagnostics.Tracing;
     using WinUX.MvvmLight.Xaml.Views;
+    using WinUX.Networking;
 
     public class ContributionsPageViewModel : PageBaseViewModel
     {
@@ -66,7 +71,6 @@
 
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
-            this.RefreshContributions();
         }
 
         public override void OnPageNavigatedFrom(NavigationEventArgs args)
@@ -85,9 +89,14 @@
             }
         }
 
-        private async void RefreshContributions()
+        private void RefreshContributions()
         {
-            // ToDo
+            if (!NetworkStatusManager.Current.IsConnected())
+            {
+                return;
+            }
+
+            this.Contributions.Reset();
         }
 
         private async Task SaveContributionAsync()
@@ -96,16 +105,36 @@
             {
                 var contribution = this.EditableContributionFlyoutViewModel.Item.Save();
 
-                this.EditableContributionFlyoutViewModel.Close();
                 if (contribution != null)
                 {
-                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution..."));
+                    this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution...", true));
 
-                    bool success = await this.contributionService.SubmitContributionAsync(contribution);
+                    bool success = false;
+
+                    try
+                    {
+                        success = await this.contributionService.SubmitContributionAsync(contribution);
+                    }
+                    catch (HttpRequestException hre) when (hre.Message.Contains("401"))
+                    {
+                        Application.Current.Exit();
+                    }
+                    catch (Exception ex)
+                    {
+                        EventLogger.Current.WriteError(ex.ToString());
+                    }
+
+                    if (success)
+                    {
+                        this.EditableContributionFlyoutViewModel.Close();
+                    }
 
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
 
-                    this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                    if (success)
+                    {
+                        this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.Contributions));
+                    }
                 }
             }
         }
