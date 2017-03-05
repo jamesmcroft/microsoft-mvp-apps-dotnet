@@ -362,11 +362,17 @@
             }
             else
             {
+                var date = ParseHelper.SafeParseDateTime(activationProtocolUri.ExtractQueryValue("date"));
+                if (date.GreaterThan(DateTime.UtcNow) || date == DateTime.MinValue)
+                {
+                    date = DateTime.UtcNow;
+                }
+
                 this.Id = 0;
                 this.TypeName = string.Empty;
                 this.Type = null;
                 this.Technology = null;
-                this.StartDate = ParseHelper.SafeParseDateTime(activationProtocolUri.ExtractQueryValue("date"));
+                this.StartDate = date;
                 this.Title = activationProtocolUri.ExtractQueryValue("title");
                 this.Description = activationProtocolUri.ExtractQueryValue("description");
                 this.AnnualQuantity = ParseHelper.SafeParseInt(activationProtocolUri.ExtractQueryValue("quantity"));

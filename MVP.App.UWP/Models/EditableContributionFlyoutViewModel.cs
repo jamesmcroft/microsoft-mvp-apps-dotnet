@@ -142,6 +142,9 @@
             this.IsInEdit = true;
             this.CanDelete = false;
 
+            viewModel.Type = this.Types.FirstOrDefault();
+            viewModel.Technology = this.Areas.FirstOrDefault();
+
             this.Show(viewModel);
         }
 
