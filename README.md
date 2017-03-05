@@ -3,6 +3,17 @@ Microsoft MVP Applications
 
 This project is designed to create applications for UWP, Android and iOS (using Xamarin) that take advantage of the Microsoft MVP API.  
 
+## Usage
+This app has been made for the purpose of use by current Microsoft MVPs who have an active profile. You will sign in using your MSA associated with your MVP profile.
+
+To submit a contribution via URI, the format is:
+
+```
+mvpapp://contribution?title={title}&date={date}&description={description}&quantity={quantity}&reach={reach}&url={url}
+```
+
+The query parameters are optional and calling without them will start a new blank contribution.
+
 ## Contributing
 All MVPs are welcome to contribute towards these MVP applications. If you are an experienced native Xamarin developer, your expertise may be useful in fleshing out the iOS and Android applications!
 
