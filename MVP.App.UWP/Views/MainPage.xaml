@@ -58,7 +58,7 @@
                 <StackPanel Margin="0,0,20,0">
                     <TextBlock
                         Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="Category" />
                     <TextBlock
@@ -72,7 +72,7 @@
                 <StackPanel Grid.Column="1" Margin="0,0,20,0">
                     <TextBlock
                         Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="Awarded" />
                     <TextBlock
@@ -86,7 +86,7 @@
                 <StackPanel Grid.Column="2" Margin="0,0,20,0">
                     <TextBlock
                         Margin="0,0,0,5"
-                        Foreground="{StaticResource MvpBlueDarkestThemeBrush}"
+                        Foreground="{StaticResource MvpBlueDarkerThemeBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="Awards" />
                     <TextBlock

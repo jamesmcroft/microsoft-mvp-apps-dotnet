@@ -8,16 +8,18 @@
     <SolidColorBrush x:Key="LightGrayThemeBrush" Color="{StaticResource LightGrayColor}" />
     <SolidColorBrush x:Key="DarkGrayThemeBrush" Color="{StaticResource DarkGrayColor}" />
 
-    <Color x:Key="MvpBlueLightestColor">#FF60BCFF</Color>
+    <Color x:Key="MvpBlueLightestColor">#FFC6E7FF</Color>
+    <Color x:Key="MvpBlueLighterColor">#FF60BCFF</Color>
     <Color x:Key="MvpBlueLightColor">#FF149BFF</Color>
     <Color x:Key="MvpBlueColor">#FF0072C6</Color>
     <Color x:Key="MvpBlueDarkColor">#FF00467A</Color>
-    <Color x:Key="MvpBlueDarkestColor">#FF001A2D</Color>
+    <Color x:Key="MvpBlueDarkerColor">#FF001A2D</Color>
     <SolidColorBrush x:Key="MvpBlueLightestThemeBrush" Color="{StaticResource MvpBlueLightestColor}" />
+    <SolidColorBrush x:Key="MvpBlueLighterThemeBrush" Color="{StaticResource MvpBlueLighterColor}" />
     <SolidColorBrush x:Key="MvpBlueLightThemeBrush" Color="{StaticResource MvpBlueLightColor}" />
     <SolidColorBrush x:Key="MvpBlueThemeBrush" Color="{StaticResource MvpBlueColor}" />
     <SolidColorBrush x:Key="MvpBlueDarkThemeBrush" Color="{StaticResource MvpBlueDarkColor}" />
-    <SolidColorBrush x:Key="MvpBlueDarkestThemeBrush" Color="{StaticResource MvpBlueDarkestColor}" />
+    <SolidColorBrush x:Key="MvpBlueDarkerThemeBrush" Color="{StaticResource MvpBlueDarkerColor}" />
 
     <Color x:Key="AccessColor">#FFA33639</Color>
     <SolidColorBrush x:Key="AccessThemeBrush" Color="{StaticResource AccessColor}" />

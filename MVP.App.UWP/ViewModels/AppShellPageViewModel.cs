@@ -125,7 +125,7 @@
             this.PrimaryMenuButtons.Add(CreateHomeButton());
             this.PrimaryMenuButtons.Add(CreateContributionsButton());
             this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
-            this.SecondaryMenuButtons.Add(CreateSettingsButton());
+            this.SecondaryMenuButtons.Add(this.CreateAboutButton());
         }
 
         private AppMenuButton CreateRefreshButton()
@@ -206,14 +206,14 @@
             return btn;
         }
 
-        private AppMenuButton CreateSettingsButton()
+        private AppMenuButton CreateAboutButton()
         {
             var btn = new AppMenuButton
             {
-                Content = GenerateButtonContent(Symbol.Setting, "Settings"),
+                Content = GenerateButtonContent(Symbol.Help, "About"),
                 IsGrouped = true,
-                Page = typeof(SettingsPage),
-                ToolTip = "View the app info and settings"
+                Page = typeof(AboutPage),
+                ToolTip = "View the app info and links"
             };
             return btn;
         }

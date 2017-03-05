@@ -114,7 +114,7 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MvpBlueLightestThemeBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MvpBlueLighterThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource WhiteThemeBrush}" />
@@ -125,7 +125,7 @@
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MvpBlueDarkestThemeBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MvpBlueDarkerThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource WhiteThemeBrush}" />
@@ -312,8 +312,8 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
-        <RelativePanel Background="{StaticResource MvpBlueLightestThemeBrush}">
-            <Grid x:Name="ContributionImage" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
+        <RelativePanel x:Name="TileContainer" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
+            <Grid x:Name="ContributionImage">
                 <Image
                     Width="70"
                     Height="70"
@@ -324,7 +324,7 @@
             <TextBlock
                 x:Name="Title"
                 Margin="10,10,0,0"
-                Foreground="{Binding Source={StaticResource MvpBlueLightestThemeBrush}, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
+                Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
@@ -338,7 +338,7 @@
                 Margin="10,0,0,10"
                 VerticalAlignment="Bottom"
                 FontSize="14"
-                Foreground="{Binding Source={StaticResource MvpBlueLightestThemeBrush}, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
+                Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignBottomWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"

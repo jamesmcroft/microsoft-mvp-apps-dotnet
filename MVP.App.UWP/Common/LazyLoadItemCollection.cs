@@ -24,7 +24,12 @@
         private readonly uint increment;
 
         public LazyLoadItemCollection()
-            : this(Activator.CreateInstance<TDataContainer>(), 20)
+            : this(20)
+        {
+        }
+
+        public LazyLoadItemCollection(uint increment)
+            : this(Activator.CreateInstance<TDataContainer>(), increment)
         {
         }
 

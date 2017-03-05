@@ -7,7 +7,7 @@
         x:Key="HeaderedTextBlockHeaderStyle"
         BasedOn="{StaticResource TitleTextBlockStyle}"
         TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource MvpBlueDarkestThemeBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MvpBlueDarkerThemeBrush}" />
     </Style>
 
     <Style

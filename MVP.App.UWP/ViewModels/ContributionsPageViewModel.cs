@@ -31,7 +31,7 @@
         {
             this.contributionService = contributionService;
 
-            this.Contributions = new LazyLoadItemCollection<Contribution, ContributionItemLoader>();
+            this.Contributions = new LazyLoadItemCollection<Contribution, ContributionItemLoader>(15);
             this.EditableContributionFlyoutViewModel = new EditableContributionFlyoutViewModel();
 
             this.ContributionClickedCommand =
