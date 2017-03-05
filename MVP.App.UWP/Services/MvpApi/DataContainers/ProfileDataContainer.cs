@@ -4,6 +4,7 @@
     using Windows.Storage;
     using WinUX.Networking;
     using Windows.UI.Xaml;
+        using WinUX.Diagnostics.Tracing;
 #elif ANDROID
     using XPlat.API.Storage;
 #endif
@@ -11,7 +12,7 @@
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    
+
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.Api;
@@ -92,6 +93,12 @@
                     Application.Current.Exit();
 #endif
                 }
+                catch (Exception ex)
+                {
+#if WINDOWS_UWP
+                    EventLogger.Current.WriteError(ex.ToString());
+#endif
+                }
 
                 if (profile != null || !string.IsNullOrWhiteSpace(profileImage))
                 {
@@ -131,7 +138,7 @@
                 var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                                FileName,
                                CreationCollisionOption.OpenIfExists);
-                
+
                 this.profileData = await file.GetDataAsync<ProfileDataContainerWrapper>();
             }
             catch (Exception ex)

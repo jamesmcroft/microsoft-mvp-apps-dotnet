@@ -41,7 +41,13 @@
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register<KeyboardCharacterService>();
-            SimpleIoc.Default.Register(() => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey"));
+            SimpleIoc.Default.Register(
+                            () =>
+                                new ApiClient(
+                                    "00000000481CAF70",
+                                    "mciGV3jyNrCnbB9anpU2moN",
+                                    "151ee67f81c142f2a51edd318dc5be7d",
+                                    true));
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
             SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();

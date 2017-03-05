@@ -12,6 +12,7 @@
     using Windows.Storage;
     using Windows.UI.Xaml;
 
+    using WinUX.Diagnostics.Tracing;
     using WinUX.Networking;
 
     public class ContributionAreaContainer : IContributionAreaContainer
@@ -63,6 +64,10 @@
                 {
                     // Show dialog, unauthorized user detected.
                     Application.Current.Exit();
+                }
+                catch (Exception ex)
+                {
+                    EventLogger.Current.WriteError(ex.ToString());
                 }
 
                 if (serviceAreas != null)

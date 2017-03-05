@@ -106,6 +106,7 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AwardCategoryToColorBrushConverter.cs" />
     <Compile Include="Converters\AwardCategoryToIconConverter.cs" />
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Extensions\Extensions.Image.cs" />
@@ -158,6 +159,7 @@
     <Content Include="Assets\Icons\DataPlatform.scale-400.png" />
     <Content Include="Assets\Icons\EnterpriseMobility.scale-400.png" />
     <Content Include="Assets\Icons\Excel.scale-400.png" />
+    <Content Include="Assets\Icons\MVP.scale-400.png" />
     <Content Include="Assets\Icons\OfficeDev.scale-400.png" />
     <Content Include="Assets\Icons\OfficeServer.scale-400.png" />
     <Content Include="Assets\Icons\OneNote.scale-400.png" />

@@ -1,5 +1,6 @@
 ﻿namespace MVP.App.ViewModels
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Net.Http;
@@ -21,6 +22,7 @@
     using Windows.UI.Xaml.Navigation;
 
     using WinUX;
+    using WinUX.Diagnostics.Tracing;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;
 
@@ -182,6 +184,10 @@
                         // Show dialog, unauthorized user detect.
                         Application.Current.Exit();
                     }
+                    catch (Exception ex)
+                    {
+                        EventLogger.Current.WriteError(ex.ToString());
+                    }
                 }
                 else if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Contributions)
                 {
@@ -250,6 +256,10 @@
                 // Show dialog, unauthorized user detected.
                 Application.Current.Exit();
             }
+            catch (Exception ex)
+            {
+                EventLogger.Current.WriteError(ex.ToString());
+            }
         }
 
         private async Task UpdateProfilePicAsync()
@@ -275,6 +285,10 @@
                 {
                     // Show dialog, unauthorized user detected.
                     Application.Current.Exit();
+                }
+                catch (Exception ex)
+                {
+                    EventLogger.Current.WriteError(ex.ToString());
                 }
             }
         }

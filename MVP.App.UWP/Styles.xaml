@@ -37,12 +37,53 @@
     <SolidColorBrush x:Key="MvpBlueDarkThemeBrush" Color="{StaticResource MvpBlueDarkColor}" />
     <SolidColorBrush x:Key="MvpBlueDarkestThemeBrush" Color="{StaticResource MvpBlueDarkestColor}" />
 
+    <Color x:Key="AccessColor">#FFA33639</Color>
+    <SolidColorBrush x:Key="AccessThemeBrush" Color="{StaticResource AccessColor}" />
+
+    <Color x:Key="ExcelColor">#FF207245</Color>
+    <SolidColorBrush x:Key="ExcelThemeBrush" Color="{StaticResource ExcelColor}" />
+
+    <Color x:Key="OfficeColor">#FFEB3C00</Color>
+    <SolidColorBrush x:Key="OfficeThemeBrush" Color="{StaticResource OfficeColor}" />
+
+    <Color x:Key="OneNoteColor">#FF844180</Color>
+    <SolidColorBrush x:Key="OneNoteThemeBrush" Color="{StaticResource OneNoteColor}" />
+
+    <Color x:Key="OutlookColor">#FF0072C6</Color>
+    <SolidColorBrush x:Key="OutlookThemeBrush" Color="{StaticResource OutlookColor}" />
+
+    <Color x:Key="PowerPointColor">#FFD24625</Color>
+    <SolidColorBrush x:Key="PowerPointThemeBrush" Color="{StaticResource PowerPointColor}" />
+
+    <Color x:Key="VisioColor">#FF39559F</Color>
+    <SolidColorBrush x:Key="VisioThemeBrush" Color="{StaticResource VisioColor}" />
+
+    <Color x:Key="VisualStudioColor">#FF681B7B</Color>
+    <SolidColorBrush x:Key="VisualStudioThemeBrush" Color="{StaticResource VisualStudioColor}" />
+
+    <Color x:Key="WordColor">#FF2A5699</Color>
+    <SolidColorBrush x:Key="WordThemeBrush" Color="{StaticResource WordColor}" />
+
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <converters:EmptyStringFormatConverter x:Key="EmptyStringFormatConverter" EmptyStringValue="No data available." />
     <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
     <localConverters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
+
+    <localConverters:AwardCategoryToIconConverter x:Key="AwardCategoryToIconConverter" />
+    <localConverters:AwardCategoryToColorBrushConverter
+        x:Key="AwardCategoryToColorBrushConverter"
+        AccessBrush="{StaticResource AccessThemeBrush}"
+        DefaultBrush="{StaticResource MvpBlueThemeBrush}"
+        ExcelBrush="{StaticResource ExcelThemeBrush}"
+        OfficeBrush="{StaticResource OfficeThemeBrush}"
+        OneNoteBrush="{StaticResource OneNoteThemeBrush}"
+        OutlookBrush="{StaticResource OutlookThemeBrush}"
+        PowerPointBrush="{StaticResource PowerPointThemeBrush}"
+        VisioBrush="{StaticResource VisioThemeBrush}"
+        VisualStudioBrush="{StaticResource VisualStudioThemeBrush}"
+        WordBrush="{StaticResource WordThemeBrush}" />
 
     <validation:ValidationRules x:Key="UrlValidationRules">
         <validation:ValidationRules.Rules>
@@ -315,12 +356,13 @@
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
         <RelativePanel Background="{StaticResource MvpBlueDarkestThemeBrush}">
-
-            <Image
-                x:Name="ContributionImage"
-                Width="70"
-                Height="70"
-                Stretch="UniformToFill" />
+            <Grid x:Name="ContributionImage" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
+                <Image
+                    Width="70"
+                    Height="70"
+                    Source="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToIconConverter}}"
+                    Stretch="UniformToFill" />
+            </Grid>
 
             <TextBlock
                 x:Name="Title"

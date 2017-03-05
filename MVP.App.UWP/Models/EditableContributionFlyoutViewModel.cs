@@ -19,6 +19,8 @@
 
     using MVP.App.Events;
 
+    using WinUX.Diagnostics.Tracing;
+
     public class EditableContributionFlyoutViewModel : ItemCustomFlyoutViewModel<ContributionViewModel>, IValidate
     {
         private DateTimeOffset maxDateOfActivity;
@@ -88,6 +90,10 @@
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
                     Application.Current.Exit();
+                }
+                catch (Exception ex)
+                {
+                    EventLogger.Current.WriteError(ex.ToString());
                 }
             }
         }
