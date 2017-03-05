@@ -5,6 +5,7 @@
 
     using GalaSoft.MvvmLight.Command;
 
+    using MVP.App.Common;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.Views;
@@ -30,6 +31,8 @@
 
         private readonly IProfileDataContainer profileData;
 
+        private ActivationArgs activationArgs;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializingPageViewModel"/> class.
         /// </summary>
@@ -39,9 +42,7 @@
         /// <param name="profileData">
         /// The profile Data.
         /// </param>
-        public InitializingPageViewModel(
-            IAppInitializer initializer,
-            IProfileDataContainer profileData)
+        public InitializingPageViewModel(IAppInitializer initializer, IProfileDataContainer profileData)
         {
             this.initializer = initializer;
             this.profileData = profileData;
@@ -94,15 +95,29 @@
         /// <inheritdoc />
         public override async void OnPageNavigatedTo(NavigationEventArgs args)
         {
+            this.activationArgs = args.Parameter as ActivationArgs;
+
             this.IsLoading = true;
 
             var initializeSuccess = await this.initializer.InitializeAsync();
             if (initializeSuccess)
             {
-                this.NavigateToHome();
+                var activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
+                if (!activated)
+                {
+                    this.NavigateToHome();
+                }
+
+                NavigateToShell();
             }
 
             this.IsLoading = false;
+        }
+
+        private static void NavigateToShell()
+        {
+            var rootFrame = Window.Current.Content as Frame;
+            rootFrame?.Navigate(typeof(AppShellPage));
         }
 
         /// <inheritdoc />
@@ -132,7 +147,13 @@
                 var initialized = await this.initializer.InitializeAsync();
                 if (initialized)
                 {
-                    this.NavigateToHome();
+                    var activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
+                    if (!activated)
+                    {
+                        this.NavigateToHome();
+                    }
+
+                    NavigateToShell();
                 }
             }
             else
@@ -150,9 +171,6 @@
         {
             // Get profile and pass onto main page.
             this.NavigationService.Navigate(typeof(MainPage), this.profileData.Profile);
-
-            var rootFrame = Window.Current.Content as Frame;
-            rootFrame?.Navigate(typeof(AppShellPage));
         }
     }
 }
