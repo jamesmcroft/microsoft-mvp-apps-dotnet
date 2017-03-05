@@ -7,6 +7,7 @@
     using MVP.App.Models.Common;
     using MVP.App.Services.MvpApi;
 
+    using WinUX;
     using WinUX.Common;
 
     public class ContributionViewModel : ItemViewModelBase<Contribution>
@@ -304,7 +305,7 @@
 
         public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology)
         {
-            this.Populate(null);
+            this.Populate(default(Contribution));
 
             this.Type = contributionType;
             this.Technology = contributionTechnology;
@@ -350,6 +351,33 @@
                 this.AnnualQuantityValue = string.Empty;
                 this.SecondAnnualQuantityValue = string.Empty;
                 this.AnnualReachValue = string.Empty;
+            }
+        }
+
+        public void Populate(Uri activationProtocolUri)
+        {
+            if (activationProtocolUri == null)
+            {
+                this.Populate(default(Contribution));
+            }
+            else
+            {
+                this.Id = 0;
+                this.TypeName = string.Empty;
+                this.Type = null;
+                this.Technology = null;
+                this.StartDate = ParseHelper.SafeParseDateTime(activationProtocolUri.ExtractQueryValue("date"));
+                this.Title = activationProtocolUri.ExtractQueryValue("title");
+                this.Description = activationProtocolUri.ExtractQueryValue("description");
+                this.AnnualQuantity = ParseHelper.SafeParseInt(activationProtocolUri.ExtractQueryValue("quantity"));
+                this.SecondAnnualQuantity = null;
+                this.AnnualReach = ParseHelper.SafeParseInt(activationProtocolUri.ExtractQueryValue("reach"));
+                this.ReferenceUrl = activationProtocolUri.ExtractQueryValue("url");
+                this.Visibility = ContributionVisibilities.Public;
+
+                this.AnnualQuantityValue = this.AnnualQuantity == null ? string.Empty : this.AnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = this.SecondAnnualQuantity == null ? string.Empty : this.SecondAnnualQuantity.ToString();
+                this.AnnualReachValue = this.AnnualReach == null ? string.Empty : this.AnnualReach.ToString();
             }
         }
 
@@ -413,5 +441,7 @@
                                                 : null;
             }
         }
+
+
     }
 }

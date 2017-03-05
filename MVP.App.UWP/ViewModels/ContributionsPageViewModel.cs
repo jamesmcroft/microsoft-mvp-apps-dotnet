@@ -71,6 +71,11 @@
 
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
+            var newContribution = args.Parameter as ContributionViewModel;
+            if (newContribution != null)
+            {
+                this.EditableContributionFlyoutViewModel.ShowNewForEdit(newContribution);
+            }
         }
 
         public override void OnPageNavigatedFrom(NavigationEventArgs args)

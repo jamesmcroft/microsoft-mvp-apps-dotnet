@@ -133,6 +133,18 @@
             this.Show(contributionViewModel);
         }
 
+        public void ShowNewForEdit(ContributionViewModel viewModel)
+        {
+            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
+
+            this.Title = "Add new contribution";
+
+            this.IsInEdit = true;
+            this.CanDelete = false;
+
+            this.Show(viewModel);
+        }
+
         /// <inheritdoc />
         public bool IsValid()
         {
