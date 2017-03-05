@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-    x:Class="MVP.App.Styles"
+    x:Class="MVP.App.Themes.Styles"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:apiModels="using:MVP.Api.Models"
@@ -16,53 +16,6 @@
     xmlns:validation="using:WinUX.Data.Validation"
     xmlns:validationRules="using:MVP.App.ValidationRules"
     mc:Ignorable="d ignore">
-
-    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
-    <Color x:Key="BlackColor">#FF000000</Color>
-    <Color x:Key="LightGrayColor">#FFEFEFEF</Color>
-    <Color x:Key="DarkGrayColor">#FF505050</Color>
-    <SolidColorBrush x:Key="WhiteThemeBrush" Color="{StaticResource WhiteColor}" />
-    <SolidColorBrush x:Key="BlackThemeBrush" Color="{StaticResource BlackColor}" />
-    <SolidColorBrush x:Key="LightGrayThemeBrush" Color="{StaticResource LightGrayColor}" />
-    <SolidColorBrush x:Key="DarkGrayThemeBrush" Color="{StaticResource DarkGrayColor}" />
-
-    <Color x:Key="MvpBlueLightestColor">#FF8EE6FF</Color>
-    <Color x:Key="MvpBlueLightColor">#FF28CFFF</Color>
-    <Color x:Key="MvpBlueColor">#FF00BEF4</Color>
-    <Color x:Key="MvpBlueDarkColor">#FF0096C1</Color>
-    <Color x:Key="MvpBlueDarkestColor">#FF00475B</Color>
-    <SolidColorBrush x:Key="MvpBlueLightestThemeBrush" Color="{StaticResource MvpBlueLightestColor}" />
-    <SolidColorBrush x:Key="MvpBlueLightThemeBrush" Color="{StaticResource MvpBlueLightColor}" />
-    <SolidColorBrush x:Key="MvpBlueThemeBrush" Color="{StaticResource MvpBlueColor}" />
-    <SolidColorBrush x:Key="MvpBlueDarkThemeBrush" Color="{StaticResource MvpBlueDarkColor}" />
-    <SolidColorBrush x:Key="MvpBlueDarkestThemeBrush" Color="{StaticResource MvpBlueDarkestColor}" />
-
-    <Color x:Key="AccessColor">#FFA33639</Color>
-    <SolidColorBrush x:Key="AccessThemeBrush" Color="{StaticResource AccessColor}" />
-
-    <Color x:Key="ExcelColor">#FF207245</Color>
-    <SolidColorBrush x:Key="ExcelThemeBrush" Color="{StaticResource ExcelColor}" />
-
-    <Color x:Key="OfficeColor">#FFEB3C00</Color>
-    <SolidColorBrush x:Key="OfficeThemeBrush" Color="{StaticResource OfficeColor}" />
-
-    <Color x:Key="OneNoteColor">#FF844180</Color>
-    <SolidColorBrush x:Key="OneNoteThemeBrush" Color="{StaticResource OneNoteColor}" />
-
-    <Color x:Key="OutlookColor">#FF0072C6</Color>
-    <SolidColorBrush x:Key="OutlookThemeBrush" Color="{StaticResource OutlookColor}" />
-
-    <Color x:Key="PowerPointColor">#FFD24625</Color>
-    <SolidColorBrush x:Key="PowerPointThemeBrush" Color="{StaticResource PowerPointColor}" />
-
-    <Color x:Key="VisioColor">#FF39559F</Color>
-    <SolidColorBrush x:Key="VisioThemeBrush" Color="{StaticResource VisioColor}" />
-
-    <Color x:Key="VisualStudioColor">#FF681B7B</Color>
-    <SolidColorBrush x:Key="VisualStudioThemeBrush" Color="{StaticResource VisualStudioColor}" />
-
-    <Color x:Key="WordColor">#FF2A5699</Color>
-    <SolidColorBrush x:Key="WordThemeBrush" Color="{StaticResource WordColor}" />
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
@@ -355,7 +308,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
-        <RelativePanel Background="{StaticResource MvpBlueDarkestThemeBrush}">
+        <RelativePanel Background="{StaticResource MvpBlueLightestThemeBrush}">
             <Grid x:Name="ContributionImage" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
                 <Image
                     Width="70"

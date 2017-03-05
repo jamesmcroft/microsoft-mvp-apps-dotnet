@@ -7,8 +7,9 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml" />
-                <ResourceDictionary Source="ControlStyles.xaml" />
+                <ResourceDictionary Source="Themes/Colors.xaml" />
+                <ResourceDictionary Source="Themes/ControlStyles.xaml" />
+                <ResourceDictionary Source="Themes/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <app:Locator x:Key="Locator" />

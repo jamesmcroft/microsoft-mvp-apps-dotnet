@@ -1,4 +1,4 @@
-﻿namespace MVP.App
+﻿namespace MVP.App.Themes
 {
     public partial class Styles
     {

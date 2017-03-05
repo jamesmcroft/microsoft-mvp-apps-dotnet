@@ -125,6 +125,7 @@
             this.PrimaryMenuButtons.Add(CreateHomeButton());
             this.PrimaryMenuButtons.Add(CreateContributionsButton());
             this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
+            this.SecondaryMenuButtons.Add(CreateSettingsButton());
         }
 
         private AppMenuButton CreateRefreshButton()
@@ -202,6 +203,18 @@
                               Page = typeof(ContributionsPage),
                               ToolTip = "View my current community activity contributions"
                           };
+            return btn;
+        }
+
+        private AppMenuButton CreateSettingsButton()
+        {
+            var btn = new AppMenuButton
+            {
+                Content = GenerateButtonContent(Symbol.Setting, "Settings"),
+                IsGrouped = true,
+                Page = typeof(SettingsPage),
+                ToolTip = "View the app info and settings"
+            };
             return btn;
         }
 
