@@ -106,6 +106,7 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AwardCategoryToIconConverter.cs" />
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Extensions\Extensions.Image.cs" />
     <Compile Include="Extensions\Extensions.MvpApi.cs" />
@@ -150,6 +151,23 @@
     <None Include="MVP.App.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\Access.scale-400.png" />
+    <Content Include="Assets\Icons\Azure.scale-400.png" />
+    <Content Include="Assets\Icons\BusinessSolutions.scale-400.png" />
+    <Content Include="Assets\Icons\CloudDataManagement.scale-400.png" />
+    <Content Include="Assets\Icons\DataPlatform.scale-400.png" />
+    <Content Include="Assets\Icons\EnterpriseMobility.scale-400.png" />
+    <Content Include="Assets\Icons\Excel.scale-400.png" />
+    <Content Include="Assets\Icons\OfficeDev.scale-400.png" />
+    <Content Include="Assets\Icons\OfficeServer.scale-400.png" />
+    <Content Include="Assets\Icons\OneNote.scale-400.png" />
+    <Content Include="Assets\Icons\Outlook.scale-400.png" />
+    <Content Include="Assets\Icons\PowerPoint.scale-400.png" />
+    <Content Include="Assets\Icons\Visio.scale-400.png" />
+    <Content Include="Assets\Icons\VisualStudio.scale-400.png" />
+    <Content Include="Assets\Icons\WindowsDevelopment.scale-400.png" />
+    <Content Include="Assets\Icons\WindowsDevices.scale-400.png" />
+    <Content Include="Assets\Icons\Word.scale-400.png" />
     <Content Include="Assets\MVPLogo.scale-100.png" />
     <Content Include="Assets\MVPPerson.scale-100.png" />
     <Content Include="Properties\Default.rd.xml" />
