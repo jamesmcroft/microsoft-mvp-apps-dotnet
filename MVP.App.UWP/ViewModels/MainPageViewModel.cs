@@ -168,7 +168,7 @@
         /// <inheritdoc />
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
-            var mvpProfile = args.Parameter as MVPProfile;
+            var mvpProfile = args.Parameter as MVPProfile ?? this.profileData.Profile;
             this.OnProfileUpdated(mvpProfile);
         }
 
