@@ -3,8 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
-    using Microsoft.Practices.ServiceLocation;
-
+    using MVP.Api;
+    using MVP.App.Services.Data;
+    using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
 
     using Windows.ApplicationModel.AppService;
@@ -17,12 +18,16 @@
 
         private BackgroundTaskDeferral serviceDeferral;
 
+        private ApiClient apiClient;
+
+        private ServiceDataContainerManager containerManager;
+
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
-            var contribution = ServiceLocator.Current.GetInstance<IContributionTypeContainer>();
-            
             this.serviceDeferral = taskInstance.GetDeferral();
             taskInstance.Canceled += this.OnTaskCanceled;
+
+            await this.InitializeServicesAsync();
 
             var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
 
@@ -52,6 +57,32 @@
                     System.Diagnostics.Debug.WriteLine(ex.Message);
 #endif
                 }
+            }
+        }
+
+        private async Task InitializeServicesAsync()
+        {
+            if (this.apiClient == null)
+            {
+                this.apiClient = ApiClientProvider.GetClient();
+            }
+
+            if (this.containerManager == null)
+            {
+                this.containerManager = new ServiceDataContainerManager(
+                    new ContributionAreaContainer(this.apiClient),
+                    new ContributionTypeContainer(this.apiClient));
+            }
+
+            try
+            {
+                await this.containerManager.LoadAsync();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+#endif
             }
         }
 

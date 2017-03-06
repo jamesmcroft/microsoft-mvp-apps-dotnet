@@ -6,6 +6,7 @@ namespace MVP.App
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api;
+    using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
 
     public class Locator
@@ -21,8 +22,7 @@ namespace MVP.App
         private void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
-            SimpleIoc.Default.Register(() => new ApiClient("ClientId", "ClientSecret", "SubscriptionKey"));
-
+            SimpleIoc.Default.Register(ApiClientProvider.GetClient);
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
         }
 

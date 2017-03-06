@@ -34,8 +34,7 @@
 
         public MainPageViewModel MainPageViewModel => ServiceLocator.Current.GetInstance<MainPageViewModel>();
 
-        public AboutPageViewModel AboutPageViewModel
-            => ServiceLocator.Current.GetInstance<AboutPageViewModel>();
+        public AboutPageViewModel AboutPageViewModel => ServiceLocator.Current.GetInstance<AboutPageViewModel>();
 
         public ContributionsPageViewModel ContributionsPageViewModel
             => ServiceLocator.Current.GetInstance<ContributionsPageViewModel>();
@@ -44,7 +43,7 @@
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register<KeyboardCharacterService>();
-            SimpleIoc.Default.Register(() => new ApiClient("LiveID", "LiveSecret", "ApiSubscriptionKey"));
+            SimpleIoc.Default.Register(ApiClientProvider.GetClient);
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
             SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();

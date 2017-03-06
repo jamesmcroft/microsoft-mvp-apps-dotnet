@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Events\AuthenticationMessage.cs" />
     <Compile Include="Models\Contributor.cs" />
+    <Compile Include="Services\MvpApi\ApiClientProvider.cs" />
     <Compile Include="Services\MvpApi\ContributionSubmissionService.cs" />
     <Compile Include="Services\MvpApi\DataContainers\ProfileDataContainerWrapper.cs" />
     <Compile Include="Services\MvpApi\DataContainers\IContributionAreaContainer.cs" />

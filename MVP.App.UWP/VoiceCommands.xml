@@ -5,7 +5,7 @@
     <Example> MVP app, add a new contribution </Example>
 
     <Command Name="addContribution">
-      <Example> Add a new contribution </Example>
+      <Example> add a new contribution </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> add [a] [new] contribution </ListenFor>
       <ListenFor RequireAppName="ExplicitlySpecified"> add [a] [new] {builtin:AppName} contribution </ListenFor>
 

@@ -115,7 +115,7 @@
                     await this.SaveAsync();
                 }
 
-                this.messenger.Send(new ProfileUpdatedMessage(this.Profile));
+                this.messenger?.Send(new ProfileUpdatedMessage(this.Profile));
 
                 await this.SaveAsync();
             }
@@ -209,7 +209,7 @@
             }
 
             this.profileData.Profile = profile;
-            this.messenger.Send(new ProfileUpdatedMessage(this.Profile));
+            this.messenger?.Send(new ProfileUpdatedMessage(this.Profile));
 
             this.LastDateChecked = DateTime.UtcNow;
             this.profileData.LastDateChecked = this.LastDateChecked;
