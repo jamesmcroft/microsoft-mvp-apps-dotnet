@@ -4,12 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Windows.Devices.Sensors;
-
     using Microsoft.Practices.ServiceLocation;
 
     using MVP.Api.Models;
-    using MVP.App.Services.Data;
     using MVP.App.Services.MvpApi.DataContainers;
 
     public static partial class Extensions

@@ -106,7 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MVP.App.UWP\Services\MvpApi\DataContainers\ProfileDataContainer.cs">
+    <Compile Include="..\MVP.App.UWP.Common\Services\MvpApi\DataContainers\ProfileDataContainer.cs">
       <Link>Services\MvpApi\DataContainers\ProfileDataContainer.cs</Link>
     </Compile>
     <Compile Include="Application.cs" />

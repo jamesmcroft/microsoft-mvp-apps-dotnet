@@ -5,6 +5,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using GalaSoft.MvvmLight.Ioc;
+
+    using Microsoft.Practices.ServiceLocation;
+
     using MVP.App.Services.MvpApi.DataContainers;
 
     public class ServiceDataContainerManager : IServiceDataContainerManager
@@ -13,6 +17,15 @@
 
         private readonly SemaphoreSlim containerSemaphore = new SemaphoreSlim(1, 1);
 
+        public ServiceDataContainerManager()
+            : this(
+                ServiceLocator.Current.GetInstance<IProfileDataContainer>(),
+                ServiceLocator.Current.GetInstance<IContributionTypeContainer>(),
+                ServiceLocator.Current.GetInstance<IContributionAreaContainer>())
+        {
+        }
+
+        [PreferredConstructor]
         public ServiceDataContainerManager(
             IProfileDataContainer profileContainer,
             IContributionTypeContainer typeContainer,

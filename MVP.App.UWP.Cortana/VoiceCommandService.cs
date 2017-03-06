@@ -3,6 +3,10 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.Practices.ServiceLocation;
+
+    using MVP.App.Services.MvpApi.DataContainers;
+
     using Windows.ApplicationModel.AppService;
     using Windows.ApplicationModel.Background;
     using Windows.ApplicationModel.VoiceCommands;
@@ -15,6 +19,8 @@
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
+            var contribution = ServiceLocator.Current.GetInstance<IContributionTypeContainer>();
+            
             this.serviceDeferral = taskInstance.GetDeferral();
             taskInstance.Canceled += this.OnTaskCanceled;
 
