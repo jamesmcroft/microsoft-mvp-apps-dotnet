@@ -53,7 +53,14 @@
 
             if (activationProtocolUri != null)
             {
-                if (activationProtocolUri.Host.Equals("contribution"))
+                var assistanceLaunchQuery = string.Empty;
+
+                if (activationProtocolUri.Scheme.Equals("windows.personalassistantlaunch"))
+                {
+                    assistanceLaunchQuery = activationProtocolUri.ExtractQueryValue("LaunchContext");
+                }
+
+                if (activationProtocolUri.Host.Equals("contribution") || assistanceLaunchQuery.Equals("contribution"))
                 {
                     var contribution = new ContributionViewModel();
                     contribution.Populate(activationProtocolUri);

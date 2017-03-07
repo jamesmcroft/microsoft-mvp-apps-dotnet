@@ -1,4 +1,7 @@
-﻿namespace MVP.App.UWP.Cortana
+﻿using System.Collections.Generic;
+using MVP.Api.Models;
+
+namespace MVP.App.UWP.Cortana
 {
     using System;
     using System.Threading.Tasks;
@@ -7,6 +10,8 @@
 
     public sealed partial class VoiceCommandService
     {
+
+
         private async Task ReportResultAsync(VoiceReportResult result, string message)
         {
             var progress = new VoiceCommandUserMessage();

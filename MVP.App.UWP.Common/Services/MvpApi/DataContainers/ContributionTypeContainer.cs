@@ -1,4 +1,6 @@
-﻿namespace MVP.App.Services.MvpApi.DataContainers
+﻿using System.Linq;
+
+namespace MVP.App.Services.MvpApi.DataContainers
 {
     using System;
     using System.Collections.Generic;
@@ -172,6 +174,20 @@
         public IEnumerable<ContributionType> GetAllTypes()
         {
             return this.contributionTypes?.ContributionTypes;
+        }
+
+        public IEnumerable<ContributionType> GetCommonTypes()
+        {
+            var items = new List<ContributionType>();
+
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Blog Site")));
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Code")));
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Forum")));
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Open Source")));
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Speaking")));
+            items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Video")));
+
+            return items.Count > 10 ? items.Take(10) : items;
         }
     }
 }

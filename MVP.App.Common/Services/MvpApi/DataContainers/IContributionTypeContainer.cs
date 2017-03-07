@@ -14,5 +14,7 @@
         /// Returns a collection of <see cref="ContributionType"/>.
         /// </returns>
         IEnumerable<ContributionType> GetAllTypes();
+
+        IEnumerable<ContributionType> GetCommonTypes();
     }
 }

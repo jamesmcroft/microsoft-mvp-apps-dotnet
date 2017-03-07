@@ -21,6 +21,9 @@
         private ApiClient apiClient;
 
         private ServiceDataContainerManager containerManager;
+        private ContributionTypeContainer typeContainer;
+        private ContributionAreaContainer areaContainer;
+        private ContributionSubmissionService contributionSubmissionService;
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -44,7 +47,10 @@
 
                     if (voiceCommand.CommandName.ToLower().Contains("contribution"))
                     {
-                        await this.HandleContributionCommand(voiceCommand);
+                        await this.LaunchAppForVoiceAsync("contribution");
+
+                        // This doesn't seem possible at the moment due to lack of communication logic with Cortana (sad times)
+                        // await this.HandleContributionCommand(voiceCommand);
                     }
                     else
                     {
@@ -67,11 +73,26 @@
                 this.apiClient = ApiClientProvider.GetClient();
             }
 
+            if (this.typeContainer == null)
+            {
+                this.typeContainer = new ContributionTypeContainer(this.apiClient);
+            }
+
+            if (this.areaContainer == null)
+            {
+                this.areaContainer = new ContributionAreaContainer(this.apiClient);
+            }
+
+            if (contributionSubmissionService == null)
+            {
+                contributionSubmissionService = new ContributionSubmissionService(this.apiClient);
+            }
+
             if (this.containerManager == null)
             {
                 this.containerManager = new ServiceDataContainerManager(
-                    new ContributionAreaContainer(this.apiClient),
-                    new ContributionTypeContainer(this.apiClient));
+                    this.typeContainer,
+                    this.areaContainer);
             }
 
             try
@@ -88,9 +109,14 @@
 
         private async Task LaunchAppForVoiceAsync()
         {
-            var message = new VoiceCommandUserMessage { SpokenMessage = "Opening MVP community app" };
+            await this.LaunchAppForVoiceAsync(string.Empty);
+        }
+
+        private async Task LaunchAppForVoiceAsync(string v)
+        {
+            var message = new VoiceCommandUserMessage {SpokenMessage = "Opening the MVP community app"};
             var response = VoiceCommandResponse.CreateResponse(message);
-            response.AppLaunchArgument = string.Empty;
+            response.AppLaunchArgument = v;
 
             await this.voiceServiceConnection.RequestAppLaunchAsync(response);
         }

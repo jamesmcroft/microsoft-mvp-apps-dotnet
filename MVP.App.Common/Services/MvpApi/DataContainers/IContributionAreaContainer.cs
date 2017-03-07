@@ -8,5 +8,7 @@
     public interface IContributionAreaContainer : IServiceDataContainer
     {
         IEnumerable<AwardContribution> GetAllAreas();
+
+        IEnumerable<ActivityTechnology> GetMyAreaTechnologies();
     }
 }

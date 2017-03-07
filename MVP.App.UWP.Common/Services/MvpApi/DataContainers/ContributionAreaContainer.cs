@@ -1,4 +1,6 @@
-﻿namespace MVP.App.Services.MvpApi.DataContainers
+﻿using System.Linq;
+
+namespace MVP.App.Services.MvpApi.DataContainers
 {
     using System;
     using System.Collections.Generic;
@@ -102,8 +104,8 @@
             try
             {
                 var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                               FileName,
-                               CreationCollisionOption.OpenIfExists);
+                    FileName,
+                    CreationCollisionOption.OpenIfExists);
 
                 this.contributionAreas = await file.GetDataAsync<ContributionAreaContainerWrapper>();
             }
@@ -120,7 +122,7 @@
 
             if (this.contributionAreas == null)
             {
-                this.contributionAreas = new ContributionAreaContainerWrapper { LastDateChecked = DateTime.MinValue };
+                this.contributionAreas = new ContributionAreaContainerWrapper {LastDateChecked = DateTime.MinValue};
 
                 await this.SaveAsync();
             }
@@ -139,8 +141,8 @@
                 try
                 {
                     file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-                               FileName,
-                               CreationCollisionOption.OpenIfExists);
+                        FileName,
+                        CreationCollisionOption.OpenIfExists);
                 }
                 catch (Exception ex)
                 {
@@ -163,6 +165,14 @@
         public IEnumerable<AwardContribution> GetAllAreas()
         {
             return this.contributionAreas?.ContributionAreas;
+        }
+
+        public IEnumerable<ActivityTechnology> GetMyAreaTechnologies()
+        {
+            var area = this.contributionAreas.ContributionAreas.FirstOrDefault();
+
+            var technologies = area?.Areas.SelectMany(x => x.Items);
+            return technologies;
         }
     }
 }
