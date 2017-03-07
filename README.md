@@ -31,7 +31,7 @@ If you find an issue in any variant of the applications, please could you raise 
 
 | Branch | Status |
 | ------ | ------ |
-| master | [![Build Status](https://jamesmcroft.visualstudio.com/_apis/public/build/definitions/2b7b1d28-64cd-4a55-bbfa-88d364727a19/13/badge)] |
+| master | [![Master Build](https://jamesmcroft.visualstudio.com/_apis/public/build/definitions/2b7b1d28-64cd-4a55-bbfa-88d364727a19/13/badge)](https://github.com/jamesmcroft/MS-MVP-Apps) |
 
 ## App Packages
 
