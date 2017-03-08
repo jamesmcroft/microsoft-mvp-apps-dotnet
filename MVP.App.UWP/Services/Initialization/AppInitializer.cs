@@ -18,6 +18,7 @@
 
     using WinUX;
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
 
     /// <summary>
@@ -31,7 +32,7 @@
 
         private readonly IProfileDataContainer profileData;
 
-        private readonly IServiceDataContainerManager containerManager;
+        private readonly IDataContainerManager containerManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppInitializer"/> class.
@@ -45,7 +46,7 @@
         /// <param name="profileData">
         /// The cached profile data.
         /// </param>
-        public AppInitializer(IMessenger messenger, ApiClient apiClient, IServiceDataContainerManager containerManager, IProfileDataContainer profileData)
+        public AppInitializer(IMessenger messenger, ApiClient apiClient, IDataContainerManager containerManager, IProfileDataContainer profileData)
         {
             this.messenger = messenger;
             this.apiClient = apiClient;
@@ -138,6 +139,8 @@
                         errorMessage = "Sign in was not successful. Please try again.";
                     }
 
+                    await this.profileData.ClearAsync();
+
                     success = false;
                 }
             }
@@ -198,6 +201,12 @@
                     if (profile == null)
                     {
                         await this.apiClient.LogOutAsync();
+                        await this.profileData.ClearAsync();
+
+                        await MessageDialogManager.Current.ShowAsync(
+                            "Profile error",
+                            "There seems to be an issue getting your MVP profile.");
+
                         return false;
                     }
 

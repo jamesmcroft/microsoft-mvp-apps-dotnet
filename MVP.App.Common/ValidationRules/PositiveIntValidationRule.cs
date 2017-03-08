@@ -2,6 +2,9 @@
 {
     using WinUX.Data.Validation;
 
+    /// <summary>
+    /// Defines a validation rule for validating a positive integer value.
+    /// </summary>
     public class PositiveIntValidationRule : ValidationRule
     {
         /// <inheritdoc />

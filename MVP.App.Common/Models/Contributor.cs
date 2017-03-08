@@ -1,5 +1,8 @@
 ﻿namespace MVP.App.Models
 {
+    /// <summary>
+    /// Defines a model for a contributor to the application.
+    /// </summary>
     public class Contributor
     {
         /// <summary>

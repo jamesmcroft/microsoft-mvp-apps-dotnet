@@ -3,7 +3,10 @@
     using System;
     using System.Threading.Tasks;
 
-    public interface IServiceDataContainer
+    /// <summary>
+    /// Defines a common interface for a local data container.
+    /// </summary>
+    public interface IDataContainer
     {
         /// <summary>
         /// Gets a value indicating whether the container has loaded.
@@ -29,7 +32,7 @@
         /// Updates the local cached data asynchronously.
         /// </summary>
         /// <returns>
-        /// Returns an await-able task.
+        /// An object that is used to manage the asynchronous operation.
         /// </returns>
         Task UpdateAsync();
 
@@ -40,7 +43,7 @@
         /// A value indicating whether to force the update.
         /// </param>
         /// <returns>
-        /// Returns an await-able task.
+        /// An object that is used to manage the asynchronous operation.
         /// </returns>
         Task UpdateAsync(bool forceUpdate);
 
@@ -48,7 +51,7 @@
         /// Loads the local cached data asynchronously.
         /// </summary>
         /// <returns>
-        /// Returns an await-able task.
+        /// An object that is used to manage the asynchronous operation.
         /// </returns>
         Task LoadAsync();
 
@@ -56,8 +59,16 @@
         /// Saves the local cached data asynchronously.
         /// </summary>
         /// <returns>
-        /// Returns an await-able task.
+        /// An object that is used to manage the asynchronous operation.
         /// </returns>
         Task SaveAsync();
+
+        /// <summary>
+        /// Clears the local cached data asynchronously.
+        /// </summary>
+        /// <returns>
+        /// An object that is used to manage the asynchronous operation.
+        /// </returns>
+        Task ClearAsync();
     }
 }

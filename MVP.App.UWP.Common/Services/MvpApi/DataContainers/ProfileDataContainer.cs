@@ -4,10 +4,13 @@
     using Windows.Storage;
     using WinUX.Networking;
     using Windows.UI.Xaml;
-        using WinUX.Diagnostics.Tracing;
+    using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
+    using Windows.UI.Popups;
 #elif ANDROID
     using XPlat.API.Storage;
 #endif
+
     using System;
     using System.Net.Http;
     using System.Threading;
@@ -19,7 +22,6 @@
     using MVP.Api.Models;
     using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Events;
-
 
     public class ProfileDataContainer : IProfileDataContainer
     {
@@ -81,6 +83,8 @@
                 MVPProfile profile = null;
                 string profileImage = string.Empty;
 
+                bool isAuthenticated = true;
+
                 try
                 {
                     profile = await this.client.GetMyProfileAsync();
@@ -88,16 +92,31 @@
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    // Show dialog, unauthorized user detected.
-#if WINDOWS_UWP
-                    Application.Current.Exit();
-#endif
+                    isAuthenticated = false;
                 }
                 catch (Exception ex)
                 {
 #if WINDOWS_UWP
                     EventLogger.Current.WriteError(ex.ToString());
 #endif
+                }
+
+                if (!isAuthenticated)
+                {
+#if WINDOWS_UWP
+                    await MessageDialogManager.Current.ShowAsync(
+                        "Not authorized",
+                        "You are no longer authenticated.",
+                        new UICommand(
+                            "Ok",
+                            async command =>
+                            {
+                                await this.client.LogOutAsync();
+                            }));
+
+                    Application.Current.Exit();
+#endif
+                    return;
                 }
 
                 if (profile != null || !string.IsNullOrWhiteSpace(profileImage))
@@ -197,6 +216,25 @@
             {
                 this.fileAccessSemaphore.Release();
             }
+        }
+
+        public async Task ClearAsync()
+        {
+            await this.LoadAsync();
+
+            if (this.profileData == null)
+            {
+                this.profileData = new ProfileDataContainerWrapper();
+            }
+
+            this.profileData.Account = null;
+            this.profileData.Profile = null;
+            this.profileData.ProfileImage = string.Empty;
+
+            this.LastDateChecked = DateTime.MinValue;
+            this.profileData.LastDateChecked = this.LastDateChecked;
+
+            await this.SaveAsync();
         }
 
         public async Task SetProfileAsync(MVPProfile profile)

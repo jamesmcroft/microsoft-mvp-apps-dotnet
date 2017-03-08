@@ -13,7 +13,7 @@
         /// Initializes the application asynchronously.
         /// </summary>
         /// <returns>
-        /// Returns true if initialized; else false.
+        /// When this method completes, it returns true if initialized successfully; else false.
         /// </returns>
         Task<bool> InitializeAsync();
 
@@ -21,7 +21,7 @@
         /// Authenticates the user with the application asynchronously.
         /// </summary>
         /// <returns>
-        /// Returns true if authenticated; else false.
+        /// When this method completes, it returns true if authenticated successfully; else false.
         /// </returns>
         Task<AuthenticationMessage> AuthenticateAsync();
     }

@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Net.Http;
 
+    using Windows.UI.Popups;
+
     using GalaSoft.MvvmLight.Ioc;
 
     using Microsoft.Practices.ServiceLocation;
@@ -20,6 +22,7 @@
     using MVP.App.Events;
 
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
 
     public class EditableContributionFlyoutViewModel : ItemCustomFlyoutViewModel<ContributionViewModel>, IValidate
     {
@@ -30,16 +33,16 @@
         public EditableContributionFlyoutViewModel()
             : this(
                 ServiceLocator.Current.GetInstance<ApiClient>(),
-                ServiceLocator.Current.GetInstance<IContributionAreaContainer>(),
-                ServiceLocator.Current.GetInstance<IContributionTypeContainer>())
+                ServiceLocator.Current.GetInstance<IContributionAreaDataContainer>(),
+                ServiceLocator.Current.GetInstance<IContributionTypeDataContainer>())
         {
         }
 
         [PreferredConstructor]
         public EditableContributionFlyoutViewModel(
             ApiClient client,
-            IContributionAreaContainer areaContainer,
-            IContributionTypeContainer typeContainer)
+            IContributionAreaDataContainer areaContainer,
+            IContributionTypeDataContainer typeContainer)
         {
             this.client = client;
 
@@ -76,6 +79,7 @@
                 this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Deleting...", true));
 
                 bool deleted = false;
+                bool isAuthenticated = true;
 
                 try
                 {
@@ -83,11 +87,26 @@
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    Application.Current.Exit();
+                    isAuthenticated = false;
                 }
                 catch (Exception ex)
                 {
                     EventLogger.Current.WriteError(ex.ToString());
+                }
+
+                if (!isAuthenticated)
+                {
+                    await MessageDialogManager.Current.ShowAsync(
+                        "Not authorized",
+                        "You are no longer authenticated.",
+                        new UICommand(
+                            "Ok",
+                            async command =>
+                                {
+                                    await this.client.LogOutAsync();
+                                }));
+
+                    Application.Current.Exit();
                 }
 
                 if (deleted)

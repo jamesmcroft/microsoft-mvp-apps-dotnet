@@ -1,9 +1,8 @@
-﻿using System.Linq;
-
-namespace MVP.App.Services.MvpApi.DataContainers
+﻿namespace MVP.App.Services.MvpApi.DataContainers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,12 +11,14 @@ namespace MVP.App.Services.MvpApi.DataContainers
     using MVP.Api.Models;
 
     using Windows.Storage;
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
 
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
 
-    public class ContributionTypeContainer : IContributionTypeContainer
+    public class ContributionTypeContainer : IContributionTypeDataContainer
     {
         private const string FileName = "ContributionTypes.mvp";
 
@@ -64,18 +65,34 @@ namespace MVP.App.Services.MvpApi.DataContainers
             {
                 IEnumerable<ContributionType> serviceTypes = null;
 
+                bool isAuthenticated = true;
+
                 try
                 {
                     serviceTypes = await this.client.GetContributionTypesAsync();
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    // Show dialog, unauthorized user detected.
-                    Application.Current.Exit();
+                    isAuthenticated = false;
                 }
                 catch (Exception ex)
                 {
                     EventLogger.Current.WriteError(ex.ToString());
+                }
+
+                if (!isAuthenticated)
+                {
+                    await MessageDialogManager.Current.ShowAsync(
+                        "Not authorized",
+                        "You are no longer authenticated.",
+                        new UICommand(
+                            "Ok",
+                            async command =>
+                            {
+                                await this.client.LogOutAsync();
+                            }));
+
+                    Application.Current.Exit();
                 }
 
                 if (serviceTypes != null)
@@ -168,6 +185,23 @@ namespace MVP.App.Services.MvpApi.DataContainers
             {
                 this.fileAccessSemaphore.Release();
             }
+        }
+
+        public async Task ClearAsync()
+        {
+            await this.LoadAsync();
+
+            if (this.contributionTypes == null)
+            {
+                this.contributionTypes = new ContributionTypeContainerWrapper();
+            }
+
+            this.contributionTypes.ContributionTypes = new List<ContributionType>();
+
+            this.LastDateChecked = DateTime.MinValue;
+            this.contributionTypes.LastDateChecked = this.LastDateChecked;
+
+            await this.SaveAsync();
         }
 
         /// <inheritdoc />

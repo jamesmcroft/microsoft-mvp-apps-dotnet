@@ -7,6 +7,8 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using Windows.UI.Popups;
+
     using GalaSoft.MvvmLight.Command;
 
     using MVP.Api;
@@ -23,6 +25,7 @@
 
     using WinUX;
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;
 
@@ -92,6 +95,7 @@
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution...", true));
 
                     bool success = false;
+                    bool isAuthenticated = true;
 
                     try
                     {
@@ -99,11 +103,26 @@
                     }
                     catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                     {
-                        Application.Current.Exit();
+                        isAuthenticated = false;
                     }
                     catch (Exception ex)
                     {
                         EventLogger.Current.WriteError(ex.ToString());
+                    }
+
+                    if (!isAuthenticated)
+                    {
+                        await MessageDialogManager.Current.ShowAsync(
+                            "Not authorized",
+                            "You are no longer authenticated.",
+                            new UICommand(
+                                "Ok",
+                                async command =>
+                                {
+                                    await this.apiClient.LogOutAsync();
+                                }));
+
+                        Application.Current.Exit();
                     }
 
                     if (success)
@@ -191,6 +210,8 @@
             {
                 if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Profile)
                 {
+                    bool isAuthenticated = true;
+
                     try
                     {
                         var newProfile = await this.apiClient.GetMyProfileAsync();
@@ -201,12 +222,26 @@
                     }
                     catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                     {
-                        // Show dialog, unauthorized user detect.
-                        Application.Current.Exit();
+                        isAuthenticated = false;
                     }
                     catch (Exception ex)
                     {
                         EventLogger.Current.WriteError(ex.ToString());
+                    }
+
+                    if (!isAuthenticated)
+                    {
+                        await MessageDialogManager.Current.ShowAsync(
+                            "Not authorized",
+                            "You are no longer authenticated.",
+                            new UICommand(
+                                "Ok",
+                                async command =>
+                                {
+                                    await this.apiClient.LogOutAsync();
+                                }));
+
+                        Application.Current.Exit();
                     }
                 }
                 else if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Contributions)
@@ -262,6 +297,8 @@
                 return;
             }
 
+            bool isAuthenticated = true;
+
             try
             {
                 var recentContributions = await this.apiClient.GetContributionsAsync(0, 10);
@@ -273,12 +310,26 @@
             }
             catch (HttpRequestException hre) when (hre.Message.Contains("401"))
             {
-                // Show dialog, unauthorized user detected.
-                Application.Current.Exit();
+                isAuthenticated = false;
             }
             catch (Exception ex)
             {
                 EventLogger.Current.WriteError(ex.ToString());
+            }
+
+            if (!isAuthenticated)
+            {
+                await MessageDialogManager.Current.ShowAsync(
+                    "Not authorized",
+                    "You are no longer authenticated.",
+                    new UICommand(
+                        "Ok",
+                        async command =>
+                        {
+                            await this.apiClient.LogOutAsync();
+                        }));
+
+                Application.Current.Exit();
             }
         }
 
@@ -295,6 +346,8 @@
                     return;
                 }
 
+                bool isAuthenticated = true;
+
                 try
                 {
                     var image = await this.apiClient.GetMyProfileImageAsync();
@@ -303,12 +356,26 @@
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    // Show dialog, unauthorized user detected.
-                    Application.Current.Exit();
+                    isAuthenticated = false;
                 }
                 catch (Exception ex)
                 {
                     EventLogger.Current.WriteError(ex.ToString());
+                }
+
+                if (!isAuthenticated)
+                {
+                    await MessageDialogManager.Current.ShowAsync(
+                        "Not authorized",
+                        "You are no longer authenticated.",
+                        new UICommand(
+                            "Ok",
+                            async command =>
+                            {
+                                await this.apiClient.LogOutAsync();
+                            }));
+
+                    Application.Current.Exit();
                 }
             }
         }

@@ -16,6 +16,15 @@
     using WinUX.Diagnostics.Tracing;
     using WinUX.Xaml;
 
+    /// <summary>
+    /// Defines an observable item collection which has lazy loading capabilities.
+    /// </summary>
+    /// <typeparam name="TItem">
+    /// The type of item contained in the collection.
+    /// </typeparam>
+    /// <typeparam name="TDataContainer">
+    /// The type of <see cref="IItemLoader{TItem}"/> to load data from.
+    /// </typeparam>
     public class LazyLoadItemCollection<TItem, TDataContainer> : ObservableCollection<TItem>, ISupportIncrementalLoading
         where TDataContainer : IItemLoader<TItem>
     {
@@ -23,16 +32,34 @@
 
         private readonly uint increment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyLoadItemCollection{TItem,TDataContainer}"/> class.
+        /// </summary>
         public LazyLoadItemCollection()
             : this(20)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyLoadItemCollection{TItem,TDataContainer}"/> class.
+        /// </summary>
+        /// <param name="increment">
+        /// The number of items to retrieve on each load.
+        /// </param>
         public LazyLoadItemCollection(uint increment)
             : this(Activator.CreateInstance<TDataContainer>(), increment)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LazyLoadItemCollection{TItem,TDataContainer}"/> class.
+        /// </summary>
+        /// <param name="container">
+        /// The container to use to get data from.
+        /// </param>
+        /// <param name="increment">
+        /// The number of items to retrieve on each load.
+        /// </param>
         public LazyLoadItemCollection(TDataContainer container, uint increment)
         {
             this.Container = container;
@@ -40,21 +67,38 @@
             this.HasMoreItems = true;
         }
 
+        /// <summary>
+        /// Gets the container to get data from.
+        /// </summary>
         public TDataContainer Container { get; }
 
+        /// <inheritdoc />
         public bool HasMoreItems { get; private set; }
 
+        /// <inheritdoc />
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
             return AsyncInfo.Run(this.LoadMoreItemsAsync);
         }
 
+        /// <summary>
+        /// Resets the items in the collection and begins lazy loading again.
+        /// </summary>
         public void Reset()
         {
             this.Clear();
             this.HasMoreItems = true;
         }
 
+        /// <summary>
+        /// Loads items from the container into the collection asynchronously.
+        /// </summary>
+        /// <param name="ct">
+        /// The cancellation token.
+        /// </param>
+        /// <returns>
+        /// When this method completes, it returns a <see cref="LoadMoreItemsResult"/> object.
+        /// </returns>
         private async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken ct)
         {
             uint resultCount = 0;
@@ -77,7 +121,6 @@
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    // Work out way to inform user.
                     Application.Current.Exit();
                 }
                 catch (Exception ex)

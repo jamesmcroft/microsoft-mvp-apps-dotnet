@@ -9,15 +9,24 @@
 
     using MVP.App.Services.MvpApi.DataContainers;
 
-    public class ServiceDataContainerManager : IServiceDataContainerManager
+    /// <summary>
+    /// Defines a manager for <see cref="IDataContainer"/> objects.
+    /// </summary>
+    public class DataContainerManager : IDataContainerManager
     {
-        private readonly List<IServiceDataContainer> containers;
+        private readonly List<IDataContainer> containers;
 
         private readonly SemaphoreSlim containerSemaphore = new SemaphoreSlim(1, 1);
 
-        public ServiceDataContainerManager(params IServiceDataContainer[] newContainers)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataContainerManager"/> class.
+        /// </summary>
+        /// <param name="newContainers">
+        /// A collection of <see cref="IDataContainer"/> objects to register.
+        /// </param>
+        public DataContainerManager(params IDataContainer[] newContainers)
         {
-            this.containers = new List<IServiceDataContainer>();
+            this.containers = new List<IDataContainer>();
             foreach (var container in newContainers)
             {
                 if (container != null)
@@ -27,17 +36,31 @@
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataContainerManager"/> class.
+        /// </summary>
+        /// <param name="profileContainer">
+        /// The profile data container.
+        /// </param>
+        /// <param name="typeContainer">
+        /// The contribution type data container.
+        /// </param>
+        /// <param name="areaContainer">
+        /// The contribution area data container.
+        /// </param>
         [PreferredConstructor]
-        public ServiceDataContainerManager(
+        public DataContainerManager(
             IProfileDataContainer profileContainer,
-            IContributionTypeContainer typeContainer,
-            IContributionAreaContainer areaContainer)
+            IContributionTypeDataContainer typeContainer,
+            IContributionAreaDataContainer areaContainer)
         {
-            this.containers = new List<IServiceDataContainer> { profileContainer, typeContainer, areaContainer };
+            this.containers = new List<IDataContainer> { profileContainer, typeContainer, areaContainer };
         }
 
-        public IReadOnlyList<IServiceDataContainer> Containers => this.containers;
+        /// <inheritdoc />
+        public IReadOnlyList<IDataContainer> Containers => this.containers;
 
+        /// <inheritdoc />
         public bool RequiresUpdate
         {
             get
@@ -46,6 +69,7 @@
             }
         }
 
+        /// <inheritdoc />
         public async Task LoadAsync()
         {
             await this.containerSemaphore.WaitAsync();
@@ -63,6 +87,7 @@
             }
         }
 
+        /// <inheritdoc />
         public async Task UpdateAsync()
         {
             if (this.RequiresUpdate)

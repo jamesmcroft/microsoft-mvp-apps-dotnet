@@ -25,7 +25,7 @@
 
         public static ActivityTechnology ToActivityTechnology(this ContributionTechnology technology)
         {
-            var areaContainer = ServiceLocator.Current.GetInstance<IContributionAreaContainer>();
+            var areaContainer = ServiceLocator.Current.GetInstance<IContributionAreaDataContainer>();
             var areas =
                 areaContainer.GetAllAreas()
                     .SelectMany(awardContribution => awardContribution.Areas)

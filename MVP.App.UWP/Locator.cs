@@ -46,9 +46,9 @@
             SimpleIoc.Default.Register(ApiClientProvider.GetClient);
             SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
-            SimpleIoc.Default.Register<IContributionTypeContainer, ContributionTypeContainer>();
-            SimpleIoc.Default.Register<IContributionAreaContainer, ContributionAreaContainer>();
-            SimpleIoc.Default.Register<IServiceDataContainerManager, ServiceDataContainerManager>();
+            SimpleIoc.Default.Register<IContributionTypeDataContainer, ContributionTypeContainer>();
+            SimpleIoc.Default.Register<IContributionAreaDataContainer, ContributionAreaContainer>();
+            SimpleIoc.Default.Register<IDataContainerManager, DataContainerManager>();
             SimpleIoc.Default.Register<IContributionSubmissionService, ContributionSubmissionService>();
         }
 

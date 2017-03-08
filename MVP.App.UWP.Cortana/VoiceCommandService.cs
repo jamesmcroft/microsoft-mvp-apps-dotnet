@@ -20,7 +20,7 @@
 
         private ApiClient apiClient;
 
-        private ServiceDataContainerManager containerManager;
+        private DataContainerManager containerManager;
         private ContributionTypeContainer typeContainer;
         private ContributionAreaContainer areaContainer;
         private ContributionSubmissionService contributionSubmissionService;
@@ -90,7 +90,7 @@
 
             if (this.containerManager == null)
             {
-                this.containerManager = new ServiceDataContainerManager(
+                this.containerManager = new DataContainerManager(
                     this.typeContainer,
                     this.areaContainer);
             }

@@ -12,12 +12,14 @@ namespace MVP.App.Services.MvpApi.DataContainers
     using MVP.Api.Models;
 
     using Windows.Storage;
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
 
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
 
-    public class ContributionAreaContainer : IContributionAreaContainer
+    public class ContributionAreaContainer : IContributionAreaDataContainer
     {
         private const string FileName = "ContributionAreas.mvp";
 
@@ -58,18 +60,34 @@ namespace MVP.App.Services.MvpApi.DataContainers
             {
                 IEnumerable<AwardContribution> serviceAreas = null;
 
+                bool isAuthenticated = true;
+
                 try
                 {
                     serviceAreas = await this.client.GetContributionAreasAsync();
                 }
                 catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                 {
-                    // Show dialog, unauthorized user detected.
-                    Application.Current.Exit();
+                    isAuthenticated = false;
                 }
                 catch (Exception ex)
                 {
                     EventLogger.Current.WriteError(ex.ToString());
+                }
+                
+                if (!isAuthenticated)
+                {
+                    await MessageDialogManager.Current.ShowAsync(
+                        "Not authorized",
+                        "You are no longer authenticated.",
+                        new UICommand(
+                            "Ok",
+                            async command =>
+                            {
+                                await this.client.LogOutAsync();
+                            }));
+
+                    Application.Current.Exit();
                 }
 
                 if (serviceAreas != null)
@@ -160,6 +178,23 @@ namespace MVP.App.Services.MvpApi.DataContainers
             {
                 this.fileAccessSemaphore.Release();
             }
+        }
+
+        public async Task ClearAsync()
+        {
+            await this.LoadAsync();
+
+            if (this.contributionAreas == null)
+            {
+                this.contributionAreas = new ContributionAreaContainerWrapper();
+            }
+
+            this.contributionAreas.ContributionAreas = new List<AwardContribution>();
+
+            this.LastDateChecked = DateTime.MinValue;
+            this.contributionAreas.LastDateChecked = this.LastDateChecked;
+
+            await this.SaveAsync();
         }
 
         public IEnumerable<AwardContribution> GetAllAreas()

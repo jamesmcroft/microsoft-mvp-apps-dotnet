@@ -14,10 +14,10 @@
 
     public class AwardCategoryToIconConverter : IValueConverter
     {
-        private IContributionAreaContainer areaContainer;
+        private IContributionAreaDataContainer areaContainer;
 
-        public IContributionAreaContainer AreaContainer
-            => this.areaContainer ?? (this.areaContainer = SimpleIoc.Default.GetInstance<IContributionAreaContainer>());
+        public IContributionAreaDataContainer AreaContainer
+            => this.areaContainer ?? (this.areaContainer = SimpleIoc.Default.GetInstance<IContributionAreaDataContainer>());
 
         public IEnumerable<AwardContribution> Areas => this.AreaContainer.GetAllAreas();
 

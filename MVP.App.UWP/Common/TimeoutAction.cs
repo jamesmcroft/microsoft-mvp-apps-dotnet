@@ -6,8 +6,26 @@
 
     using WinUX.Diagnostics.Tracing;
 
+    /// <summary>
+    /// Defines a model for executing actions with a timeout.
+    /// </summary>
     public class TimeoutAction
     {
+        /// <summary>
+        /// Executes a task with an expected result asynchronously.
+        /// </summary>
+        /// <param name="taskToExecute">
+        /// The task to execute.
+        /// </param>
+        /// <param name="cts">
+        /// The cancellation token source.
+        /// </param>
+        /// <typeparam name="TValue">
+        /// The expected result type.
+        /// </typeparam>
+        /// <returns>
+        /// When this method completes, it returns a <see cref="TValue"/> object.
+        /// </returns>
         public static async Task<TValue> ExecuteAsync<TValue>(Task<TValue> taskToExecute, CancellationTokenSource cts = null)
         {
             if (cts == null)

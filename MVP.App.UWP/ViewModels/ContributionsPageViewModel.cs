@@ -8,16 +8,19 @@
 
     using GalaSoft.MvvmLight.Command;
 
+    using MVP.Api;
     using MVP.Api.Models;
     using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Models;
     using MVP.App.Services.MvpApi;
 
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Navigation;
 
     using WinUX.Diagnostics.Tracing;
+    using WinUX.Messaging.Dialogs;
     using WinUX.MvvmLight.Xaml.Views;
     using WinUX.Networking;
 
@@ -27,7 +30,9 @@
 
         private readonly IContributionSubmissionService contributionService;
 
-        public ContributionsPageViewModel(IContributionSubmissionService contributionService)
+        private readonly ApiClient client;
+
+        public ContributionsPageViewModel(ApiClient client, IContributionSubmissionService contributionService)
         {
             this.contributionService = contributionService;
 
@@ -116,6 +121,7 @@
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution...", true));
 
                     bool success = false;
+                    bool isAuthenticated = true;
 
                     try
                     {
@@ -123,11 +129,26 @@
                     }
                     catch (HttpRequestException hre) when (hre.Message.Contains("401"))
                     {
-                        Application.Current.Exit();
+                        isAuthenticated = false;
                     }
                     catch (Exception ex)
                     {
                         EventLogger.Current.WriteError(ex.ToString());
+                    }
+
+                    if (!isAuthenticated)
+                    {
+                        await MessageDialogManager.Current.ShowAsync(
+                            "Not authorized",
+                            "You are no longer authenticated.",
+                            new UICommand(
+                                "Ok",
+                                async command =>
+                                {
+                                    await this.client.LogOutAsync();
+                                }));
+
+                        Application.Current.Exit();
                     }
 
                     if (success)

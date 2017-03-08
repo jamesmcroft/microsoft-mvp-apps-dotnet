@@ -4,14 +4,23 @@
 
     using Windows.UI.Xaml;
 
+    /// <summary>
+    /// Defines a flyout control designed to show data from a model.
+    /// </summary>
     public sealed partial class ItemFlyoutControl
     {
+        /// <summary>
+        /// Defines the dependency property for the <see cref="Title"/> property.
+        /// </summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             nameof(Title),
             typeof(string),
             typeof(ItemFlyoutControl),
             new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="CloseCommand"/> property.
+        /// </summary>
         public static readonly DependencyProperty CloseCommandProperty =
             DependencyProperty.Register(
                 nameof(CloseCommand),
@@ -19,6 +28,9 @@
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="ReadonlyContentTemplate"/> property.
+        /// </summary>
         public static readonly DependencyProperty ReadonlyContentTemplateProperty =
             DependencyProperty.Register(
                 nameof(ReadonlyContentTemplate),
@@ -26,6 +38,9 @@
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="EditContentTemplate"/> property.
+        /// </summary>
         public static readonly DependencyProperty EditContentTemplateProperty =
             DependencyProperty.Register(
                 nameof(EditContentTemplate),
@@ -33,69 +48,111 @@
                 typeof(ItemFlyoutControl),
                 new PropertyMetadata(null));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="IsInEdit"/> property.
+        /// </summary>
         public static readonly DependencyProperty IsInEditProperty = DependencyProperty.Register(
             nameof(IsInEdit),
             typeof(bool),
             typeof(ItemFlyoutControl),
             new PropertyMetadata(false));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="SaveCommand"/> property.
+        /// </summary>
         public static readonly DependencyProperty SaveCommandProperty = DependencyProperty.Register(
             nameof(SaveCommand),
             typeof(ICommand),
             typeof(ItemFlyoutControl),
             new PropertyMetadata(null));
 
+        /// <summary>
+        /// Defines the dependency property for the <see cref="CanDeleteProperty"/> property.
+        /// </summary>
         public static readonly DependencyProperty CanDeleteProperty = DependencyProperty.Register(
             nameof(CanDelete),
             typeof(bool),
             typeof(ItemFlyoutControl),
             new PropertyMetadata(false));
 
-        public static readonly DependencyProperty EditCommandProperty = DependencyProperty.Register(nameof(EditCommand), typeof(ICommand), typeof(ItemFlyoutControl), new PropertyMetadata(default(ICommand)));
+        /// <summary>
+        /// Defines the dependency property for the <see cref="EditCommand"/> property.
+        /// </summary>
+        public static readonly DependencyProperty EditCommandProperty = DependencyProperty.Register(
+            nameof(EditCommand),
+            typeof(ICommand),
+            typeof(ItemFlyoutControl),
+            new PropertyMetadata(default(ICommand)));
 
-        public static readonly DependencyProperty DeleteCommandProperty = DependencyProperty.Register(nameof(DeleteCommand), typeof(ICommand), typeof(ItemFlyoutControl), new PropertyMetadata(default(ICommand)));
+        /// <summary>
+        /// Defines the dependency property for the <see cref="DeleteCommand"/> property.
+        /// </summary>
+        public static readonly DependencyProperty DeleteCommandProperty =
+            DependencyProperty.Register(
+                nameof(DeleteCommand),
+                typeof(ICommand),
+                typeof(ItemFlyoutControl),
+                new PropertyMetadata(default(ICommand)));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemFlyoutControl"/> class.
+        /// </summary>
         public ItemFlyoutControl()
         {
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Gets or sets the command called when the delete button is clicked.
+        /// </summary>
         public ICommand DeleteCommand
         {
             get
             {
-                return (ICommand)GetValue(DeleteCommandProperty);
+                return (ICommand)this.GetValue(DeleteCommandProperty);
             }
+
             set
             {
-                SetValue(DeleteCommandProperty, value);
+                this.SetValue(DeleteCommandProperty, value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item can be deleted.
+        /// </summary>
         public bool CanDelete
         {
             get
             {
-                return (bool)GetValue(CanDeleteProperty);
+                return (bool)this.GetValue(CanDeleteProperty);
             }
+
             set
             {
-                SetValue(CanDeleteProperty, value);
+                this.SetValue(CanDeleteProperty, value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the command called when the edit button is clicked.
+        /// </summary>
         public ICommand EditCommand
         {
             get
             {
-                return (ICommand)GetValue(EditCommandProperty);
+                return (ICommand)this.GetValue(EditCommandProperty);
             }
+
             set
             {
-                SetValue(EditCommandProperty, value);
+                this.SetValue(EditCommandProperty, value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the data template to be used when the item is being edited.
+        /// </summary>
         public DataTemplate EditContentTemplate
         {
             get
@@ -109,6 +166,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the data template to be used when the item is not being edited.
+        /// </summary>
         public DataTemplate ReadonlyContentTemplate
         {
             get
@@ -122,6 +182,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the title of the flyout.
+        /// </summary>
         public string Title
         {
             get
@@ -135,6 +198,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the command called when the close button is clicked.
+        /// </summary>
         public ICommand CloseCommand
         {
             get
@@ -148,6 +214,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the command called when the save button is clicked.
+        /// </summary>
         public ICommand SaveCommand
         {
             get
@@ -161,6 +230,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is in edit mode.
+        /// </summary>
         public bool IsInEdit
         {
             get
