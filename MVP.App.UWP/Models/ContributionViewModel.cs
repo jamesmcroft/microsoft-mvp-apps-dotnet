@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
 
     using MVP.Api.Models;
     using MVP.App.Models.Common;
@@ -49,6 +50,8 @@
         private bool isAnnualReachInvalid;
 
         private bool isReferenceUrlInvalid;
+
+        private bool isVisibilityInvalid;
 
         public ContributionViewModel()
         {
@@ -303,17 +306,32 @@
             }
         }
 
-        public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology)
+        public bool IsVisibilityInvalid
+        {
+            get
+            {
+                return this.isVisibilityInvalid;
+            }
+            set
+            {
+                this.Set(() => this.IsVisibilityInvalid, ref this.isVisibilityInvalid, value);
+            }
+        }
+
+        public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology, ItemVisibility visibility)
         {
             this.Populate(default(Contribution));
 
             this.Type = contributionType;
             this.Technology = contributionTechnology;
+            this.Visibility = visibility;
         }
 
         /// <inheritdoc />
         public override void Populate(Contribution model)
         {
+            var visibilities = ContributionVisibilities.GetItemVisibilities();
+
             if (model != null)
             {
                 this.Id = model.Id;
@@ -327,7 +345,9 @@
                 this.SecondAnnualQuantity = model.SecondAnnualQuantity;
                 this.AnnualReach = model.AnnualReach;
                 this.ReferenceUrl = model.ReferenceUrl;
-                this.Visibility = model.Visibility;
+                this.Visibility = model.Visibility == null
+                                      ? visibilities.FirstOrDefault()
+                                      : visibilities.FirstOrDefault(x => x.Id.Equals(model.Visibility.Id));
 
                 this.AnnualQuantityValue = model.AnnualQuantity == null ? string.Empty : model.AnnualQuantity.ToString();
                 this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null ? string.Empty : model.SecondAnnualQuantity.ToString();
@@ -346,7 +366,7 @@
                 this.SecondAnnualQuantity = null;
                 this.AnnualReach = null;
                 this.ReferenceUrl = string.Empty;
-                this.Visibility = ContributionVisibilities.Public;
+                this.Visibility = visibilities.FirstOrDefault();
 
                 this.AnnualQuantityValue = string.Empty;
                 this.SecondAnnualQuantityValue = string.Empty;
@@ -419,7 +439,7 @@
         {
             return !this.IsAnnualQuantityInvalid && !this.IsAnnualReachInvalid && !this.IsReferenceUrlInvalid
                    && !this.IsSecondAnnualQuantityInvalid && !this.IsStartDateInvalid && !this.IsTechnologyInvalid
-                   && !this.IsTitleInvalid;
+                   && !this.IsTitleInvalid && !this.IsVisibilityInvalid;
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

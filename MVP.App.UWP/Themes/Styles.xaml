@@ -160,7 +160,8 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.AlignTopWithPanel="True"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                Text="{Binding Item.TypeName, Mode=OneWay}" />
+                Text="{Binding Item.TypeName, Mode=OneWay}"
+                Visibility="{Binding Item.TypeName, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionArea"
@@ -169,7 +170,8 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ActivityType"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                Text="{Binding Item.Technology.Name, Mode=OneWay}" />
+                Text="{Binding Item.Technology.Name, Mode=OneWay}"
+                Visibility="{Binding Item.Technology, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="DateOfActivity"
@@ -178,7 +180,8 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionArea"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
-                Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=d}" />
+                Text="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=d}"
+                Visibility="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionDescription"
@@ -189,6 +192,17 @@
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.Description, Mode=OneWay}"
                 Visibility="{Binding Item.Description, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionVisibility"
+                Header="Visibility"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionDescription"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.Visibility.Description, Mode=OneWay}"
+                Visibility="{Binding Item.Visibility, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
         </RelativePanel>
     </DataTemplate>
 
@@ -308,6 +322,20 @@
                     <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.AnnualReachValue, Mode=TwoWay}" />
                 </interactivity:Interaction.Behaviors>
             </controls:ValidatingTextBox>
+
+            <controls:ValidatingComboBox
+                x:Name="ContributionVisibility"
+                Margin="0,0,0,10"
+                DisplayMemberPath="Description"
+                Header="Visibility"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsVisibilityInvalid, Mode=TwoWay}"
+                IsMandatory="True"
+                ItemsSource="{Binding Visibilities, Mode=OneWay}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionReach"
+                SelectedItem="{Binding Item.Visibility, Mode=OneWay}" />
         </RelativePanel>
     </DataTemplate>
 
@@ -330,7 +358,7 @@
                 RelativePanel.AlignTopWithPanel="True"
                 RelativePanel.RightOf="ContributionImage"
                 Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
-                Text="{Binding Title, Mode=OneWay, FallbackValue='Unknown title'}"
+                Text="{Binding Title, Mode=OneWay, FallbackValue='No title'}"
                 TextTrimming="CharacterEllipsis" />
 
             <TextBlock

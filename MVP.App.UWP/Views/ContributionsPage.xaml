@@ -70,6 +70,7 @@
             Grid.RowSpan="3"
             d:IsHidden="True"
             CanDelete="{x:Bind ViewModel.EditableContributionFlyoutViewModel.CanDelete, Mode=OneWay}"
+            CanEdit="{x:Bind ViewModel.EditableContributionFlyoutViewModel.CanEdit, Mode=OneWay}"
             CloseCommand="{x:Bind ViewModel.EditableContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
             DataContext="{Binding EditableContributionFlyoutViewModel, Mode=OneWay}"
             DeleteCommand="{x:Bind ViewModel.EditableContributionFlyoutViewModel.DeleteCommand, Mode=OneWay}"

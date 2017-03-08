@@ -51,6 +51,7 @@
                         Command="{x:Bind EditCommand, Mode=OneWay}"
                         Icon="Edit"
                         Label="Edit"
+                        IsEnabled="{x:Bind CanEdit, Mode=OneWay}"
                         Visibility="{x:Bind IsInEdit, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                     <AppBarButton
                         Command="{x:Bind CloseCommand, Mode=OneWay}"

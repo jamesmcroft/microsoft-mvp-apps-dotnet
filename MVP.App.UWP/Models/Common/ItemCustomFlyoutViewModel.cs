@@ -23,6 +23,8 @@
 
         private bool canDelete;
 
+        private bool canEdit;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemCustomFlyoutViewModel{TItem}"/> class.
         /// </summary>
@@ -97,6 +99,18 @@
             set
             {
                 this.Set(() => this.CanDelete, ref this.canDelete, value);
+            }
+        }
+
+        public bool CanEdit
+        {
+            get
+            {
+                return this.canEdit;
+            }
+            set
+            {
+                this.Set(() => this.CanEdit, ref this.canEdit, value);
             }
         }
 

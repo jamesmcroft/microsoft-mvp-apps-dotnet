@@ -95,11 +95,36 @@
                 new PropertyMetadata(default(ICommand)));
 
         /// <summary>
+        /// Defines the dependency property for the <see cref="CanEdit"/> property.
+        /// </summary>
+        public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register(
+            nameof(CanEdit),
+            typeof(bool),
+            typeof(ItemFlyoutControl),
+            new PropertyMetadata(false));
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ItemFlyoutControl"/> class.
         /// </summary>
         public ItemFlyoutControl()
         {
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item can be edited.
+        /// </summary>
+        public bool CanEdit
+        {
+            get
+            {
+                return (bool)this.GetValue(CanEditProperty);
+            }
+
+            set
+            {
+                this.SetValue(CanEditProperty, value);
+            }
         }
 
         /// <summary>

@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Net.Http;
 
-    using Windows.UI.Popups;
-
     using GalaSoft.MvvmLight.Ioc;
 
     using Microsoft.Practices.ServiceLocation;
@@ -14,13 +12,15 @@
     using MVP.Api;
     using MVP.Api.Models;
     using MVP.App.Common;
+    using MVP.App.Events;
     using MVP.App.Models.Common;
+    using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
 
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
 
-    using MVP.App.Events;
-
+    using WinUX.Common;
     using WinUX.Diagnostics.Tracing;
     using WinUX.Messaging.Dialogs;
 
@@ -28,7 +28,7 @@
     {
         private DateTimeOffset maxDateOfActivity;
 
-        private ApiClient client;
+        private readonly ApiClient client;
 
         public EditableContributionFlyoutViewModel()
             : this(
@@ -54,11 +54,14 @@
                     .SelectMany(a => a.Items)
                     .ToList();
             this.Types = typeContainer.GetAllTypes();
+            this.Visibilities = ContributionVisibilities.GetItemVisibilities();
         }
 
         public IEnumerable<ContributionType> Types { get; }
 
         public IEnumerable<ActivityTechnology> Areas { get; }
+
+        public IEnumerable<ItemVisibility> Visibilities { get; }
 
         public DateTimeOffset MaxDateOfActivity
         {
@@ -131,9 +134,10 @@
 
             this.IsInEdit = true;
             this.CanDelete = false;
+            this.CanEdit = false;
 
             var contributionViewModel = new ContributionViewModel();
-            contributionViewModel.Populate(this.Types.FirstOrDefault(), this.Areas.FirstOrDefault());
+            contributionViewModel.Populate(this.Types.FirstOrDefault(), this.Areas.FirstOrDefault(), this.Visibilities.FirstOrDefault());
             this.Show(contributionViewModel);
         }
 
@@ -147,6 +151,12 @@
             this.Title = contributionViewModel.Title;
 
             this.IsInEdit = false;
+
+            // The ID being checked here is for PGIs which don't appear to be editable in the portal.
+            this.CanEdit = contributionViewModel.Type != null
+                           && contributionViewModel.Type.Id
+                           != ParseHelper.SafeParseGuid("f36464de-179a-e411-bbc8-6c3be5a82b68");
+
             this.CanDelete = true;
 
             this.Show(contributionViewModel);
