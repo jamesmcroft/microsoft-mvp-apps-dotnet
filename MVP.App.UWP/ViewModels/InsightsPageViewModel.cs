@@ -1,62 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
-using MVP.Api;
-using MVP.Api.Models;
-using MVP.App.Events;
-using MVP.App.Models;
-using MVP.App.Services.MvpApi;
-using MVP.App.Services.MvpApi.DataContainers;
-using WinUX;
-using WinUX.Diagnostics.Tracing;
-using WinUX.Mvvm.Input;
-using WinUX.MvvmLight.Xaml.Views;
-using WinUX.Networking;
-
-namespace MVP.App.ViewModels
+﻿namespace MVP.App.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+
+    using MVP.Api;
+    using MVP.Api.Models;
+    using MVP.App.Events;
+    using MVP.App.Models;
+    using MVP.App.Services.MvpApi.DataContainers;
+
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Navigation;
+
+    using WinUX;
+    using WinUX.Diagnostics.Tracing;
+    using WinUX.MvvmLight.Xaml.Views;
+    using WinUX.Networking;
+
     public class InsightsPageViewModel : PageBaseViewModel
     {
         #region Fields
 
         private readonly ApiClient apiClient;
-        private readonly IContributionSubmissionService contributionService;
+
         private readonly IProfileDataContainer profileData;
+
         private int contributionsToRetrieve = 20;
+
         private string selectedGroupByType = "Contribution Area";
+
         private bool isConfigurationPanelVisible = true;
 
         #endregion
 
-        public InsightsPageViewModel(ApiClient apiClient,
-            IContributionSubmissionService contributionService,
+        public InsightsPageViewModel(
+            ApiClient apiClient,
             IProfileDataContainer profileData)
         {
             this.apiClient = apiClient;
-            this.contributionService = contributionService;
             this.profileData = profileData;
 
-            Contributions = new ObservableCollection<Contribution>();
-            GroupedContributionsData = new ObservableCollection<ChartDataItemViewModel>();
-            GroupByTypes = new ObservableCollection<string> { "Contribution Type", "Technology Name" };
-            SelectedGroupByType = GroupByTypes.FirstOrDefault();
+            this.Contributions = new ObservableCollection<Contribution>();
+            this.GroupedContributionsData = new ObservableCollection<ChartDataItemViewModel>();
+            this.GroupByTypes = new ObservableCollection<string> { "Contribution Type", "Technology Name" };
+            this.SelectedGroupByType = this.GroupByTypes.FirstOrDefault();
 
-            MessengerInstance.Register<ProfileUpdatedMessage>(
+            this.MessengerInstance.Register<ProfileUpdatedMessage>(
                 this,
                 args =>
-                {
-                    if (args != null)
                     {
-                        OnProfileUpdated(args.Profile);
-                    }
-                });
+                        if (args != null)
+                        {
+                            this.OnProfileUpdated(args.Profile);
+                        }
+                    });
 
-            MessengerInstance.Register<RefreshDataMessage>(this, RefreshProfileData);
+            this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshProfileData);
         }
 
         #region Properties
@@ -81,8 +84,15 @@ namespace MVP.App.ViewModels
         /// </summary>
         public string SelectedGroupByType
         {
-            get { return selectedGroupByType; }
-            set { Set(() => SelectedGroupByType, ref selectedGroupByType, value); }
+            get
+            {
+                return this.selectedGroupByType;
+            }
+
+            set
+            {
+                this.Set(() => this.SelectedGroupByType, ref this.selectedGroupByType, value);
+            }
         }
 
         /// <summary>
@@ -90,8 +100,15 @@ namespace MVP.App.ViewModels
         /// </summary>
         public int ContributionsToRetrieve
         {
-            get { return contributionsToRetrieve; }
-            set { Set(() => ContributionsToRetrieve, ref contributionsToRetrieve, value); }
+            get
+            {
+                return this.contributionsToRetrieve;
+            }
+
+            set
+            {
+                this.Set(() => this.ContributionsToRetrieve, ref this.contributionsToRetrieve, value);
+            }
         }
 
         /// <summary>
@@ -99,8 +116,15 @@ namespace MVP.App.ViewModels
         /// </summary>
         public bool IsConfigurationPanelVisible
         {
-            get { return isConfigurationPanelVisible; }
-            set { Set(() => IsConfigurationPanelVisible, ref isConfigurationPanelVisible, value); }
+            get
+            {
+                return this.isConfigurationPanelVisible;
+            }
+
+            set
+            {
+                this.Set(() => this.IsConfigurationPanelVisible, ref this.isConfigurationPanelVisible, value);
+            }
         }
 
         #endregion
@@ -115,10 +139,10 @@ namespace MVP.App.ViewModels
                 {
                     try
                     {
-                        var newProfile = await apiClient.GetMyProfileAsync();
+                        var newProfile = await this.apiClient.GetMyProfileAsync();
                         if (newProfile != null)
                         {
-                            await profileData.SetProfileAsync(newProfile);
+                            await this.profileData.SetProfileAsync(newProfile);
                         }
                     }
                     catch (HttpRequestException hre) when (hre.Message.Contains("401"))
@@ -129,18 +153,18 @@ namespace MVP.App.ViewModels
                 }
                 else if (obj.Mode == RefreshDataMode.All || obj.Mode == RefreshDataMode.Contributions)
                 {
-                    await UpdateContributionsAsync();
+                    await this.UpdateContributionsAsync();
                 }
             }
 
-            MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
+            this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
         }
 
         private async void OnProfileUpdated(MVPProfile prof)
         {
             if (prof != null)
             {
-                await UpdateContributionsAsync();
+                await this.UpdateContributionsAsync();
             }
         }
 
@@ -153,11 +177,11 @@ namespace MVP.App.ViewModels
 
             try
             {
-                var periodContributions = await apiClient.GetContributionsAsync(0, ContributionsToRetrieve);
+                var periodContributions = await this.apiClient.GetContributionsAsync(0, this.ContributionsToRetrieve);
                 if (periodContributions?.Items != null)
                 {
-                    Contributions.Clear();
-                    Contributions.AddRange(periodContributions.Items);
+                    this.Contributions.Clear();
+                    this.Contributions.AddRange(periodContributions.Items);
                 }
             }
             catch (HttpRequestException hre) when (hre.Message.Contains("401"))
@@ -171,36 +195,44 @@ namespace MVP.App.ViewModels
         {
             try
             {
-                MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "refreshing charts..."));
+                this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Updating charts..."));
 
-                if (ContributionsToRetrieve != Contributions.Count)
+                if (this.ContributionsToRetrieve != this.Contributions.Count)
                 {
-                    await UpdateContributionsAsync();
+                    await this.UpdateContributionsAsync();
                 }
 
                 IEnumerable<ChartDataItemViewModel> groupedContributions = null;
 
-                if (selectedGroupByType == GroupByTypes[0]) // "Contribution Type"
+                if (this.selectedGroupByType == this.GroupByTypes[0])
                 {
-                    groupedContributions = Contributions.GroupBy(c => c.TypeName).Select(g => new ChartDataItemViewModel
-                    {
-                        CategoryName = g.Key.ToString(),
-                        CategoryValue = g.Count()
-                    });
+                    // "Contribution Type"
+                    groupedContributions = this.Contributions.GroupBy(c => c.TypeName)
+                            .Select(
+                                g =>
+                                    new ChartDataItemViewModel
+                                        {
+                                            CategoryName = g.Key.ToString(),
+                                            CategoryValue = g.Count()
+                                        });
                 }
-                else if (selectedGroupByType == GroupByTypes[1]) // "Technology Name"
+                else if (this.selectedGroupByType == this.GroupByTypes[1])
                 {
-                    groupedContributions = Contributions.GroupBy(c => c.Technology.Name).Select(g => new ChartDataItemViewModel
-                    {
-                        CategoryName = g.Key.ToString(),
-                        CategoryValue = g.Count()
-                    });
+                    // "Technology Name"
+                    groupedContributions = this.Contributions.GroupBy(c => c.Technology.Name)
+                            .Select(
+                                g =>
+                                    new ChartDataItemViewModel
+                                        {
+                                            CategoryName = g.Key.ToString(),
+                                            CategoryValue = g.Count()
+                                        });
                 }
 
                 if (groupedContributions != null)
                 {
-                    GroupedContributionsData.Clear();
-                    GroupedContributionsData.AddRange(groupedContributions);
+                    this.GroupedContributionsData.Clear();
+                    this.GroupedContributionsData.AddRange(groupedContributions);
                 }
             }
             catch (Exception ex)
@@ -209,18 +241,18 @@ namespace MVP.App.ViewModels
             }
             finally
             {
-                MessengerInstance.Send(new UpdateBusyIndicatorMessage(false, string.Empty));
-                IsConfigurationPanelVisible = false;
+                this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
+                this.IsConfigurationPanelVisible = false;
             }
         }
 
         #endregion
 
         #region UI event handlers
-        
+
         public async void UpdateChartsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            await UpdateChartDataAsync();
+            await this.UpdateChartDataAsync();
         }
 
         #endregion
@@ -230,7 +262,10 @@ namespace MVP.App.ViewModels
         /// <inheritdoc />
         public override async void OnPageNavigatedTo(NavigationEventArgs args)
         {
-            await UpdateContributionsAsync();
+            if (args.NavigationMode == NavigationMode.New)
+            {
+                await this.UpdateChartDataAsync();
+            }
         }
 
         /// <inheritdoc />

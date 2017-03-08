@@ -1,16 +1,14 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using MVP.App.ViewModels;
-
-namespace MVP.App.Views
+﻿namespace MVP.App.Views
 {
-    public sealed partial class InsightsPage : Page
-    {
-        InsightsPageViewModel ViewModel => this.DataContext as InsightsPageViewModel;
+    using MVP.App.ViewModels;
 
+    public sealed partial class InsightsPage
+    {
         public InsightsPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
+        public InsightsPageViewModel ViewModel => this.DataContext as InsightsPageViewModel;
     }
 }
