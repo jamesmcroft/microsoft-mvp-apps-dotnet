@@ -23,8 +23,6 @@
 
     public class InsightsPageViewModel : PageBaseViewModel
     {
-        #region Fields
-
         private readonly ApiClient apiClient;
 
         private readonly IProfileDataContainer profileData;
@@ -35,11 +33,11 @@
 
         private bool isConfigurationPanelVisible = true;
 
-        #endregion
+        private bool? isPieChartVisible;
 
-        public InsightsPageViewModel(
-            ApiClient apiClient,
-            IProfileDataContainer profileData)
+        private bool? isBarChartVisible;
+
+        public InsightsPageViewModel(ApiClient apiClient, IProfileDataContainer profileData)
         {
             this.apiClient = apiClient;
             this.profileData = profileData;
@@ -48,6 +46,9 @@
             this.GroupedContributionsData = new ObservableCollection<ChartDataItemViewModel>();
             this.GroupByTypes = new ObservableCollection<string> { "Contribution Type", "Technology Name" };
             this.SelectedGroupByType = this.GroupByTypes.FirstOrDefault();
+
+            this.IsPieChartVisible = true;
+            this.IsBarChartVisible = true;
 
             this.MessengerInstance.Register<ProfileUpdatedMessage>(
                 this,
@@ -62,7 +63,35 @@
             this.MessengerInstance.Register<RefreshDataMessage>(this, this.RefreshProfileData);
         }
 
-        #region Properties
+        /// <summary>
+        /// Gets or sets a value indicating whether the pie chart control is visible.
+        /// </summary>
+        public bool? IsPieChartVisible
+        {
+            get
+            {
+                return this.isPieChartVisible;
+            }
+            set
+            {
+                this.Set(() => this.IsPieChartVisible, ref this.isPieChartVisible, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the bar chart control is visible.
+        /// </summary>
+        public bool? IsBarChartVisible
+        {
+            get
+            {
+                return this.isBarChartVisible;
+            }
+            set
+            {
+                this.Set(() => this.IsBarChartVisible, ref this.isBarChartVisible, value);
+            }
+        }
 
         /// <summary>
         /// Holds the activities of the current MVP profile within the selected range of ContributionsToRetrieve
@@ -126,10 +155,6 @@
                 this.Set(() => this.IsConfigurationPanelVisible, ref this.isConfigurationPanelVisible, value);
             }
         }
-
-        #endregion
-
-        #region Methods
 
         private async void RefreshProfileData(RefreshDataMessage obj)
         {
@@ -207,7 +232,8 @@
                 if (this.selectedGroupByType == this.GroupByTypes[0])
                 {
                     // "Contribution Type"
-                    groupedContributions = this.Contributions.GroupBy(c => c.TypeName)
+                    groupedContributions =
+                        this.Contributions.GroupBy(c => c.TypeName)
                             .Select(
                                 g =>
                                     new ChartDataItemViewModel
@@ -219,7 +245,8 @@
                 else if (this.selectedGroupByType == this.GroupByTypes[1])
                 {
                     // "Technology Name"
-                    groupedContributions = this.Contributions.GroupBy(c => c.Technology.Name)
+                    groupedContributions =
+                        this.Contributions.GroupBy(c => c.Technology.Name)
                             .Select(
                                 g =>
                                     new ChartDataItemViewModel
@@ -246,18 +273,10 @@
             }
         }
 
-        #endregion
-
-        #region UI event handlers
-
         public async void UpdateChartsButton_OnClick(object sender, RoutedEventArgs e)
         {
             await this.UpdateChartDataAsync();
         }
-
-        #endregion
-
-        #region Navigation and lifecycle
 
         /// <inheritdoc />
         public override async void OnPageNavigatedTo(NavigationEventArgs args)
@@ -277,7 +296,5 @@
         public override void OnPageNavigatingFrom(NavigatingCancelEventArgs args)
         {
         }
-
-        #endregion
     }
 }

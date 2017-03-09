@@ -27,6 +27,7 @@
     <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
     <localConverters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
+    <localConverters:IntToDoubleConverter x:Key="IntToDoubleConverter" />
 
     <localConverters:AwardCategoryToIconConverter x:Key="AwardCategoryToIconConverter" />
     <localConverters:AwardCategoryToColorBrushConverter
@@ -213,7 +214,7 @@
                 Margin="0,0,0,10"
                 DisplayMemberPath="Name"
                 Header="Type"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 ItemsSource="{Binding Types, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -225,7 +226,7 @@
                 Margin="0,0,0,10"
                 DisplayMemberPath="Name"
                 Header="Area"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsTechnologyInvalid, Mode=TwoWay}"
                 IsMandatory="True"
                 ItemsSource="{Binding Areas, Mode=OneWay}"
@@ -240,7 +241,7 @@
                 HorizontalAlignment="Stretch"
                 Date="{Binding Item.StartDate, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"
                 Header="Date"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 MaxDate="{Binding MaxDateOfActivity}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -250,7 +251,7 @@
                 x:Name="ContributionTitle"
                 Margin="0,0,0,10"
                 Header="Title"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsTitleInvalid, Mode=TwoWay}"
                 IsMandatory="True"
                 RelativePanel.AlignLeftWithPanel="True"
@@ -265,7 +266,7 @@
                 x:Name="ContributionUrl"
                 Margin="0,0,0,10"
                 Header="URL"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsReferenceUrlInvalid, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -281,7 +282,7 @@
                 Margin="0,0,0,10"
                 AcceptsReturn="True"
                 Header="Description"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 MaxLength="5000"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -296,7 +297,7 @@
                 x:Name="ContributionQuantity"
                 Margin="0,0,0,10"
                 Header="Quantity"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsAnnualQuantityInvalid, Mode=TwoWay}"
                 IsMandatory="True"
                 RelativePanel.AlignLeftWithPanel="True"
@@ -312,7 +313,7 @@
                 x:Name="ContributionReach"
                 Margin="0,0,0,10"
                 Header="Reach"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsAnnualReachInvalid, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -328,7 +329,7 @@
                 Margin="0,0,0,10"
                 DisplayMemberPath="Description"
                 Header="Visibility"
-                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
                 IsInvalid="{Binding Item.IsVisibilityInvalid, Mode=TwoWay}"
                 IsMandatory="True"
                 ItemsSource="{Binding Visibilities, Mode=OneWay}"

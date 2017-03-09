@@ -111,6 +111,7 @@
     <Compile Include="Converters\AwardCategoryToIconConverter.cs" />
     <Compile Include="Converters\BackgroundToForegroundBrushConverter.cs" />
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\IntToDoubleConverter.cs" />
     <Compile Include="Models\ChartDataItemViewModel.cs" />
     <Compile Include="Models\Common\ItemViewModelBase.cs" />
     <Compile Include="Models\ContributionViewModel.cs" />

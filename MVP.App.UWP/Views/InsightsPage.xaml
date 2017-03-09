@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:chart="using:Telerik.UI.Xaml.Controls.Chart"
-    xmlns:converters="using:WinUX.Xaml.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:input="using:Telerik.UI.Xaml.Controls.Input"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -30,7 +29,7 @@
                     x:Name="PieSeriesGrid"
                     Grid.Row="0"
                     Grid.Column="0"
-                    Visibility="{x:Bind PieSeriesCheckBox.IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind ViewModel.IsPieChartVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
@@ -91,10 +90,11 @@
                     x:Name="CartesianSeriesGrid"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Visibility="{x:Bind CartesianSeriesCheckBox.IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    Visibility="{x:Bind ViewModel.IsBarChartVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                     <chart:RadCartesianChart
                         x:Name="LineSeriesChart"
                         EmptyContent="No data to display"
+                        Foreground="{StaticResource MvpBlueDarkThemeBrush}"
                         PaletteName="DefaultLight">
                         <chart:RadCartesianChart.VerticalAxis>
                             <chart:LinearAxis />
@@ -122,12 +122,10 @@
                                 <chart:ChartSeriesLabelDefinition Margin="30,0,0,5">
                                     <chart:ChartSeriesLabelDefinition.Template>
                                         <DataTemplate>
-                                            <Grid Background="{StaticResource MvpBlueDarkThemeBrush}">
-                                                <TextBlock
-                                                    FocusVisualPrimaryBrush="{StaticResource WhiteThemeBrush}"
-                                                    Foreground="White"
-                                                    Text="{Binding DataItem.Category}" />
-                                            </Grid>
+                                            <TextBlock
+                                                FocusVisualPrimaryBrush="{StaticResource MvpBlueDarkThemeBrush}"
+                                                Foreground="{StaticResource MvpBlueDarkThemeBrush}"
+                                                Text="{Binding DataItem.Category}" />
                                         </DataTemplate>
                                     </chart:ChartSeriesLabelDefinition.Template>
                                 </chart:ChartSeriesLabelDefinition>
@@ -138,62 +136,85 @@
             </Grid>
         </ScrollViewer>
 
-        <Grid
-            x:Name="ChartConfigurationGrid"
-            VerticalAlignment="Bottom"
-            Background="{StaticResource MvpBlueLightestThemeBrush}"
-            BorderBrush="{StaticResource MvpBlueDarkerThemeBrush}"
-            BorderThickness="1,1,1,0"
-            Visibility="{x:Bind ViewModel.IsConfigurationPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, FallbackValue=Visible}">
-
-            <Grid x:Name="InputPanel" MaxWidth="420">
-                <StackPanel>
-                    <StackPanel Margin="10" Orientation="Horizontal">
-
-                        <CheckBox
-                            x:Name="PieSeriesCheckBox"
-                            Margin="00,0,10,0"
-                            Content="Doughnut Chart"
-                            IsChecked="True" />
-
-                        <CheckBox
-                            x:Name="CartesianSeriesCheckBox"
-                            Content="Bar Chart"
-                            IsChecked="True" />
-                    </StackPanel>
-
-                    <ComboBox
-                        x:Name="AreaOrTypeComboBox"
-                        Margin="10"
-                        HorizontalAlignment="Stretch"
-                        Header="Group By"
-                        ItemsSource="{x:Bind ViewModel.GroupByTypes}"
-                        SelectedItem="{x:Bind ViewModel.SelectedGroupByType, Mode=TwoWay}" />
-
-                    <input:RadNumericBox
-                        Margin="10"
-                        HorizontalAlignment="Stretch"
-                        Header="Number of Contributions"
-                        ValueFormat="{}{0:N0}"
-                        Value="{Binding ContributionsToRetrieve, Mode=TwoWay}" />
-
-                    <Button
-                        Margin="10"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        Click="{x:Bind ViewModel.UpdateChartsButton_OnClick}"
-                        Content="Update charts" />
-                </StackPanel>
-            </Grid>
-        </Grid>
-
         <CommandBar Grid.Row="1">
-            <AppBarToggleButton
-                x:Name="SettingsButton"
-                VerticalAlignment="Bottom"
+            <AppBarButton
+                x:Name="FilterButton"
                 Icon="Filter"
-                IsChecked="{Binding IsConfigurationPanelVisible, Mode=TwoWay}"
-                Label="Filter" />
+                Label="Filter">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <RelativePanel MinWidth="420">
+                            <TextBlock
+                                x:Name="ChartsHeader"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.AlignTopWithPanel="True"
+                                Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
+                                Text="Charts" />
+
+                            <Grid
+                                x:Name="ChartOptions"
+                                Margin="0,0,0,10"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.Below="ChartsHeader">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBox
+                                    x:Name="PieChartCheckBox"
+                                    AllowFocusOnInteraction="True"
+                                    Content="Pie"
+                                    IsChecked="{x:Bind ViewModel.IsPieChartVisible, Mode=TwoWay}" />
+
+                                <CheckBox
+                                    x:Name="BarChartCheckBox"
+                                    Grid.Column="1"
+                                    AllowFocusOnInteraction="True"
+                                    Content="Bar"
+                                    IsChecked="{x:Bind ViewModel.IsBarChartVisible, Mode=TwoWay}" />
+                            </Grid>
+
+                            <ComboBox
+                                x:Name="ChartGroupingComboBox"
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                AllowFocusOnInteraction="True"
+                                Header="Group By"
+                                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.GroupByTypes}"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.Below="ChartOptions"
+                                SelectedItem="{x:Bind ViewModel.SelectedGroupByType, Mode=TwoWay}" />
+
+                            <input:RadNumericBox
+                                x:Name="ContributionNumberBox"
+                                Margin="0,0,0,10"
+                                AllowFocusOnInteraction="True"
+                                Header="Number of recent contributions"
+                                HeaderTemplate="{StaticResource StandardSubheaderTemplate}"
+                                RelativePanel.AlignLeftWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.Below="ChartGroupingComboBox"
+                                ValueFormat="{}{0:N0}"
+                                Value="{x:Bind ViewModel.ContributionsToRetrieve, Mode=TwoWay, Converter={StaticResource IntToDoubleConverter}}" />
+
+                            <AppBarButton
+                                AllowFocusOnInteraction="True"
+                                Click="{x:Bind ViewModel.UpdateChartsButton_OnClick}"
+                                Icon="Refresh"
+                                Label="Update"
+                                RelativePanel.AlignBottomWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                RelativePanel.Below="ContributionNumberBox" />
+                        </RelativePanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
         </CommandBar>
 
         <VisualStateManager.VisualStateGroups>
@@ -203,7 +224,6 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="InputPanel.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="ChartConfigurationGrid.HorizontalAlignment" Value="Stretch" />
                     </VisualState.Setters>
                 </VisualState>
@@ -212,7 +232,6 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="InputPanel.HorizontalAlignment" Value="Center" />
                         <Setter Target="ChartConfigurationGrid.HorizontalAlignment" Value="Right" />
                     </VisualState.Setters>
                 </VisualState>
