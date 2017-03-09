@@ -37,7 +37,6 @@
         <Setter Property="TextWrapping" Value="WrapWholeWords" />
     </Style>
 
-
     <Style
         x:Key="HeaderedTextBlockTextStyle"
         BasedOn="{StaticResource BodyTextBlockStyle}"
@@ -48,6 +47,13 @@
     </Style>
 
     <DataTemplate x:Key="StandardHeaderTemplate">
+        <TextBlock
+            x:Name="HeaderContent"
+            Style="{StaticResource HeaderedTextBlockHeaderStyle}"
+            Text="{Binding}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="StandardSubheaderTemplate">
         <TextBlock
             x:Name="HeaderContent"
             Style="{StaticResource HeaderedTextBlockSubheaderStyle}"

@@ -34,6 +34,8 @@
 
         public MainPageViewModel MainPageViewModel => ServiceLocator.Current.GetInstance<MainPageViewModel>();
 
+        public InsightsPageViewModel InsightsPageViewModel => ServiceLocator.Current.GetInstance<InsightsPageViewModel>();
+
         public AboutPageViewModel AboutPageViewModel => ServiceLocator.Current.GetInstance<AboutPageViewModel>();
 
         public ContributionsPageViewModel ContributionsPageViewModel
@@ -58,6 +60,7 @@
             SimpleIoc.Default.Register<AppShellPageViewModel>();
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<ContributionsPageViewModel>();
+            SimpleIoc.Default.Register<InsightsPageViewModel>();
             SimpleIoc.Default.Register<AboutPageViewModel>();
         }
     }

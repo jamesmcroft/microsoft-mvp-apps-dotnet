@@ -124,6 +124,7 @@
 
             this.PrimaryMenuButtons.Add(CreateHomeButton());
             this.PrimaryMenuButtons.Add(CreateContributionsButton());
+            this.PrimaryMenuButtons.Add(CreateChartsButton());
             this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
             this.SecondaryMenuButtons.Add(this.CreateAboutButton());
         }
@@ -203,6 +204,18 @@
                               Page = typeof(ContributionsPage),
                               ToolTip = "View my current community activity contributions"
                           };
+            return btn;
+        }
+
+        private AppMenuButton CreateChartsButton()
+        {
+            var btn = new AppMenuButton
+            {
+                Content = GenerateButtonContent(Symbol.FourBars, "Insights"),
+                IsGrouped = true,
+                Page = typeof(InsightsPage),
+                ToolTip = "View charts of my community activities"
+            };
             return btn;
         }
 
