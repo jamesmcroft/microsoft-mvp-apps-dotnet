@@ -17,7 +17,7 @@
 
             <Image
                 x:Name="MvpLogo"
-                Width="140"
+                Width="90"
                 Source="../Assets/MVPLogo.png" />
 
             <ProgressRing

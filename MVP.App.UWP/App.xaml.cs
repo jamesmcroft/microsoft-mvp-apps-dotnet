@@ -14,9 +14,13 @@
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Activation;
     using Windows.ApplicationModel.VoiceCommands;
+    using Windows.Foundation.Metadata;
+    using Windows.UI;
+    using Windows.UI.ViewManagement;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 
+    using WinUX;
     using WinUX.ApplicationModel.Lifecycle;
     using WinUX.Diagnostics;
     using WinUX.Diagnostics.Tracing;
@@ -100,6 +104,43 @@
 
         private async Task LaunchApplicationAsync(object launchArgs)
         {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                var applicationView = ApplicationView.GetForCurrentView();
+                if (applicationView != null)
+                {
+                    if (applicationView.TitleBar != null)
+                    {
+                        applicationView.TitleBar.ForegroundColor = Colors.White;
+                        applicationView.TitleBar.BackgroundColor = "#00467A".ToColor();
+
+                        applicationView.TitleBar.InactiveForegroundColor = Colors.Black;
+                        applicationView.TitleBar.InactiveBackgroundColor = "#C6E7FF".ToColor();
+
+                        applicationView.TitleBar.ButtonForegroundColor = Colors.White;
+                        applicationView.TitleBar.ButtonBackgroundColor = "#00467A".ToColor();
+
+                        applicationView.TitleBar.ButtonHoverForegroundColor = Colors.Black;
+                        applicationView.TitleBar.ButtonHoverBackgroundColor = "#60BCFF".ToColor();
+
+                        applicationView.TitleBar.ButtonPressedForegroundColor = Colors.White;
+                        applicationView.TitleBar.ButtonPressedBackgroundColor = "#001A2D".ToColor();
+
+                        applicationView.TitleBar.ButtonInactiveForegroundColor = Colors.Black;
+                        applicationView.TitleBar.ButtonInactiveBackgroundColor = "#C6E7FF".ToColor();
+                    }
+                }
+            }
+
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    await statusBar.HideAsync();
+                }
+            }
+
             try
             {
                 var commandFile = await Package.Current.InstalledLocation.GetFileAsync("VoiceCommands.xml");
