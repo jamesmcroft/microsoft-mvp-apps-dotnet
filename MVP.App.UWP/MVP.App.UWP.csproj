@@ -116,6 +116,7 @@
     <Compile Include="Converters\AwardCategoryToIconConverter.cs" />
     <Compile Include="Converters\BackgroundToForegroundBrushConverter.cs" />
     <Compile Include="Converters\DateTimeToDateTimeOffsetConverter.cs" />
+    <Compile Include="Models\ChartDataItemViewModel.cs" />
     <Compile Include="Models\Common\ItemViewModelBase.cs" />
     <Compile Include="Models\ContributionViewModel.cs" />
     <Compile Include="Models\EditableContributionFlyoutViewModel.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="ViewModels\ContributionsPageViewModel.cs" />
     <Compile Include="ViewModels\InitializingPageViewModel.cs" />
     <Compile Include="Models\Common\ItemCustomFlyoutViewModel.cs" />
+    <Compile Include="ViewModels\InsightsPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\AboutPageViewModel.cs" />
     <Compile Include="Views\AppShellPage.xaml.cs">
@@ -141,6 +143,9 @@
     </Compile>
     <Compile Include="Views\InitializingPage.xaml.cs">
       <DependentUpon>InitializingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InsightsPage.xaml.cs">
+      <DependentUpon>InsightsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -267,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InitializingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InsightsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
