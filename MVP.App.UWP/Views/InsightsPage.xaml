@@ -122,10 +122,12 @@
                                 <chart:ChartSeriesLabelDefinition Margin="30,0,0,5">
                                     <chart:ChartSeriesLabelDefinition.Template>
                                         <DataTemplate>
-                                            <TextBlock
-                                                FocusVisualPrimaryBrush="{StaticResource MvpBlueDarkThemeBrush}"
-                                                Foreground="{StaticResource MvpBlueDarkThemeBrush}"
-                                                Text="{Binding DataItem.Category}" />
+                                            <Grid Background="{StaticResource MvpBlueDarkThemeBrush}">
+                                                <TextBlock
+                                                    FocusVisualPrimaryBrush="{StaticResource WhiteThemeBrush}"
+                                                    Foreground="White"
+                                                    Text="{Binding DataItem.Category}" />
+                                            </Grid>
                                         </DataTemplate>
                                     </chart:ChartSeriesLabelDefinition.Template>
                                 </chart:ChartSeriesLabelDefinition>
