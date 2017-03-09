@@ -175,6 +175,7 @@ AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
+*.appx
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
@@ -250,3 +251,11 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/MVP.App.UWP/_scale-400.appx
+/MVP.App.UWP/_scale-150.appx
+/MVP.App.UWP/_scale-125.appx
+/MVP.App.UWP/_scale-100.appx
+/MVP.App.UWP/_scale-400.appx
+/MVP.App.UWP/_scale-150.appx
+/MVP.App.UWP/_scale-125.appx
+/MVP.App.UWP/_scale-100.appx
