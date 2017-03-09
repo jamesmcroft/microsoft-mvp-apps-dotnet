@@ -5,11 +5,11 @@ Last revised on 3/9/2017
 
 ### Summary
 
-The MVP Community application does not collect or store any personally identify information about you. 
+The MVP Community application does not collect or store any personal information about you. 
 
-The application will require you to authenticate using your Microsoft Account associated with your Microsoft MVP profile, however we do not collect or distribute any of the information about your Microsoft Account.
+The MVP Community application will require you to authenticate using your Microsoft Account associated with your Microsoft MVP profile, however we do not collect or distribute any of the information about your Microsoft Account.
 
-We do cache the tokens required to authenticate your Account when communicating with the Microsoft MVP API. 
+The MVP Community application will cache the tokens required to authenticate your Account when communicating with the Microsoft MVP API. 
 
 ### Questions
 
