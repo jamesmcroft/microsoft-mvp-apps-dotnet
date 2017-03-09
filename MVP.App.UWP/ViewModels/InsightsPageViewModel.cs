@@ -44,7 +44,7 @@
 
             this.Contributions = new ObservableCollection<Contribution>();
             this.GroupedContributionsData = new ObservableCollection<ChartDataItemViewModel>();
-            this.GroupByTypes = new ObservableCollection<string> { "Contribution Type", "Technology Name" };
+            this.GroupByTypes = new ObservableCollection<string> { "Contribution Type", "Technology Name", "Week", "Month", "Year" };
             this.SelectedGroupByType = this.GroupByTypes.FirstOrDefault();
 
             this.IsPieChartVisible = true;
@@ -254,6 +254,60 @@
                                             CategoryName = g.Key.ToString(),
                                             CategoryValue = g.Count()
                                         });
+                }
+                else if (this.selectedGroupByType == this.GroupByTypes[2]) 
+                {
+                    // "Week" 
+
+                    // Only use the past year's activities)
+                    var lastYear = this.Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
+
+                    if (lastYear != null)
+                    {
+                        groupedContributions =
+                            lastYear.GroupBy(c => c.StartDate.Value.Date.AddDays(-(int)c.StartDate.Value.Date.DayOfWeek))
+                                .Select(
+                                    g =>
+                                        new ChartDataItemViewModel
+                                        {
+                                            CategoryName = g.Key.ToString(),
+                                            CategoryValue = g.Count()
+                                        });
+
+                    }
+                }
+                else if (this.selectedGroupByType == this.GroupByTypes[3]) 
+                {
+                    // "Month"
+
+                    // Only use the past year's activities)
+                    var lastYear = this.Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
+
+                    if (lastYear != null)
+                    {
+                        groupedContributions =
+                            lastYear.GroupBy(c => c.StartDate.Value.Month)
+                                .Select(
+                                    g =>
+                                        new ChartDataItemViewModel
+                                        {
+                                            CategoryName = g.Key.ToString(),
+                                            CategoryValue = g.Count()
+                                        });
+                    }
+                }
+                else if (this.selectedGroupByType == this.GroupByTypes[4])
+                {
+                    // "Year"
+                    groupedContributions =
+                        this.Contributions.GroupBy(c => c.StartDate.Value.Year)
+                            .Select(
+                                g =>
+                                    new ChartDataItemViewModel
+                                    {
+                                        CategoryName = g.Key.ToString(),
+                                        CategoryValue = g.Count()
+                                    });
                 }
 
                 if (groupedContributions != null)
