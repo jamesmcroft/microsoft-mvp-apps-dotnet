@@ -59,8 +59,8 @@
     </views:PageBase.Resources>
 
     <Grid Background="{StaticResource LightGrayThemeBrush}">
-        <ScrollViewer Padding="20">
-            <StackPanel>
+        <ScrollViewer>
+            <StackPanel x:Name="ContentScroller">
                 <TextBlock
                     HorizontalAlignment="Center"
                     Foreground="{StaticResource MvpBlueDarkThemeBrush}"
@@ -111,5 +111,26 @@
 
             </StackPanel>
         </ScrollViewer>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentScroller.Padding" Value="20,50,20,20" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentScroller.Padding" Value="20" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </views:PageBase>

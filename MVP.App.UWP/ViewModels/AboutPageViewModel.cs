@@ -52,7 +52,7 @@
 
         public string AppDescription
             =>
-                $"The MVP Community app is built by community developers to provide an app experience for Microsoft MVPs worldwide. {Environment.NewLine}{Environment.NewLine}You can find a list of the app's contributors below."
+                $"The MVP Community app is built by community developers to provide an app experience for Microsoft MVPs worldwide. It is designed to help MVPs with managing their profile and contributions. {Environment.NewLine}{Environment.NewLine}A special thank you to the team at Microsoft behind the MVP API. {Environment.NewLine}{Environment.NewLine}You can find a list of the app's contributors below. If you'd like to contribute towards this project, please find the public GitHub repo link at the bottom of this page."
         ;
 
         public ObservableCollection<Contributor> Contributors { get; }
