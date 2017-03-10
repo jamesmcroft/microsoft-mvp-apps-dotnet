@@ -2,16 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/MvpBlueColor">
-    <StackView
+    android:background="@color/MvpBlueColor"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:id="@+id/mvp_logo"
             android:src="@drawable/Icon"
-            android:scaleType="fitCenter" />
-    </StackView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mvp_icon" />
+    </LinearLayout>
 </RelativeLayout>

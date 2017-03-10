@@ -1672,7 +1672,7 @@ namespace MVP.App
 			public const int multiply = 2131427348;
 			
 			// aapt resource value: 0x7f0b0050
-			public const int mvp_logo = 2131427408;
+			public const int mvp_icon = 2131427408;
 			
 			// aapt resource value: 0x7f0b001f
 			public const int never = 2131427359;
