@@ -1,18 +1,21 @@
-﻿using Android.App;
-using Android.Widget;
-using Android.OS;
-
-namespace MVP.App.Droid
+﻿namespace MVP.App
 {
-    [Activity(Label = "MVP.App.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
-    {
-        protected override void OnCreate(Bundle bundle)
-        {
-            base.OnCreate(bundle);
+    using Android.App;
+    using Android.OS;
+    using Android.Views;
 
-            // Set our view from the "main" layout resource
-            // SetContentView (Resource.Layout.Main);
+    using MVP.App.Common;
+    using MVP.App.ViewModels;
+
+    [Activity]
+    public class MainActivity : BaseActivity<MainActivityViewModel>
+    {
+        public override MainActivityViewModel ViewModel => App.Application.Locator.MainActivityViewModel;
+
+        public override void OnCreated(Bundle bundle)
+        {
+            this.RequestWindowFeature(WindowFeatures.NoTitle);
+            this.SetContentView(Resource.Layout.Main);
         }
     }
 }

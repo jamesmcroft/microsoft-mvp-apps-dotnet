@@ -1,0 +1,1 @@
+XHDPI is 2.66666666 times larger than LDPI

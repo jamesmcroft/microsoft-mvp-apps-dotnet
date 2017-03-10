@@ -5,9 +5,9 @@ namespace MVP.App
 
     using Microsoft.Practices.ServiceLocation;
 
-    using MVP.Api;
     using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
+    using MVP.App.ViewModels;
 
     public class Locator
     {
@@ -19,6 +19,12 @@ namespace MVP.App
             this.RegisterViewModels();
         }
 
+        public InitializingActivityViewModel InitializingActivityViewModel
+            => ServiceLocator.Current.GetInstance<InitializingActivityViewModel>();
+
+        public MainActivityViewModel MainActivityViewModel
+            => ServiceLocator.Current.GetInstance<MainActivityViewModel>();
+
         private void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
@@ -28,7 +34,8 @@ namespace MVP.App
 
         private void RegisterViewModels()
         {
-
+            SimpleIoc.Default.Register<InitializingActivityViewModel>();
+            SimpleIoc.Default.Register<MainActivityViewModel>();
         }
     }
 }

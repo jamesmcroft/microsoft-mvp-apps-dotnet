@@ -753,32 +753,89 @@ namespace MVP.App
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0a003a
-			public const int abc_background_cache_hint_selector_material_dark = 2131361850;
+			// aapt resource value: 0x7f0a0044
+			public const int AccessColor = 2131361860;
 			
 			// aapt resource value: 0x7f0a003b
-			public const int abc_background_cache_hint_selector_material_light = 2131361851;
+			public const int BlackColor = 2131361851;
+			
+			// aapt resource value: 0x7f0a003d
+			public const int DarkGrayColor = 2131361853;
+			
+			// aapt resource value: 0x7f0a0045
+			public const int ExcelColor = 2131361861;
 			
 			// aapt resource value: 0x7f0a003c
-			public const int abc_color_highlight_material = 2131361852;
+			public const int LightGrayColor = 2131361852;
+			
+			// aapt resource value: 0x7f0a0041
+			public const int MvpBlueColor = 2131361857;
+			
+			// aapt resource value: 0x7f0a0042
+			public const int MvpBlueDarkColor = 2131361858;
+			
+			// aapt resource value: 0x7f0a0043
+			public const int MvpBlueDarkerColor = 2131361859;
+			
+			// aapt resource value: 0x7f0a0040
+			public const int MvpBlueLightColor = 2131361856;
+			
+			// aapt resource value: 0x7f0a003f
+			public const int MvpBlueLighterColor = 2131361855;
+			
+			// aapt resource value: 0x7f0a003e
+			public const int MvpBlueLightestColor = 2131361854;
+			
+			// aapt resource value: 0x7f0a0046
+			public const int OfficeColor = 2131361862;
+			
+			// aapt resource value: 0x7f0a0047
+			public const int OneNoteColor = 2131361863;
+			
+			// aapt resource value: 0x7f0a0048
+			public const int OutlookColor = 2131361864;
+			
+			// aapt resource value: 0x7f0a0049
+			public const int PowerPointColor = 2131361865;
+			
+			// aapt resource value: 0x7f0a004a
+			public const int VisioColor = 2131361866;
+			
+			// aapt resource value: 0x7f0a004b
+			public const int VisualStudioColor = 2131361867;
+			
+			// aapt resource value: 0x7f0a003a
+			public const int WhiteColor = 2131361850;
+			
+			// aapt resource value: 0x7f0a004c
+			public const int WordColor = 2131361868;
+			
+			// aapt resource value: 0x7f0a004d
+			public const int abc_background_cache_hint_selector_material_dark = 2131361869;
+			
+			// aapt resource value: 0x7f0a004e
+			public const int abc_background_cache_hint_selector_material_light = 2131361870;
+			
+			// aapt resource value: 0x7f0a004f
+			public const int abc_color_highlight_material = 2131361871;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int abc_input_method_navigation_guard = 2131361792;
 			
-			// aapt resource value: 0x7f0a003d
-			public const int abc_primary_text_disable_only_material_dark = 2131361853;
+			// aapt resource value: 0x7f0a0050
+			public const int abc_primary_text_disable_only_material_dark = 2131361872;
 			
-			// aapt resource value: 0x7f0a003e
-			public const int abc_primary_text_disable_only_material_light = 2131361854;
+			// aapt resource value: 0x7f0a0051
+			public const int abc_primary_text_disable_only_material_light = 2131361873;
 			
-			// aapt resource value: 0x7f0a003f
-			public const int abc_primary_text_material_dark = 2131361855;
+			// aapt resource value: 0x7f0a0052
+			public const int abc_primary_text_material_dark = 2131361874;
 			
-			// aapt resource value: 0x7f0a0040
-			public const int abc_primary_text_material_light = 2131361856;
+			// aapt resource value: 0x7f0a0053
+			public const int abc_primary_text_material_light = 2131361875;
 			
-			// aapt resource value: 0x7f0a0041
-			public const int abc_search_url_text = 2131361857;
+			// aapt resource value: 0x7f0a0054
+			public const int abc_search_url_text = 2131361876;
 			
 			// aapt resource value: 0x7f0a0001
 			public const int abc_search_url_text_normal = 2131361793;
@@ -789,11 +846,11 @@ namespace MVP.App
 			// aapt resource value: 0x7f0a0003
 			public const int abc_search_url_text_selected = 2131361795;
 			
-			// aapt resource value: 0x7f0a0042
-			public const int abc_secondary_text_material_dark = 2131361858;
+			// aapt resource value: 0x7f0a0055
+			public const int abc_secondary_text_material_dark = 2131361877;
 			
-			// aapt resource value: 0x7f0a0043
-			public const int abc_secondary_text_material_light = 2131361859;
+			// aapt resource value: 0x7f0a0056
+			public const int abc_secondary_text_material_light = 2131361878;
 			
 			// aapt resource value: 0x7f0a0004
 			public const int accent_material_dark = 2131361796;
@@ -951,11 +1008,11 @@ namespace MVP.App
 			// aapt resource value: 0x7f0a0037
 			public const int switch_thumb_disabled_material_light = 2131361847;
 			
-			// aapt resource value: 0x7f0a0044
-			public const int switch_thumb_material_dark = 2131361860;
+			// aapt resource value: 0x7f0a0057
+			public const int switch_thumb_material_dark = 2131361879;
 			
-			// aapt resource value: 0x7f0a0045
-			public const int switch_thumb_material_light = 2131361861;
+			// aapt resource value: 0x7f0a0058
+			public const int switch_thumb_material_light = 2131361880;
 			
 			// aapt resource value: 0x7f0a0038
 			public const int switch_thumb_normal_material_dark = 2131361848;
@@ -1440,10 +1497,22 @@ namespace MVP.App
 			public const int abc_textfield_search_material = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int Icon = 2130837579;
+			public const int AboutHDPI = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int notification_template_icon_bg = 2130837580;
+			public const int AboutLDPI = 2130837580;
+			
+			// aapt resource value: 0x7f02004d
+			public const int AboutMDPI = 2130837581;
+			
+			// aapt resource value: 0x7f02004e
+			public const int AboutXHDPI = 2130837582;
+			
+			// aapt resource value: 0x7f02004f
+			public const int Icon = 2130837583;
+			
+			// aapt resource value: 0x7f020050
+			public const int notification_template_icon_bg = 2130837584;
 			
 			static Drawable()
 			{
@@ -1458,8 +1527,8 @@ namespace MVP.App
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b0050
-			public const int action0 = 2131427408;
+			// aapt resource value: 0x7f0b0051
+			public const int action0 = 2131427409;
 			
 			// aapt resource value: 0x7f0b0041
 			public const int action_bar = 2131427393;
@@ -1485,8 +1554,8 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b0042
 			public const int action_context_bar = 2131427394;
 			
-			// aapt resource value: 0x7f0b0054
-			public const int action_divider = 2131427412;
+			// aapt resource value: 0x7f0b0055
+			public const int action_divider = 2131427413;
 			
 			// aapt resource value: 0x7f0b0002
 			public const int action_menu_divider = 2131427330;
@@ -1518,14 +1587,14 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b002b
 			public const int buttonPanel = 2131427371;
 			
-			// aapt resource value: 0x7f0b0051
-			public const int cancel_action = 2131427409;
+			// aapt resource value: 0x7f0b0052
+			public const int cancel_action = 2131427410;
 			
 			// aapt resource value: 0x7f0b0039
 			public const int checkbox = 2131427385;
 			
-			// aapt resource value: 0x7f0b0057
-			public const int chronometer = 2131427415;
+			// aapt resource value: 0x7f0b0058
+			public const int chronometer = 2131427416;
 			
 			// aapt resource value: 0x7f0b001d
 			public const int collapseActionView = 2131427357;
@@ -1554,8 +1623,8 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b001a
 			public const int end = 2131427354;
 			
-			// aapt resource value: 0x7f0b005c
-			public const int end_padder = 2131427420;
+			// aapt resource value: 0x7f0b005d
+			public const int end_padder = 2131427421;
 			
 			// aapt resource value: 0x7f0b0025
 			public const int expand_activities_button = 2131427365;
@@ -1578,14 +1647,14 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b0026
 			public const int image = 2131427366;
 			
-			// aapt resource value: 0x7f0b005b
-			public const int info = 2131427419;
+			// aapt resource value: 0x7f0b005c
+			public const int info = 2131427420;
 			
-			// aapt resource value: 0x7f0b0055
-			public const int line1 = 2131427413;
+			// aapt resource value: 0x7f0b0056
+			public const int line1 = 2131427414;
 			
-			// aapt resource value: 0x7f0b0059
-			public const int line3 = 2131427417;
+			// aapt resource value: 0x7f0b005a
+			public const int line3 = 2131427418;
 			
 			// aapt resource value: 0x7f0b0009
 			public const int listMode = 2131427337;
@@ -1593,14 +1662,17 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b0028
 			public const int list_item = 2131427368;
 			
-			// aapt resource value: 0x7f0b0053
-			public const int media_actions = 2131427411;
+			// aapt resource value: 0x7f0b0054
+			public const int media_actions = 2131427412;
 			
 			// aapt resource value: 0x7f0b001b
 			public const int middle = 2131427355;
 			
 			// aapt resource value: 0x7f0b0014
 			public const int multiply = 2131427348;
+			
+			// aapt resource value: 0x7f0b0050
+			public const int mvp_logo = 2131427408;
 			
 			// aapt resource value: 0x7f0b001f
 			public const int never = 2131427359;
@@ -1695,8 +1767,8 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b0018
 			public const int src_over = 2131427352;
 			
-			// aapt resource value: 0x7f0b0052
-			public const int status_bar_latest_event_content = 2131427410;
+			// aapt resource value: 0x7f0b0053
+			public const int status_bar_latest_event_content = 2131427411;
 			
 			// aapt resource value: 0x7f0b004c
 			public const int submit_area = 2131427404;
@@ -1704,17 +1776,17 @@ namespace MVP.App
 			// aapt resource value: 0x7f0b000b
 			public const int tabMode = 2131427339;
 			
-			// aapt resource value: 0x7f0b005a
-			public const int text = 2131427418;
+			// aapt resource value: 0x7f0b005b
+			public const int text = 2131427419;
 			
-			// aapt resource value: 0x7f0b0058
-			public const int text2 = 2131427416;
+			// aapt resource value: 0x7f0b0059
+			public const int text2 = 2131427417;
 			
 			// aapt resource value: 0x7f0b0034
 			public const int textSpacerNoButtons = 2131427380;
 			
-			// aapt resource value: 0x7f0b0056
-			public const int time = 2131427414;
+			// aapt resource value: 0x7f0b0057
+			public const int time = 2131427415;
 			
 			// aapt resource value: 0x7f0b002a
 			public const int title = 2131427370;
@@ -1854,43 +1926,46 @@ namespace MVP.App
 			public const int abc_select_dialog_material = 2130903064;
 			
 			// aapt resource value: 0x7f030019
-			public const int Main = 2130903065;
+			public const int Initializing = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int notification_media_action = 2130903066;
+			public const int Main = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int notification_media_cancel_action = 2130903067;
+			public const int notification_media_action = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int notification_template_big_media = 2130903068;
+			public const int notification_media_cancel_action = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int notification_template_big_media_narrow = 2130903069;
+			public const int notification_template_big_media = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int notification_template_lines = 2130903070;
+			public const int notification_template_big_media_narrow = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int notification_template_media = 2130903071;
+			public const int notification_template_lines = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int notification_template_part_chronometer = 2130903072;
+			public const int notification_template_media = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int notification_template_part_time = 2130903073;
+			public const int notification_template_part_chronometer = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int select_dialog_item_material = 2130903074;
+			public const int notification_template_part_time = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int select_dialog_multichoice_material = 2130903075;
+			public const int select_dialog_item_material = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public const int select_dialog_singlechoice_material = 2130903076;
+			public const int select_dialog_multichoice_material = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int support_simple_spinner_dropdown_item = 2130903077;
+			public const int select_dialog_singlechoice_material = 2130903077;
+			
+			// aapt resource value: 0x7f030026
+			public const int support_simple_spinner_dropdown_item = 2130903078;
 			
 			static Layout()
 			{

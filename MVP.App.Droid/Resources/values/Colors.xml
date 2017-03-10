@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <color name="WhiteColor">#FFFFFFFF</color>
+  <color name="BlackColor">#FF000000</color>
+  <color name="LightGrayColor">#FFEFEFEF</color>
+  <color name="DarkGrayColor">#FF505050</color>
+  
+  <color name="MvpBlueLightestColor">#FFC6E7FF</color>
+  <color name="MvpBlueLighterColor">#FF60BCFF</color>
+  <color name="MvpBlueLightColor">#FF149BFF</color>
+  <color name="MvpBlueColor">#FF0072C6</color>
+  <color name="MvpBlueDarkColor">#FF00467A</color>
+  <color name="MvpBlueDarkerColor">#FF001A2D</color>
+
+  <color name="AccessColor">#FFA33639</color>
+  <color name="ExcelColor">#FF207245</color>
+  <color name="OfficeColor">#FFEB3C00</color>
+  <color name="OneNoteColor">#FF844180</color>
+  <color name="OutlookColor">#FF0072C6</color>
+  <color name="PowerPointColor">#FFD24625</color>
+  <color name="VisioColor">#FF39559F</color>
+  <color name="VisualStudioColor">#FF681B7B</color>
+  <color name="WordColor">#FF2A5699</color>
+
+</resources>
