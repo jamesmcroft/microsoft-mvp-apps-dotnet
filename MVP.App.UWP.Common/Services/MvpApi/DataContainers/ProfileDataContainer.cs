@@ -75,7 +75,7 @@
                 return;
             }
 #elif ANDROID
-            // Check network connectivity
+            // ToDo - Android, check network status is connected.
 #endif
 
             if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates || forceUpdate)
@@ -98,6 +98,8 @@
                 {
 #if WINDOWS_UWP
                     EventLogger.Current.WriteError(ex.ToString());
+#elif ANDROID
+                    // ToDo - Android, write out exception to log.
 #endif
                 }
 
@@ -115,6 +117,8 @@
                             }));
 
                     Application.Current.Exit();
+#elif ANDROID
+                    // ToDo - Android, show unauthorized dialog and exit application.
 #endif
                     return;
                 }

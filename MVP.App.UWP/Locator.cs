@@ -46,12 +46,12 @@
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register<KeyboardCharacterService>();
             SimpleIoc.Default.Register(ApiClientProvider.GetClient);
-            SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
             SimpleIoc.Default.Register<IContributionTypeDataContainer, ContributionTypeContainer>();
             SimpleIoc.Default.Register<IContributionAreaDataContainer, ContributionAreaContainer>();
             SimpleIoc.Default.Register<IDataContainerManager, DataContainerManager>();
             SimpleIoc.Default.Register<IContributionSubmissionService, ContributionSubmissionService>();
+            SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
         }
 
         private static void RegisterViewModels()

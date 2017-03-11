@@ -5,6 +5,8 @@ namespace MVP.App
 
     using Microsoft.Practices.ServiceLocation;
 
+    using MVP.App.Services.Data;
+    using MVP.App.Services.Initialization;
     using MVP.App.Services.MvpApi;
     using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.ViewModels;
@@ -20,16 +22,31 @@ namespace MVP.App
         }
 
         public InitializingActivityViewModel InitializingActivityViewModel
-            => ServiceLocator.Current.GetInstance<InitializingActivityViewModel>();
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<InitializingActivityViewModel>();
+            }
+        }
 
         public MainActivityViewModel MainActivityViewModel
-            => ServiceLocator.Current.GetInstance<MainActivityViewModel>();
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<MainActivityViewModel>();
+            }
+        }
 
         private void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
             SimpleIoc.Default.Register(ApiClientProvider.GetClient);
             SimpleIoc.Default.Register<IProfileDataContainer, ProfileDataContainer>();
+            SimpleIoc.Default.Register<IContributionTypeDataContainer, ContributionTypeContainer>();
+            SimpleIoc.Default.Register<IContributionAreaDataContainer, ContributionAreaContainer>();
+            SimpleIoc.Default.Register<IDataContainerManager, DataContainerManager>();
+            SimpleIoc.Default.Register<IContributionSubmissionService, ContributionSubmissionService>();
+            SimpleIoc.Default.Register<IAppInitializer, AppInitializer>();
         }
 
         private void RegisterViewModels()

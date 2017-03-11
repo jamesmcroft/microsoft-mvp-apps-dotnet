@@ -105,7 +105,6 @@
     <Compile Include="Common\ContributionItemLoader.cs" />
     <Compile Include="Common\LazyLoadItemCollection.cs" />
     <Compile Include="Common\IItemLoader.cs" />
-    <Compile Include="Common\TimeoutAction.cs" />
     <Compile Include="Controls\ItemFlyoutControl.xaml.cs">
       <DependentUpon>ItemFlyoutControl.xaml</DependentUpon>
     </Compile>

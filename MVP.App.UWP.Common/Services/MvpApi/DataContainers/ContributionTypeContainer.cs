@@ -10,6 +10,10 @@
     using MVP.Api;
     using MVP.Api.Models;
 
+#if ANDROID
+    using XPlat.API.Storage;
+
+#elif WINDOWS_UWP
     using Windows.Storage;
     using Windows.UI.Popups;
     using Windows.UI.Xaml;
@@ -17,6 +21,7 @@
     using WinUX.Diagnostics.Tracing;
     using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
+#endif
 
     public class ContributionTypeContainer : IContributionTypeDataContainer
     {
@@ -56,10 +61,14 @@
         {
             await this.LoadAsync();
 
+#if WINDOWS_UWP
             if (!NetworkStatusManager.Current.IsConnected())
             {
                 return;
             }
+#elif ANDROID
+            // ToDo - Android, check network is connected.
+#endif
 
             if (this.LastDateChecked < DateTime.UtcNow - this.TimeBetweenUpdates || forceUpdate)
             {
@@ -77,11 +86,16 @@
                 }
                 catch (Exception ex)
                 {
+#if WINDOWS_UWP
                     EventLogger.Current.WriteError(ex.ToString());
+#elif ANDROID
+                    // ToDo - Android, log exception.
+#endif
                 }
 
                 if (!isAuthenticated)
                 {
+#if WINDOWS_UWP
                     await MessageDialogManager.Current.ShowAsync(
                         "Not authorized",
                         "You are no longer authenticated.",
@@ -93,6 +107,10 @@
                             }));
 
                     Application.Current.Exit();
+#elif ANDROID
+                    // ToDo - Android, show unauthorized message and exit.
+                    return;
+#endif
                 }
 
                 if (serviceTypes != null)
@@ -161,7 +179,11 @@
 
             try
             {
+#if WINDOWS_UWP
                 StorageFile file = null;
+#elif ANDROID
+                IStorageFile file = null;
+#endif
 
                 try
                 {

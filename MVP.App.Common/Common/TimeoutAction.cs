@@ -4,8 +4,6 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using WinUX.Diagnostics.Tracing;
-
     /// <summary>
     /// Defines a model for executing actions with a timeout.
     /// </summary>
@@ -62,7 +60,9 @@
                 }
                 catch (TaskCanceledException tce)
                 {
-                    EventLogger.Current.WriteDebug(tce.ToString());
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine(tce.ToString());
+#endif
                 }
             }
 

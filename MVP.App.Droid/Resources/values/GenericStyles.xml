@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="BaseTextViewStyle">
+    <item name="android:textStyle">normal</item>
+    <item name="android:textSize">15dp</item>
+  </style>
+
+  <style name="HeaderTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">46dp</item>
+  </style>
+
+  <style name="SubheaderTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">34dp</item>
+  </style>
+
+  <style name="TitleTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">24dp</item>
+  </style>
+
+  <style name="SubtitleTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">20dp</item>
+  </style>
+
+  <style name="BodyTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">15dp</item>
+  </style>
+
+  <style name="CaptionTextViewStyle" parent="BaseTextViewStyle">
+    <item name="android:textSize">12dp</item>
+  </style>
+</resources>

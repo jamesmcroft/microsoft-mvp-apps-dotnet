@@ -1,10 +1,10 @@
 namespace MVP.App.ViewModels
 {
     using Android.OS;
+    using Android.Views;
 
     using MVP.Api;
     using MVP.App.Common;
-    using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.MvpApi.DataContainers;
 
@@ -16,9 +16,11 @@ namespace MVP.App.ViewModels
 
         private IProfileDataContainer profileData;
 
-        private bool isLoading;
+        private ViewStates loadingState;
 
         private string loadingProgress;
+
+        private ViewStates loadedState;
 
         public InitializingActivityViewModel(IAppInitializer initializer, ApiClient apiClient, IProfileDataContainer profileData)
         {
@@ -37,15 +39,28 @@ namespace MVP.App.ViewModels
         /// <summary>
         /// Gets or sets a value indicating whether the view is loading.
         /// </summary>
-        public bool IsLoading
+        public ViewStates LoadingState
         {
             get
             {
-                return this.isLoading;
+                return this.loadingState;
             }
             set
             {
-                this.Set(() => this.IsLoading, ref this.isLoading, value);
+                this.Set(() => this.LoadingState, ref this.loadingState, value);
+                this.LoadedState = value == ViewStates.Visible ? ViewStates.Invisible : ViewStates.Visible;
+            }
+        }
+
+        public ViewStates LoadedState
+        {
+            get
+            {
+                return this.loadedState;
+            }
+            set
+            {
+                this.Set(() => this.LoadedState, ref this.loadedState, value);
             }
         }
 
@@ -66,7 +81,7 @@ namespace MVP.App.ViewModels
 
         public override async void OnActivityCreated(Bundle bundle)
         {
-            this.IsLoading = true;
+            this.LoadingState = ViewStates.Visible;
 
             var initializeSuccess = await this.initializer.InitializeAsync();
             if (initializeSuccess)
@@ -74,7 +89,7 @@ namespace MVP.App.ViewModels
                 this.NavigateToHome();
             }
 
-            this.IsLoading = false;
+            this.LoadingState = ViewStates.Invisible;
         }
 
         private void NavigateToHome()

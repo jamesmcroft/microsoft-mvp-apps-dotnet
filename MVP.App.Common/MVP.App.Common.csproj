@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\TimeoutAction.cs" />
     <Compile Include="Events\AuthenticationMessage.cs" />
     <Compile Include="Models\Contributor.cs" />
     <Compile Include="Services\MvpApi\ApiClientProvider.cs" />

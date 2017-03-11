@@ -1,25 +1,31 @@
 ﻿namespace MVP.App.Services.Initialization
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.Api;
     using MVP.Api.Models;
-    using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Services.Data;
     using MVP.App.Services.MvpApi.DataContainers;
 
+#if WINDOWS_UWP
     using Windows.Security.Authentication.Web;
 
     using WinUX;
+
+    using MVP.Api.Models.MicrosoftAccount;
+
+    using System.Collections.Generic;
+
     using WinUX.Diagnostics.Tracing;
     using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
+
+#endif
 
     /// <summary>
     /// Defines a service for initializing an application.
@@ -46,7 +52,11 @@
         /// <param name="profileData">
         /// The cached profile data.
         /// </param>
-        public AppInitializer(IMessenger messenger, ApiClient apiClient, IDataContainerManager containerManager, IProfileDataContainer profileData)
+        public AppInitializer(
+            IMessenger messenger,
+            ApiClient apiClient,
+            IDataContainerManager containerManager,
+            IProfileDataContainer profileData)
         {
             this.messenger = messenger;
             this.apiClient = apiClient;
@@ -84,6 +94,7 @@
             var success = true;
             var errorMessage = string.Empty;
 
+#if WINDOWS_UWP
             if (!NetworkStatusManager.Current.IsConnected())
             {
                 return new AuthenticationMessage(false, "There appears to be no network connection!");
@@ -149,6 +160,9 @@
                 EventLogger.Current.WriteWarning(ex.ToString());
                 success = false;
             }
+#elif ANDROID
+            // ToDo - Android, bring up UI for authenticating with MSA.
+#endif
 
             return new AuthenticationMessage(success, errorMessage);
         }
@@ -164,10 +178,15 @@
 
             this.apiClient.Credentials = this.profileData.Account;
 
-            // Check network status.
+#if WINDOWS_UWP
             if (NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Disconnected
                 || NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Unknown)
             {
+#elif ANDROID
+            // ToDo - Android, check network connection status is not disconnected
+            if (true)
+            {
+#endif
                 var profile = await this.TestApiEndpointAsync();
                 if (profile == null)
                 {
@@ -180,7 +199,11 @@
                     }
                     catch (ApiException aex)
                     {
+#if WINDOWS_UWP
                         EventLogger.Current.WriteWarning(aex.ToString());
+#elif ANDROID
+                        // ToDo - Android, log out exception.
+#endif
                         exchangeErrored = true;
                     }
                     catch (Exception ex)
@@ -203,9 +226,13 @@
                         await this.apiClient.LogOutAsync();
                         await this.profileData.ClearAsync();
 
+#if WINDOWS_UWP
                         await MessageDialogManager.Current.ShowAsync(
                             "Profile error",
                             "There seems to be an issue getting your MVP profile.");
+#elif ANDROID
+                        // ToDo - Android, show message dialog for profile error
+#endif
 
                         return false;
                     }
