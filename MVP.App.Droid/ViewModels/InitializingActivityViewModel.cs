@@ -1,7 +1,12 @@
 namespace MVP.App.ViewModels
 {
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+
     using Android.OS;
     using Android.Views;
+
+    using GalaSoft.MvvmLight.Command;
 
     using MVP.Api;
     using MVP.App.Common;
@@ -22,11 +27,16 @@ namespace MVP.App.ViewModels
 
         private ViewStates loadedState;
 
-        public InitializingActivityViewModel(IAppInitializer initializer, ApiClient apiClient, IProfileDataContainer profileData)
+        public InitializingActivityViewModel(
+            IAppInitializer initializer,
+            ApiClient apiClient,
+            IProfileDataContainer profileData)
         {
             this.initializer = initializer;
             this.apiClient = apiClient;
             this.profileData = profileData;
+
+            this.SigninCommand = new RelayCommand(async () => await this.SignInAsync());
 
             this.MessengerInstance.Register<AppInitializerMessage>(
                 this,
@@ -35,6 +45,11 @@ namespace MVP.App.ViewModels
                         this.LoadingProgress = !string.IsNullOrWhiteSpace(msg?.Message) ? msg.Message : "Loading...";
                     });
         }
+
+        /// <summary>
+        /// Gets the command for signing into an MVP account using Live ID.
+        /// </summary>
+        public ICommand SigninCommand { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the view is loading.
@@ -92,9 +107,38 @@ namespace MVP.App.ViewModels
             this.LoadingState = ViewStates.Invisible;
         }
 
+
+        private async Task SignInAsync()
+        {
+            // ToDo - Android, check network connected.
+
+            this.LoadingProgress = "Signing in...";
+            this.LoadingState = ViewStates.Visible;
+
+            var authMsg = await this.initializer.AuthenticateAsync();
+
+            if (authMsg.IsSuccess)
+            {
+                var initialized = await this.initializer.InitializeAsync();
+                if (initialized)
+                {
+                    this.NavigateToHome();
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(authMsg.ErrorMessage))
+                {
+                    // ToDo - Android, show auth error message.
+                }
+            }
+
+            this.LoadingState = ViewStates.Invisible;
+        }
+
         private void NavigateToHome()
         {
-            // Navigate to the home page with the current profile from profileData.Profile.
+            // ToDo - Android, navigate to the home page.
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MVP.App
         private Button signinButton;
 
         private Binding<ViewStates, ViewStates> signinButtonVisibilityBinding;
-        
+
         public ProgressBar LoadingProgressRing
             =>
                 this.loadingProgressRing
@@ -51,6 +51,8 @@ namespace MVP.App
             this.signinButtonVisibilityBinding = this.SetBinding(
                 () => this.ViewModel.LoadedState,
                 () => this.SigninButton.Visibility);
+
+            this.signinButton.SetCommand(this.ViewModel.SigninCommand);
         }
     }
 }
