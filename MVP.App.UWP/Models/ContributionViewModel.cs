@@ -33,8 +33,10 @@
         private string annualQuantityValue;
 
         private string secondAnnualQuantityValue;
-        
+
         private string annualReachValue;
+
+        private string visibilityValue;
 
         public ContributionViewModel()
         {
@@ -119,7 +121,7 @@
                 this.Set(() => this.Title, ref this.title, value);
             }
         }
-        
+
         public string Description
         {
             get
@@ -216,6 +218,18 @@
             }
         }
 
+        public string VisibilityValue
+        {
+            get
+            {
+                return this.visibilityValue;
+            }
+            set
+            {
+                this.Set(() => this.VisibilityValue, ref this.visibilityValue, value);
+            }
+        }
+
         public ItemVisibility Visibility
         {
             get
@@ -228,14 +242,17 @@
                 this.Set(() => this.Visibility, ref this.visibility, value);
             }
         }
-        
-        public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology, ItemVisibility visibility)
+
+        public void Populate(
+            ContributionType contributionType,
+            ActivityTechnology contributionTechnology,
+            ItemVisibility visibility)
         {
             this.Populate(default(Contribution));
 
             this.Type = contributionType;
             this.Technology = contributionTechnology;
-            this.Visibility = visibility;
+            this.VisibilityValue = visibility?.Description;
         }
 
         /// <inheritdoc />
@@ -259,9 +276,12 @@
                 this.Visibility = model.Visibility == null
                                       ? visibilities.FirstOrDefault()
                                       : visibilities.FirstOrDefault(x => x.Id.Equals(model.Visibility.Id));
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = model.AnnualQuantity == null ? string.Empty : model.AnnualQuantity.ToString();
-                this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null ? string.Empty : model.SecondAnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null
+                                                     ? string.Empty
+                                                     : model.SecondAnnualQuantity.ToString();
                 this.AnnualReachValue = model.AnnualReach == null ? string.Empty : model.AnnualReach.ToString();
             }
             else
@@ -278,6 +298,7 @@
                 this.AnnualReach = null;
                 this.ReferenceUrl = string.Empty;
                 this.Visibility = visibilities.FirstOrDefault();
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = string.Empty;
                 this.SecondAnnualQuantityValue = string.Empty;
@@ -311,9 +332,12 @@
                 this.AnnualReach = ParseHelper.SafeParseInt(activationProtocolUri.ExtractQueryValue("reach"));
                 this.ReferenceUrl = activationProtocolUri.ExtractQueryValue("url");
                 this.Visibility = ContributionVisibilities.Public;
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = this.AnnualQuantity == null ? string.Empty : this.AnnualQuantity.ToString();
-                this.SecondAnnualQuantityValue = this.SecondAnnualQuantity == null ? string.Empty : this.SecondAnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = this.SecondAnnualQuantity == null
+                                                     ? string.Empty
+                                                     : this.SecondAnnualQuantity.ToString();
                 this.AnnualReachValue = this.AnnualReach == null ? string.Empty : this.AnnualReach.ToString();
             }
         }
@@ -326,21 +350,28 @@
                 return null;
             }
 
+            var visibilities = ContributionVisibilities.GetItemVisibilities();
+
             var contribution = new Contribution
-            {
-                Id = this.Id,
-                TypeName = this.TypeName,
-                Type = this.Type,
-                Technology = this.Technology.ToContributionTechnology(),
-                StartDate = this.StartDate,
-                Title = this.Title,
-                Description = this.Description,
-                AnnualQuantity = this.AnnualQuantity,
-                SecondAnnualQuantity = this.SecondAnnualQuantity,
-                AnnualReach = this.AnnualReach,
-                ReferenceUrl = this.ReferenceUrl,
-                Visibility = this.Visibility
-            };
+                                   {
+                                       Id = this.Id,
+                                       TypeName = this.TypeName,
+                                       Type = this.Type,
+                                       Technology = this.Technology.ToContributionTechnology(),
+                                       StartDate = this.StartDate,
+                                       Title = this.Title,
+                                       Description = this.Description,
+                                       AnnualQuantity = this.AnnualQuantity,
+                                       SecondAnnualQuantity = this.SecondAnnualQuantity,
+                                       AnnualReach = this.AnnualReach,
+                                       ReferenceUrl = this.ReferenceUrl,
+                                       Visibility =
+                                           visibilities.FirstOrDefault(
+                                               x =>
+                                                   x.Description.Equals(
+                                                       this.VisibilityValue,
+                                                       StringComparison.CurrentCultureIgnoreCase))
+                                   };
 
             return contribution;
         }

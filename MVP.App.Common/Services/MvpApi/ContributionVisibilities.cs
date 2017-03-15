@@ -12,21 +12,17 @@
         /// <summary>
         /// Gets the public item visibility.
         /// </summary>
-        public static ItemVisibility Public
-            => new ItemVisibility { Description = "Everyone", Id = 299600000, LocalizeKey = "PublicVisibilityText" };
+        public static ItemVisibility Public => new ItemVisibility { Description = "Everyone", Id = 299600000 };
 
         /// <summary>
         /// Gets the Microsoft item visibility.
         /// </summary>
-        public static ItemVisibility Microsoft
-            => new ItemVisibility { Description = "Microsoft", Id = 100000000, LocalizeKey = "MicrosoftVisibilityText" }
-        ;
+        public static ItemVisibility Microsoft => new ItemVisibility { Description = "Microsoft", Id = 100000000 };
 
         /// <summary>
         /// Ges the MVP item visibility.
         /// </summary>
-        public static ItemVisibility MVP
-            => new ItemVisibility { Description = "MVP Community", Id = 100000001, LocalizeKey = "MVPVisibilityText" };
+        public static ItemVisibility MVP => new ItemVisibility { Description = "Microsoft and MVPs", Id = 100000001 };
 
         /// <summary>
         /// Gets a list of the currently available contribution item visibilities.

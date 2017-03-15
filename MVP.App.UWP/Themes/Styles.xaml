@@ -384,16 +384,15 @@
             <controls:ValidatingComboBox
                 x:Name="ContributionVisibility"
                 Margin="0,0,0,10"
-                DisplayMemberPath="Description"
                 Header="Visibility"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsVisibilityInvalid, Mode=TwoWay}"
                 IsMandatory="True"
-                ItemsSource="{Binding Visibilities, Mode=OneWay}"
+                ItemsSource="{Binding VisibilityValues, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionReach"
-                SelectedItem="{Binding Item.Visibility, Mode=OneWay}" />
+                SelectedItem="{Binding Item.VisibilityValue, Mode=TwoWay}" />
         </RelativePanel>
     </DataTemplate>
 

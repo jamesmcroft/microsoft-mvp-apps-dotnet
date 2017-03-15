@@ -55,6 +55,7 @@
                     .ToList();
             this.Types = typeContainer.GetAllTypes();
             this.Visibilities = ContributionVisibilities.GetItemVisibilities();
+            this.VisibilityValues = this.Visibilities.Select(x => x.Description);
         }
 
         public IEnumerable<ContributionType> Types { get; }
@@ -62,6 +63,8 @@
         public IEnumerable<ActivityTechnology> Areas { get; }
 
         public IEnumerable<ItemVisibility> Visibilities { get; }
+
+        public IEnumerable<string> VisibilityValues { get; }
 
         public override async void Delete()
         {
