@@ -27,7 +27,7 @@
     <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
     <localConverters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
-
+    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     <localConverters:AwardCategoryToIconConverter x:Key="AwardCategoryToIconConverter" />
     <localConverters:AwardCategoryToColorBrushConverter
         x:Key="AwardCategoryToColorBrushConverter"
@@ -184,21 +184,61 @@
                 Visibility="{Binding Item.StartDate, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
-                x:Name="ContributionDescription"
+                x:Name="ContributionUrl"
                 Header="Description"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="DateOfActivity"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.ReferenceUrl, Mode=OneWay}"
+                Visibility="{Binding Item.ReferenceUrl, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionDescription"
+                Header="Description"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionUrl"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.Description, Mode=OneWay}"
                 Visibility="{Binding Item.Description, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionQuantity"
+                Header="{Binding Item.AnnualQuantityTitle, Mode=OneWay, FallbackValue='Quantity'}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionDescription"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.AnnualQuantityValue, Mode=OneWay}"
+                Visibility="{Binding Item.AnnualQuantityValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionSecondQuantity"
+                Header="{Binding Item.SecondAnnualQuantityTitle, Mode=OneWay, FallbackValue='Second quantity'}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionQuantity"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.SecondAnnualQuantityValue, Mode=OneWay}"
+                Visibility="{Binding Item.SecondAnnualQuantityValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <controls:HeaderedTextBlock
+                x:Name="ContributionReach"
+                Header="{Binding Item.AnnualReachTitle, Mode=OneWay, FallbackValue='Reach'}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionSecondQuantity"
+                Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
+                Text="{Binding Item.AnnualReachValue, Mode=OneWay}"
+                Visibility="{Binding Item.AnnualReachValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionVisibility"
                 Header="Visibility"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.Below="ContributionDescription"
+                RelativePanel.Below="ContributionReach"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.Visibility.Description, Mode=OneWay}"
                 Visibility="{Binding Item.Visibility, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
@@ -212,7 +252,8 @@
                 x:Name="ContributionType"
                 Margin="0,0,0,10"
                 DisplayMemberPath="Name"
-                Header="Type"
+                Header="Activity type"
+                IsEnabled="{Binding CanDelete, Converter={StaticResource InverseBooleanConverter}}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 ItemsSource="{Binding Types, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
@@ -224,7 +265,7 @@
                 x:Name="ContributionArea"
                 Margin="0,0,0,10"
                 DisplayMemberPath="Name"
-                Header="Area"
+                Header="Contribution area"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsTechnologyInvalid, Mode=TwoWay}"
                 IsMandatory="True"
@@ -239,9 +280,8 @@
                 Margin="0,0,0,10"
                 HorizontalAlignment="Stretch"
                 Date="{Binding Item.StartDate, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"
-                Header="Date"
+                Header="Date of activity"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
-                MaxDate="{Binding MaxDateOfActivity}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionArea" />
@@ -249,7 +289,7 @@
             <controls:ValidatingTextBox
                 x:Name="ContributionTitle"
                 Margin="0,0,0,10"
-                Header="Title"
+                Header="Title of activity"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsTitleInvalid, Mode=TwoWay}"
                 IsMandatory="True"
@@ -265,6 +305,7 @@
                 x:Name="ContributionUrl"
                 Margin="0,0,0,10"
                 Header="URL"
+                IsMandatory="{Binding Item.IsReferenceUrlMandatory, Mode=TwoWay}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsReferenceUrlInvalid, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
@@ -295,10 +336,10 @@
             <controls:ValidatingTextBox
                 x:Name="ContributionQuantity"
                 Margin="0,0,0,10"
-                Header="Quantity"
+                Header="{Binding Item.AnnualQuantityTitle, Mode=OneWay, FallbackValue='Quantity'}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsAnnualQuantityInvalid, Mode=TwoWay}"
-                IsMandatory="True"
+                IsMandatory="{Binding Item.IsAnnualQuantityMandatory, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionDescription"
@@ -309,14 +350,31 @@
             </controls:ValidatingTextBox>
 
             <controls:ValidatingTextBox
+                x:Name="ContributionSecondQuantity"
+                Margin="0,0,0,10"
+                Header="{Binding Item.SecondAnnualQuantityTitle, Mode=OneWay, FallbackValue='Second quantity'}"
+                HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsInvalid="{Binding Item.IsSecondAnnualQuantityInvalid, Mode=TwoWay}"
+                IsMandatory="{Binding Item.IsSecondAnnualQuantityMandatory, Mode=TwoWay}"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="ContributionQuantity"
+                ValidationRules="{StaticResource NumericValidationRules}"
+                Visibility="{Binding Item.IsSecondAnnualQuantityVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <interactivity:Interaction.Behaviors>
+                    <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.SecondAnnualQuantityValue, Mode=TwoWay}" />
+                </interactivity:Interaction.Behaviors>
+            </controls:ValidatingTextBox>
+
+            <controls:ValidatingTextBox
                 x:Name="ContributionReach"
                 Margin="0,0,0,10"
-                Header="Reach"
+                Header="{Binding Item.AnnualReachTitle, Mode=OneWay, FallbackValue='Reach'}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsAnnualReachInvalid, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
-                RelativePanel.Below="ContributionQuantity"
+                RelativePanel.Below="ContributionSecondQuantity"
                 ValidationRules="{StaticResource NumericValidationRules}">
                 <interactivity:Interaction.Behaviors>
                     <textBox:TextBoxTextUpdateBehavior Text="{Binding Item.AnnualReachValue, Mode=TwoWay}" />

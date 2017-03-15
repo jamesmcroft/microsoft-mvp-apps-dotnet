@@ -1,7 +1,6 @@
 ﻿namespace MVP.App.Models
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
 
     using MVP.Api.Models;
@@ -11,7 +10,7 @@
     using WinUX;
     using WinUX.Common;
 
-    public class ContributionViewModel : ItemViewModelBase<Contribution>
+    public partial class ContributionViewModel : ItemViewModelBase<Contribution>
     {
         private int? id;
 
@@ -31,27 +30,11 @@
 
         private ItemVisibility visibility;
 
-        private bool isTechnologyInvalid;
-
-        private bool isStartDateInvalid;
-
-        private bool isTitleInvalid;
-
-        private bool isAnnualQuantityInvalid;
-
         private string annualQuantityValue;
 
         private string secondAnnualQuantityValue;
-
-        private bool isSecondAnnualQuantityInvalid;
-
+        
         private string annualReachValue;
-
-        private bool isAnnualReachInvalid;
-
-        private bool isReferenceUrlInvalid;
-
-        private bool isVisibilityInvalid;
 
         public ContributionViewModel()
         {
@@ -110,18 +93,6 @@
             }
         }
 
-        public bool IsTechnologyInvalid
-        {
-            get
-            {
-                return this.isTechnologyInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsTechnologyInvalid, ref this.isTechnologyInvalid, value);
-            }
-        }
 
         public DateTime? StartDate
         {
@@ -133,19 +104,6 @@
             set
             {
                 this.Set(() => this.StartDate, ref this.startDate, value);
-            }
-        }
-
-        public bool IsStartDateInvalid
-        {
-            get
-            {
-                return this.isStartDateInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsStartDateInvalid, ref this.isStartDateInvalid, value);
             }
         }
 
@@ -161,20 +119,7 @@
                 this.Set(() => this.Title, ref this.title, value);
             }
         }
-
-        public bool IsTitleInvalid
-        {
-            get
-            {
-                return this.isTitleInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsTitleInvalid, ref this.isTitleInvalid, value);
-            }
-        }
-
+        
         public string Description
         {
             get
@@ -200,19 +145,15 @@
             set
             {
                 this.Set(() => this.AnnualQuantityValue, ref this.annualQuantityValue, value);
-            }
-        }
 
-        public bool IsAnnualQuantityInvalid
-        {
-            get
-            {
-                return this.isAnnualQuantityInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsAnnualQuantityInvalid, ref this.isAnnualQuantityInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.AnnualQuantity = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -227,18 +168,15 @@
             set
             {
                 this.Set(() => this.SecondAnnualQuantityValue, ref this.secondAnnualQuantityValue, value);
-            }
-        }
 
-        public bool IsSecondAnnualQuantityInvalid
-        {
-            get
-            {
-                return this.isSecondAnnualQuantityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsSecondAnnualQuantityInvalid, ref this.isSecondAnnualQuantityInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.SecondAnnualQuantity = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -253,18 +191,15 @@
             set
             {
                 this.Set(() => this.AnnualReachValue, ref this.annualReachValue, value);
-            }
-        }
 
-        public bool IsAnnualReachInvalid
-        {
-            get
-            {
-                return this.isAnnualReachInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsAnnualReachInvalid, ref this.isAnnualReachInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.AnnualReach = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -281,18 +216,6 @@
             }
         }
 
-        public bool IsReferenceUrlInvalid
-        {
-            get
-            {
-                return this.isReferenceUrlInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsReferenceUrlInvalid, ref this.isReferenceUrlInvalid, value);
-            }
-        }
-
         public ItemVisibility Visibility
         {
             get
@@ -305,19 +228,7 @@
                 this.Set(() => this.Visibility, ref this.visibility, value);
             }
         }
-
-        public bool IsVisibilityInvalid
-        {
-            get
-            {
-                return this.isVisibilityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsVisibilityInvalid, ref this.isVisibilityInvalid, value);
-            }
-        }
-
+        
         public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology, ItemVisibility visibility)
         {
             this.Populate(default(Contribution));
@@ -433,41 +344,5 @@
 
             return contribution;
         }
-
-        /// <inheritdoc />
-        public override bool IsValid()
-        {
-            return !this.IsAnnualQuantityInvalid && !this.IsAnnualReachInvalid && !this.IsReferenceUrlInvalid
-                   && !this.IsSecondAnnualQuantityInvalid && !this.IsStartDateInvalid && !this.IsTechnologyInvalid
-                   && !this.IsTitleInvalid && !this.IsVisibilityInvalid;
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var propName = e.PropertyName;
-
-            if (propName == nameof(this.IsAnnualQuantityInvalid))
-            {
-                this.AnnualQuantity = !this.IsAnnualQuantityInvalid
-                                          ? (int?)ParseHelper.SafeParseInt(this.AnnualQuantityValue)
-                                          : null;
-            }
-
-            if (propName == nameof(this.IsAnnualReachInvalid))
-            {
-                this.AnnualReach = !this.IsAnnualReachInvalid
-                                       ? (int?)ParseHelper.SafeParseInt(this.AnnualReachValue)
-                                       : null;
-            }
-
-            if (propName == nameof(this.IsSecondAnnualQuantityInvalid))
-            {
-                this.SecondAnnualQuantity = !this.IsSecondAnnualQuantityInvalid
-                                                ? (int?)ParseHelper.SafeParseInt(this.SecondAnnualQuantityValue)
-                                                : null;
-            }
-        }
-
-
     }
 }

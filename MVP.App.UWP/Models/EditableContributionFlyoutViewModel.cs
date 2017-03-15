@@ -63,18 +63,6 @@
 
         public IEnumerable<ItemVisibility> Visibilities { get; }
 
-        public DateTimeOffset MaxDateOfActivity
-        {
-            get
-            {
-                return this.maxDateOfActivity;
-            }
-            set
-            {
-                this.Set(() => this.MaxDateOfActivity, ref this.maxDateOfActivity, value);
-            }
-        }
-
         public override async void Delete()
         {
             if (this.Item?.Id != null)
@@ -128,8 +116,6 @@
 
         public void ShowNew()
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             this.Title = "Add new contribution";
 
             this.IsInEdit = true;
@@ -143,8 +129,6 @@
 
         public void ShowEdit(Contribution model)
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             var contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(model);
 
@@ -164,8 +148,6 @@
 
         public void ShowNewForEdit(ContributionViewModel viewModel)
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             this.Title = "Add new contribution";
 
             this.IsInEdit = true;
