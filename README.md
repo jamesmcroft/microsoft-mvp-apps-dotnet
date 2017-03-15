@@ -25,19 +25,23 @@ You can take a look at the project backlogs here:
 | [Android](https://github.com/jamesmcroft/MS-MVP-Apps/projects/2) |
 | [iOS](https://github.com/jamesmcroft/MS-MVP-Apps/projects/3) |
 
+### Getting started
+
+To develop against this application, you will need to create an MSA Application (https://apps.dev.microsoft.com/). Both Converged and Live SDK are supported and you will define that in the API client settings. You will also need a subscription key for the Microsoft MVP API by registering on the Microsoft MVP API site. 
+
+### Fixing issues
+
+When fixing issues in what is part of the current live application, please make these changes against the master branch. This is where our live code resides and will make it easier for us to release a hotfix for. If the issue is part of newer 'in-development' code, please fix those against the develop branch.
+
+## Issue tracking
+
 If you find an issue in any variant of the applications, please could you raise it in the [issues](https://github.com/jamesmcroft/mvp-api-app/issues) section with appropriate tags and it would be fantastic if you could have a look at rectifying the issue and submitting a pull request too!
-
-## Builds
-
-| Branch | Status |
-| ------ | ------ |
-| master | [![Master Build](https://jamesmcroft.visualstudio.com/_apis/public/build/definitions/2b7b1d28-64cd-4a55-bbfa-88d364727a19/13/badge)](https://github.com/jamesmcroft/MS-MVP-Apps) |
 
 ## App Packages
 
 | Package | Version |
 | ------ | ------ |
-| UWP | Coming soon. |
+| UWP | [Become a tester](https://t.co/iC7ZRvew3r) |
 | Android | Coming soon. |
 | iOS | Coming soon. |
 
