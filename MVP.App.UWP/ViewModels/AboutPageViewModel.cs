@@ -4,13 +4,13 @@
     using System.Collections.ObjectModel;
     using System.Windows.Input;
 
-    using Windows.ApplicationModel;
-    using Windows.System;
-    using Windows.UI.Xaml.Navigation;
-
     using GalaSoft.MvvmLight.Command;
 
     using MVP.App.Models;
+
+    using Windows.ApplicationModel;
+    using Windows.System;
+    using Windows.UI.Xaml.Navigation;
 
     using WinUX.MvvmLight.Xaml.Views;
 
@@ -37,6 +37,15 @@
                                                 LinkUri =
                                                     "https://github.com/LanceMcCarthy",
                                                 IsMvp = true
+                                            },
+                                        new Contributor
+                                            {
+                                                Name = "Bart Lannoeye",
+                                                ImageUri =
+                                                    "https://mvp.microsoft.com/en-us/PublicProfile/Photo/5001715",
+                                                LinkUri =
+                                                    "https://github.com/bartlannoeye",
+                                                IsMvp = true
                                             }
                                     };
 
@@ -52,7 +61,7 @@
 
         public string AppDescription
             =>
-                $"The MVP Community app is built by community developers to provide an app experience for Microsoft MVPs worldwide. It is designed to help MVPs with managing their profile and contributions. {Environment.NewLine}{Environment.NewLine}A special thank you to the team at Microsoft behind the MVP API. {Environment.NewLine}{Environment.NewLine}You can find a list of the app's contributors below. If you'd like to contribute towards this project, please find the public GitHub repo link at the bottom of this page."
+                $"The MVP Community app is built and tested by community developers to provide an app experience for Microsoft MVPs worldwide. It is designed to help MVPs with managing their profile and contributions. {Environment.NewLine}{Environment.NewLine}A special thank you to the team at Microsoft behind the MVP API. {Environment.NewLine}{Environment.NewLine}You can find a list of the app's contributors below. If you'd like to contribute towards this project, please find the public GitHub repo link at the bottom of this page."
         ;
 
         public ObservableCollection<Contributor> Contributors { get; }

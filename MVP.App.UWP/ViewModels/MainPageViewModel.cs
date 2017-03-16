@@ -7,8 +7,6 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    using Windows.UI.Popups;
-
     using GalaSoft.MvvmLight.Command;
 
     using MVP.Api;
@@ -19,6 +17,7 @@
     using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.Views;
 
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;

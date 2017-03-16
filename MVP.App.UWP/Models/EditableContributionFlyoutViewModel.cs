@@ -144,7 +144,9 @@
                            && contributionViewModel.Type.Id
                            != ParseHelper.SafeParseGuid("f36464de-179a-e411-bbc8-6c3be5a82b68");
 
-            this.CanDelete = true;
+            this.CanDelete = contributionViewModel.Type != null
+                             && contributionViewModel.Type.Id
+                             != ParseHelper.SafeParseGuid("f36464de-179a-e411-bbc8-6c3be5a82b68");
 
             this.Show(contributionViewModel);
         }
