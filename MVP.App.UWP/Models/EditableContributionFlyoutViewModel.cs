@@ -55,6 +55,7 @@
                     .ToList();
             this.Types = typeContainer.GetAllTypes();
             this.Visibilities = ContributionVisibilities.GetItemVisibilities();
+            this.VisibilityValues = this.Visibilities.Select(x => x.Description);
         }
 
         public IEnumerable<ContributionType> Types { get; }
@@ -63,17 +64,7 @@
 
         public IEnumerable<ItemVisibility> Visibilities { get; }
 
-        public DateTimeOffset MaxDateOfActivity
-        {
-            get
-            {
-                return this.maxDateOfActivity;
-            }
-            set
-            {
-                this.Set(() => this.MaxDateOfActivity, ref this.maxDateOfActivity, value);
-            }
-        }
+        public IEnumerable<string> VisibilityValues { get; }
 
         public override async void Delete()
         {
@@ -128,8 +119,6 @@
 
         public void ShowNew()
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             this.Title = "Add new contribution";
 
             this.IsInEdit = true;
@@ -143,8 +132,6 @@
 
         public void ShowEdit(Contribution model)
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             var contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(model);
 
@@ -164,8 +151,6 @@
 
         public void ShowNewForEdit(ContributionViewModel viewModel)
         {
-            this.MaxDateOfActivity = DateTimeOffset.UtcNow;
-
             this.Title = "Add new contribution";
 
             this.IsInEdit = true;

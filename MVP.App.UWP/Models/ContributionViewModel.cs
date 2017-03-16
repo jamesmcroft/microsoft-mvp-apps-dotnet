@@ -1,7 +1,6 @@
 ﻿namespace MVP.App.Models
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
 
     using MVP.Api.Models;
@@ -11,7 +10,7 @@
     using WinUX;
     using WinUX.Common;
 
-    public class ContributionViewModel : ItemViewModelBase<Contribution>
+    public partial class ContributionViewModel : ItemViewModelBase<Contribution>
     {
         private int? id;
 
@@ -31,27 +30,13 @@
 
         private ItemVisibility visibility;
 
-        private bool isTechnologyInvalid;
-
-        private bool isStartDateInvalid;
-
-        private bool isTitleInvalid;
-
-        private bool isAnnualQuantityInvalid;
-
         private string annualQuantityValue;
 
         private string secondAnnualQuantityValue;
 
-        private bool isSecondAnnualQuantityInvalid;
-
         private string annualReachValue;
 
-        private bool isAnnualReachInvalid;
-
-        private bool isReferenceUrlInvalid;
-
-        private bool isVisibilityInvalid;
+        private string visibilityValue;
 
         public ContributionViewModel()
         {
@@ -110,18 +95,6 @@
             }
         }
 
-        public bool IsTechnologyInvalid
-        {
-            get
-            {
-                return this.isTechnologyInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsTechnologyInvalid, ref this.isTechnologyInvalid, value);
-            }
-        }
 
         public DateTime? StartDate
         {
@@ -136,19 +109,6 @@
             }
         }
 
-        public bool IsStartDateInvalid
-        {
-            get
-            {
-                return this.isStartDateInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsStartDateInvalid, ref this.isStartDateInvalid, value);
-            }
-        }
-
         public string Title
         {
             get
@@ -159,19 +119,6 @@
             set
             {
                 this.Set(() => this.Title, ref this.title, value);
-            }
-        }
-
-        public bool IsTitleInvalid
-        {
-            get
-            {
-                return this.isTitleInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsTitleInvalid, ref this.isTitleInvalid, value);
             }
         }
 
@@ -200,19 +147,15 @@
             set
             {
                 this.Set(() => this.AnnualQuantityValue, ref this.annualQuantityValue, value);
-            }
-        }
 
-        public bool IsAnnualQuantityInvalid
-        {
-            get
-            {
-                return this.isAnnualQuantityInvalid;
-            }
-
-            set
-            {
-                this.Set(() => this.IsAnnualQuantityInvalid, ref this.isAnnualQuantityInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.AnnualQuantity = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -227,18 +170,15 @@
             set
             {
                 this.Set(() => this.SecondAnnualQuantityValue, ref this.secondAnnualQuantityValue, value);
-            }
-        }
 
-        public bool IsSecondAnnualQuantityInvalid
-        {
-            get
-            {
-                return this.isSecondAnnualQuantityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsSecondAnnualQuantityInvalid, ref this.isSecondAnnualQuantityInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.SecondAnnualQuantity = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -253,18 +193,15 @@
             set
             {
                 this.Set(() => this.AnnualReachValue, ref this.annualReachValue, value);
-            }
-        }
 
-        public bool IsAnnualReachInvalid
-        {
-            get
-            {
-                return this.isAnnualReachInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsAnnualReachInvalid, ref this.isAnnualReachInvalid, value);
+                if (value != null)
+                {
+                    int val;
+                    if (int.TryParse(value, out val))
+                    {
+                        this.AnnualReach = ParseHelper.SafeParseInt(value);
+                    }
+                }
             }
         }
 
@@ -281,15 +218,15 @@
             }
         }
 
-        public bool IsReferenceUrlInvalid
+        public string VisibilityValue
         {
             get
             {
-                return this.isReferenceUrlInvalid;
+                return this.visibilityValue;
             }
             set
             {
-                this.Set(() => this.IsReferenceUrlInvalid, ref this.isReferenceUrlInvalid, value);
+                this.Set(() => this.VisibilityValue, ref this.visibilityValue, value);
             }
         }
 
@@ -306,25 +243,16 @@
             }
         }
 
-        public bool IsVisibilityInvalid
-        {
-            get
-            {
-                return this.isVisibilityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsVisibilityInvalid, ref this.isVisibilityInvalid, value);
-            }
-        }
-
-        public void Populate(ContributionType contributionType, ActivityTechnology contributionTechnology, ItemVisibility visibility)
+        public void Populate(
+            ContributionType contributionType,
+            ActivityTechnology contributionTechnology,
+            ItemVisibility visibility)
         {
             this.Populate(default(Contribution));
 
             this.Type = contributionType;
             this.Technology = contributionTechnology;
-            this.Visibility = visibility;
+            this.VisibilityValue = visibility?.Description;
         }
 
         /// <inheritdoc />
@@ -348,9 +276,12 @@
                 this.Visibility = model.Visibility == null
                                       ? visibilities.FirstOrDefault()
                                       : visibilities.FirstOrDefault(x => x.Id.Equals(model.Visibility.Id));
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = model.AnnualQuantity == null ? string.Empty : model.AnnualQuantity.ToString();
-                this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null ? string.Empty : model.SecondAnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = model.SecondAnnualQuantity == null
+                                                     ? string.Empty
+                                                     : model.SecondAnnualQuantity.ToString();
                 this.AnnualReachValue = model.AnnualReach == null ? string.Empty : model.AnnualReach.ToString();
             }
             else
@@ -367,6 +298,7 @@
                 this.AnnualReach = null;
                 this.ReferenceUrl = string.Empty;
                 this.Visibility = visibilities.FirstOrDefault();
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = string.Empty;
                 this.SecondAnnualQuantityValue = string.Empty;
@@ -400,9 +332,12 @@
                 this.AnnualReach = ParseHelper.SafeParseInt(activationProtocolUri.ExtractQueryValue("reach"));
                 this.ReferenceUrl = activationProtocolUri.ExtractQueryValue("url");
                 this.Visibility = ContributionVisibilities.Public;
+                this.VisibilityValue = this.Visibility?.Description;
 
                 this.AnnualQuantityValue = this.AnnualQuantity == null ? string.Empty : this.AnnualQuantity.ToString();
-                this.SecondAnnualQuantityValue = this.SecondAnnualQuantity == null ? string.Empty : this.SecondAnnualQuantity.ToString();
+                this.SecondAnnualQuantityValue = this.SecondAnnualQuantity == null
+                                                     ? string.Empty
+                                                     : this.SecondAnnualQuantity.ToString();
                 this.AnnualReachValue = this.AnnualReach == null ? string.Empty : this.AnnualReach.ToString();
             }
         }
@@ -415,59 +350,30 @@
                 return null;
             }
 
+            var visibilities = ContributionVisibilities.GetItemVisibilities();
+
             var contribution = new Contribution
-            {
-                Id = this.Id,
-                TypeName = this.TypeName,
-                Type = this.Type,
-                Technology = this.Technology.ToContributionTechnology(),
-                StartDate = this.StartDate,
-                Title = this.Title,
-                Description = this.Description,
-                AnnualQuantity = this.AnnualQuantity,
-                SecondAnnualQuantity = this.SecondAnnualQuantity,
-                AnnualReach = this.AnnualReach,
-                ReferenceUrl = this.ReferenceUrl,
-                Visibility = this.Visibility
-            };
+                                   {
+                                       Id = this.Id,
+                                       TypeName = this.TypeName,
+                                       Type = this.Type,
+                                       Technology = this.Technology.ToContributionTechnology(),
+                                       StartDate = this.StartDate,
+                                       Title = this.Title,
+                                       Description = this.Description,
+                                       AnnualQuantity = this.AnnualQuantity,
+                                       SecondAnnualQuantity = this.SecondAnnualQuantity,
+                                       AnnualReach = this.AnnualReach,
+                                       ReferenceUrl = this.ReferenceUrl,
+                                       Visibility =
+                                           visibilities.FirstOrDefault(
+                                               x =>
+                                                   x.Description.Equals(
+                                                       this.VisibilityValue,
+                                                       StringComparison.CurrentCultureIgnoreCase))
+                                   };
 
             return contribution;
         }
-
-        /// <inheritdoc />
-        public override bool IsValid()
-        {
-            return !this.IsAnnualQuantityInvalid && !this.IsAnnualReachInvalid && !this.IsReferenceUrlInvalid
-                   && !this.IsSecondAnnualQuantityInvalid && !this.IsStartDateInvalid && !this.IsTechnologyInvalid
-                   && !this.IsTitleInvalid && !this.IsVisibilityInvalid;
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            var propName = e.PropertyName;
-
-            if (propName == nameof(this.IsAnnualQuantityInvalid))
-            {
-                this.AnnualQuantity = !this.IsAnnualQuantityInvalid
-                                          ? (int?)ParseHelper.SafeParseInt(this.AnnualQuantityValue)
-                                          : null;
-            }
-
-            if (propName == nameof(this.IsAnnualReachInvalid))
-            {
-                this.AnnualReach = !this.IsAnnualReachInvalid
-                                       ? (int?)ParseHelper.SafeParseInt(this.AnnualReachValue)
-                                       : null;
-            }
-
-            if (propName == nameof(this.IsSecondAnnualQuantityInvalid))
-            {
-                this.SecondAnnualQuantity = !this.IsSecondAnnualQuantityInvalid
-                                                ? (int?)ParseHelper.SafeParseInt(this.SecondAnnualQuantityValue)
-                                                : null;
-            }
-        }
-
-
     }
 }
