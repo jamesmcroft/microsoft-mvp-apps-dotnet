@@ -28,6 +28,7 @@
     <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
     <localConverters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" />
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    <localConverters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
     <localConverters:IntToDoubleConverter x:Key="IntToDoubleConverter" />
 
     <localConverters:AwardCategoryToIconConverter x:Key="AwardCategoryToIconConverter" />
@@ -213,7 +214,7 @@
                 RelativePanel.Below="ContributionDescription"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.AnnualQuantityValue, Mode=OneWay}"
-                Visibility="{Binding Item.AnnualQuantityValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+                Visibility="{Binding Item.AnnualQuantityValue, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionSecondQuantity"
@@ -223,7 +224,7 @@
                 RelativePanel.Below="ContributionQuantity"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.SecondAnnualQuantityValue, Mode=OneWay}"
-                Visibility="{Binding Item.SecondAnnualQuantityValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+                Visibility="{Binding Item.SecondAnnualQuantityValue, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionReach"
@@ -233,7 +234,7 @@
                 RelativePanel.Below="ContributionSecondQuantity"
                 Style="{StaticResource SeparatedHeaderedTextBlockStyle}"
                 Text="{Binding Item.AnnualReachValue, Mode=OneWay}"
-                Visibility="{Binding Item.AnnualReachValue, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}" />
+                Visibility="{Binding Item.AnnualReachValue, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}}" />
 
             <controls:HeaderedTextBlock
                 x:Name="ContributionVisibility"
@@ -428,11 +429,26 @@
                 Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignBottomWithPanel="True"
-                RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="Title"
                 RelativePanel.RightOf="ContributionImage"
                 Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
                 Text="{Binding StartDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=d}"
+                TextTrimming="CharacterEllipsis" />
+
+            <TextBlock
+                x:Name="Type"
+                Margin="10,0,10,10"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
+                MaxLines="1"
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.Below="Title"
+                RelativePanel.RightOf="Date"
+                HorizontalAlignment="Right"
+                Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
+                Text="{Binding Type.Name, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis" />
         </RelativePanel>
     </DataTemplate>

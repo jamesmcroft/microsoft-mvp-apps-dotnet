@@ -559,6 +559,20 @@
                         this.IsSecondAnnualQuantityVisible = true;
                         this.IsSecondAnnualQuantityMandatory = false;
                     }
+                    else
+                    {
+                        this.AnnualQuantityTitle = "Annual quantity";
+                        this.SecondAnnualQuantityTitle = string.Empty;
+                        this.AnnualReachTitle = "Annual reach";
+
+                        this.IsReferenceUrlMandatory = false;
+                        this.IsAnnualQuantityMandatory = true;
+                        this.IsSecondAnnualQuantityVisible = false;
+                        this.IsSecondAnnualQuantityMandatory = false;
+
+                        this.SecondAnnualQuantity = null;
+                        this.SecondAnnualQuantityValue = null;
+                    }
                 }
             }
         }
