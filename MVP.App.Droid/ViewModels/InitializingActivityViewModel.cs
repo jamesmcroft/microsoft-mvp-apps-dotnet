@@ -3,6 +3,7 @@ namespace MVP.App.ViewModels
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using Android.App;
     using Android.OS;
     using Android.Views;
 
@@ -10,12 +11,15 @@ namespace MVP.App.ViewModels
 
     using MVP.Api;
     using MVP.App.Common;
+    using MVP.App.Common.Networking;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.MvpApi.DataContainers;
 
     public class InitializingActivityViewModel : BaseActivityViewModel
     {
         private readonly IAppInitializer initializer;
+
+        private NetworkStatusManager networkStatusManager;
 
         private ApiClient apiClient;
 
@@ -98,6 +102,8 @@ namespace MVP.App.ViewModels
         {
             this.LoadingState = ViewStates.Visible;
 
+            this.networkStatusManager = new NetworkStatusManager(Application.Context);
+
             var initializeSuccess = await this.initializer.InitializeAsync();
             if (initializeSuccess)
             {
@@ -110,7 +116,10 @@ namespace MVP.App.ViewModels
 
         private async Task SignInAsync()
         {
-            // ToDo - Android, check network connected.
+            if (!this.networkStatusManager.IsConnected())
+            {
+                return;
+            }
 
             this.LoadingProgress = "Signing in...";
             this.LoadingState = ViewStates.Visible;

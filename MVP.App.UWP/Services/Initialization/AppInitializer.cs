@@ -1,12 +1,14 @@
 ﻿namespace MVP.App.Services.Initialization
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.Api;
     using MVP.Api.Models;
+    using MVP.Api.Models.MicrosoftAccount;
     using MVP.App.Common;
     using MVP.App.Events;
     using MVP.App.Services.Data;
@@ -16,11 +18,6 @@
     using Windows.Security.Authentication.Web;
 
     using WinUX;
-
-    using MVP.Api.Models.MicrosoftAccount;
-
-    using System.Collections.Generic;
-
     using WinUX.Diagnostics.Tracing;
     using WinUX.Messaging.Dialogs;
     using WinUX.Networking;
@@ -99,6 +96,7 @@
             {
                 return new AuthenticationMessage(false, "There appears to be no network connection!");
             }
+#endif
 
             try
             {
@@ -110,7 +108,11 @@
                                      MSAScope.SignIn
                                  };
 
-                var authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
+
+#if ANDROID
+
+#elif WINDOWS_UWP
+                                var authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
 
                 var result = await WebAuthenticationBroker.AuthenticateAsync(
                                  WebAuthenticationOptions.None,
@@ -154,15 +156,17 @@
 
                     success = false;
                 }
+#endif
             }
             catch (Exception ex)
             {
+#if WINDOWS_UWP
                 EventLogger.Current.WriteWarning(ex.ToString());
+#else
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+#endif
                 success = false;
             }
-#elif ANDROID
-            // ToDo - Android, bring up UI for authenticating with MSA.
-#endif
 
             return new AuthenticationMessage(success, errorMessage);
         }
