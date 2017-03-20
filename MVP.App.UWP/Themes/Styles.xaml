@@ -33,7 +33,7 @@
     <localConverters:AwardCategoryToColorBrushConverter
         x:Key="AwardCategoryToColorBrushConverter"
         AccessBrush="{StaticResource AccessThemeBrush}"
-        DefaultBrush="{StaticResource MvpBlueThemeBrush}"
+        DefaultBrush="{StaticResource DefaultThemeBrush}"
         ExcelBrush="{StaticResource ExcelThemeBrush}"
         OfficeBrush="{StaticResource OfficeThemeBrush}"
         OneNoteBrush="{StaticResource OneNoteThemeBrush}"
@@ -399,17 +399,17 @@
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
         <RelativePanel x:Name="TileContainer" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
-            <Grid x:Name="ContributionImage">
+            <Grid x:Name="ContributionImage" Padding="10,10,5,10">
                 <Image
-                    Width="70"
-                    Height="70"
+                    Width="50"
+                    Height="50"
                     Source="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToIconConverter}}"
                     Stretch="UniformToFill" />
             </Grid>
 
             <TextBlock
                 x:Name="Title"
-                Margin="10,10,0,0"
+                Margin="10,10,10,0"
                 Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignRightWithPanel="True"

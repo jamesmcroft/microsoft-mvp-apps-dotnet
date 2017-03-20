@@ -78,12 +78,13 @@
         <ScrollViewer
             x:Name="ContentScroller"
             Grid.Row="1"
-            Padding="20"
+            Padding="20,0"
             Background="{StaticResource LightGrayThemeBrush}">
             <RelativePanel x:Name="ProfileContainer">
                 <winuxControls:HeaderedTextBlock
                     x:Name="Biography"
                     Header="Biography"
+                    Margin="0,20,0,0"
                     RelativePanel.AlignLeftWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
                     RelativePanel.AlignTopWithPanel="True"
@@ -92,7 +93,7 @@
 
                 <StackPanel
                     x:Name="RecentActivities"
-                    Margin="0,20,0,0"
+                    Margin="0,20"
                     RelativePanel.AlignLeftWithPanel="True"
                     RelativePanel.AlignRightWithPanel="True"
                     RelativePanel.Below="Biography">
@@ -152,7 +153,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProfileHero.Padding" Value="20,50,20,20" />
+                        <Setter Target="ProfileHero.Padding" Value="20,53,20,20" />
 
                         <Setter Target="ProfileImage.Width" Value="50" />
                         <Setter Target="ProfileImage.Height" Value="50" />

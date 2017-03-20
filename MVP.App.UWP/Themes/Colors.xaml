@@ -21,6 +21,9 @@
     <SolidColorBrush x:Key="MvpBlueDarkThemeBrush" Color="{StaticResource MvpBlueDarkColor}" />
     <SolidColorBrush x:Key="MvpBlueDarkerThemeBrush" Color="{StaticResource MvpBlueDarkerColor}" />
 
+    <Color x:Key="DefaultColor">#FF0078D7</Color>
+    <SolidColorBrush x:Key="DefaultThemeBrush" Color="{StaticResource DefaultColor}" />
+
     <Color x:Key="AccessColor">#FFA33639</Color>
     <SolidColorBrush x:Key="AccessThemeBrush" Color="{StaticResource AccessColor}" />
 

@@ -20,7 +20,6 @@
 
         <RelativePanel
             x:Name="ContributionHero"
-            Padding="20"
             Background="{StaticResource MvpBlueThemeBrush}"
             RequestedTheme="Dark">
             <TextBlock
@@ -88,9 +87,11 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ContributionHero.Padding" Value="68,20,20,20" />
                         <Setter Target="PageName.Style" Value="{StaticResource TitleTextBlockStyle}" />
 
+                        <Setter Target="ContributionHero.Height" Value="48" />
+                        <Setter Target="ContributionHero.Padding" Value="58,6" />
+                        
                         <Setter Target="ContributionBar.DefaultLabelPosition" Value="Bottom" />
                     </VisualState.Setters>
                 </VisualState>
@@ -99,6 +100,7 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="ContributionHero.Padding" Value="20" />
 
                         <Setter Target="ContributionBar.DefaultLabelPosition" Value="Right" />
                     </VisualState.Setters>

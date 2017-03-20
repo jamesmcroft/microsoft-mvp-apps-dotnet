@@ -22,7 +22,7 @@
         x:Key="HeaderedTextBlockLightHeaderStyle"
         BasedOn="{StaticResource SubtitleTextBlockStyle}"
         TargetType="TextBlock">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="{StaticResource WhiteThemeBrush}" />
     </Style>
 
@@ -30,7 +30,7 @@
         x:Key="HeaderedTextBlockLightTextStyle"
         BasedOn="{StaticResource BodyTextBlockStyle}"
         TargetType="TextBlock">
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{StaticResource WhiteThemeBrush}" />
         <Setter Property="Opacity" Value="0.7" />
         <Setter Property="Margin" Value="0,5,0,0" />
@@ -110,11 +110,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:HeaderedTextBlock">
                     <Grid x:Name="Container">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
                         <StackPanel x:Name="Panel" Orientation="{TemplateBinding Orientation}">
                             <TextBlock
                                 x:Name="HeaderContent"
@@ -126,13 +121,6 @@
                                 Style="{TemplateBinding TextStyle}"
                                 Text="{TemplateBinding Text}" />
                         </StackPanel>
-
-                        <Rectangle
-                            Grid.Row="1"
-                            Height="2"
-                            Margin="0,10,0,0"
-                            Fill="{StaticResource MvpBlueThemeBrush}"
-                            Opacity="0.1" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OrientationStates">
