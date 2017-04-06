@@ -41,7 +41,7 @@ If you find an issue in any variant of the applications, please could you raise 
 
 | Package | Version |
 | ------ | ------ |
-| UWP | [Become a tester](https://t.co/iC7ZRvew3r) |
+| UWP | [1.1.6](https://www.microsoft.com/en-us/store/p/mvp-community-app/9nm26mmrjbpf) |
 | Android | Coming soon. |
 | iOS | Coming soon. |
 
