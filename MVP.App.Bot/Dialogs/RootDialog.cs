@@ -1,94 +1,31 @@
 ﻿using System;
-using System.Configuration;
-using System.Threading;
 using System.Threading.Tasks;
-using AuthBot;
-using AuthBot.Dialogs;
-using AuthBot.Models;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Luis;
-using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 
 namespace MVP.App.Bot.Dialogs
 {
     [Serializable]
-    [LuisModel("3bd30c5a-4049-4825-bf2d-b594db13f044", "4400bf5e7b6140718188f4d25c3af592")]
-    public class RootDialog : AppBaseDialog<string>
+    public class RootDialog : IDialog<object>
     {
-        private string receivedMessage;
-
-        protected override async Task MessageReceived(IDialogContext context, IAwaitable<IMessageActivity> item)
+        public Task StartAsync(IDialogContext context)
         {
-            var message = await item;
+            context.Wait(MessageReceivedAsync);
 
-            receivedMessage = message.Text.ToLowerInvariant();
-
-            if (receivedMessage.Contains("help") || message.Type != ActivityTypes.Message)
-            {
-                await base.MessageReceived(context, item);
-                return;
-            }
-
-            var accessToken = await context.GetAccessToken(AuthSettings.Scopes);
-
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                if (receivedMessage.Contains("login"))
-                {
-                    await context.Forward(new AzureAuthDialog(AuthSettings.Scopes, "Sign in with MVP account"), this.AuthCompleteAsync, message, CancellationToken.None);
-                }
-                else
-                {
-                    await this.Help(context, new LuisResult());
-                }
-            }
-            else
-            {
-                // User authenticated
-                // Get profile
-                // Next steps
-            }
-
+            return Task.CompletedTask;
         }
 
-        [LuisIntent("Help")]
-        private async Task Help(IDialogContext context, LuisResult luisResult)
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
-            var message = $"Hey MVP!\n\n";
-            var accessToken = await context.GetAccessToken(AuthSettings.Scopes);
+            var activity = await result as Activity;
 
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                message += $"Before I can help you, I need you to login.";
-            }
-            else
-            {
-                message += "I can help you with: \n";
-                message += "* List you recent contributions\n";
-                message += "* Add new contributions\n";
-            }
+            // calculate something for us to return
+            int length = (activity.Text ?? string.Empty).Length;
 
-            await context.PostAsync(message);
+            // return our reply to the user
+            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
 
-            context.Wait(this.MessageReceived);
-        }
-
-        [LuisIntent("Logout")]
-        public async Task Logout(IDialogContext context, LuisResult result)
-        {
-            context.UserData.Clear();
-            await context.Logout();
-
-            context.Wait(this.MessageReceived);
-        }
-
-        private async Task AuthCompleteAsync(IDialogContext context, IAwaitable<string> result)
-        {
-            var message = await result;
-            await context.PostAsync(message);
-
-            // Get profile
+            context.Wait(MessageReceivedAsync);
         }
     }
 }
