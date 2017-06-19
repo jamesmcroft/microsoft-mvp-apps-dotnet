@@ -16,6 +16,7 @@ using MVP.App.Services.MvpApi.DataContainers;
 
 using WinUX;
 
+using Debug = System.Diagnostics.Debug;
 using Exception = System.Exception;
 
 namespace MVP.App.ViewModels
@@ -201,7 +202,7 @@ namespace MVP.App.ViewModels
 
         public override async void OnActivityCreated(Bundle bundle)
         {
-            await this.UpdateChartDataAsync();
+            await this.GroupChartDataAsync();
         }
 
         private async void RefreshProfileData(RefreshDataMessage obj)
@@ -270,10 +271,12 @@ namespace MVP.App.ViewModels
             }
         }
 
-        public async Task UpdateChartDataAsync()
+        public async Task GroupChartDataAsync()
         {
             try
             {
+                Debug.WriteLine("GroupChartData Started");
+
                 this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Updating charts..."));
 
                 if (this.ContributionsToRetrieve != this.Contributions.Count)
@@ -283,11 +286,11 @@ namespace MVP.App.ViewModels
 
                 IEnumerable<ChartDataItemViewModel> groupedContributions = null;
 
-                if (this.selectedGroupByType == this.GroupByTypes[0])
+                if (selectedGroupByType == GroupByTypes[0])
                 {
                     // "Contribution Type"
                     groupedContributions =
-                        this.Contributions.GroupBy(c => c.TypeName)
+                        Contributions.GroupBy(c => c.TypeName)
                             .Select(
                                 g =>
                                     new ChartDataItemViewModel
@@ -296,11 +299,11 @@ namespace MVP.App.ViewModels
                                         CategoryValue = g.Count()
                                     });
                 }
-                else if (this.selectedGroupByType == this.GroupByTypes[1])
+                else if (selectedGroupByType == GroupByTypes[1])
                 {
                     // "Technology Name"
                     groupedContributions =
-                        this.Contributions.GroupBy(c => c.Technology.Name)
+                        Contributions.GroupBy(c => c.Technology.Name)
                             .Select(
                                 g =>
                                     new ChartDataItemViewModel
@@ -309,12 +312,12 @@ namespace MVP.App.ViewModels
                                         CategoryValue = g.Count()
                                     });
                 }
-                else if (this.selectedGroupByType == this.GroupByTypes[2])
+                else if (selectedGroupByType == GroupByTypes[2])
                 {
                     // "Week" 
 
                     // Only use the past year's activities)
-                    var lastYear = this.Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
+                    var lastYear = Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
 
                     if (lastYear != null)
                     {
@@ -330,12 +333,12 @@ namespace MVP.App.ViewModels
 
                     }
                 }
-                else if (this.selectedGroupByType == this.GroupByTypes[3])
+                else if (selectedGroupByType == GroupByTypes[3])
                 {
                     // "Month"
 
                     // Only use the past year's activities)
-                    var lastYear = this.Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
+                    var lastYear = Contributions.GroupBy(c => c.StartDate.Value.Year).LastOrDefault();
 
                     if (lastYear != null)
                     {
@@ -350,11 +353,11 @@ namespace MVP.App.ViewModels
                                         });
                     }
                 }
-                else if (this.selectedGroupByType == this.GroupByTypes[4])
+                else if (selectedGroupByType == GroupByTypes[4])
                 {
                     // "Year"
                     groupedContributions =
-                        this.Contributions.GroupBy(c => c.StartDate.Value.Year)
+                        Contributions.GroupBy(c => c.StartDate.Value.Year)
                             .Select(
                                 g =>
                                     new ChartDataItemViewModel
@@ -366,12 +369,25 @@ namespace MVP.App.ViewModels
 
                 if (groupedContributions != null)
                 {
-                    this.GroupedContributionsData.Clear();
+                    GroupedContributionsData.Clear();
+                    
                     this.GroupedContributionsData.AddRange(groupedContributions);
+
+                    // In case AddRange fails
+                    //foreach (var item in groupedContributions)
+                    //    GroupedContributionsData.Add(item);
+
+                    Debug.WriteLine($"GroupChartData - {GroupedContributionsData.Count} items grouped");
+                }
+                else
+                {
+                    Debug.WriteLine($"GroupChartData - groupedContributions was null");
                 }
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"GroupChartData Exception: {ex}");
+
 #if WINDOWS_UWP
                 EventLogger.Current.WriteWarning(aex.ToString());
 #elif ANDROID
@@ -381,10 +397,10 @@ namespace MVP.App.ViewModels
             finally
             {
                 this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(false));
-                this.IsConfigurationPanelVisible = false;
+                IsConfigurationPanelVisible = false;
             }
         }
-        
+
         private void NavigateToHome()
         {
             // ToDo - Android, navigate to the home page.

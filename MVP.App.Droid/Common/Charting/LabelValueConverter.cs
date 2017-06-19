@@ -9,9 +9,7 @@ namespace MVP.App.Common.Charting
     {
         public Java.Lang.Object Apply(Java.Lang.Object argument)
         {
-            double labelValue = (argument.JavaCast<MajorTickModel>()).Value();
-            string format = "Value is: {0}";
-            return string.Format(format, labelValue);
+            return $"Value is: {argument?.JavaCast<MajorTickModel>()?.Value()}";
         }
     }
 }

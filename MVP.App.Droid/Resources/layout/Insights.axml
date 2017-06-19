@@ -4,56 +4,71 @@
     android:layout_height="match_parent"
     android:background="@color/MvpBlueColor"
     android:minWidth="25px"
-    android:minHeight="25px" >
-
+    android:minHeight="25px">
   <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/scrollAreaLayout"
+    android:scrollbars="vertical"
+    android:scrollIndicators="right"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+    <!-- content here -->
     <LinearLayout
       android:orientation="vertical"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
-
+      android:layout_height="wrap_content">
       <com.telerik.widget.primitives.legend.RadLegendView
         android:id="@+id/pie_legend"
         android:layout_width="fill_parent"
-        android:layout_height="100dp">
-
-      </com.telerik.widget.primitives.legend.RadLegendView>
-
+        android:layout_height="100dp" />
       <com.telerik.widget.chart.visualization.pieChart.RadPieChartView
         android:id="@+id/pie_chart"
         android:layout_width="fill_parent"
-        android:layout_height="250dp" />
-
+        android:layout_height="200dp" />
       <com.telerik.widget.chart.visualization.cartesianChart.RadCartesianChartView
-                android:id="@+id/bar_chart"
-                android:layout_width="fill_parent"
-                android:layout_height="250dp" />
-
+        android:id="@+id/bar_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp" />
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insight Data Configuration"
+        android:textAlignment="center"
+        android:id="@+id/textView1" />
+      <Spinner
+        android:id="@+id/group_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/GroupBySpinnerHeader" />
+      <com.telerik.widget.numberpicker.RadNumberPicker
+        android:id="@+id/number_picker"
+        android:layout_width="200dp"
+        android:layout_height="match_parent" />
+      <Button
+        android:text="update charts"
+        android:id="@+id/update_charts_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
     </LinearLayout>
   </ScrollView>
-  
-  
-  <ProgressBar
-    android:id="@+id/loading_progressring"
-    style="@style/Base.Widget.AppCompat.ProgressBar"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:indeterminate="true"
-    android:visibility="visible"
-    android:layout_marginTop="20dp"
-    android:indeterminateTint="#ffffffff" />
-  <TextView
-    android:id="@+id/loading_progress"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:maxLines="2"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    style="@style/SubtitleTextViewStyle"
-    android:gravity="center_horizontal"
-    android:ellipsize="end"
-    android:textColor="@color/WhiteColor" />
-
+    <ProgressBar
+        android:id="@+id/loading_progressring"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:indeterminate="true"
+        android:visibility="visible"
+        android:layout_marginTop="20dp"
+        android:indeterminateTint="#ffffffff" />
+    <TextView
+        android:id="@+id/loading_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        style="@style/SubtitleTextViewStyle"
+        android:gravity="center_horizontal"
+        android:ellipsize="end"
+        android:textColor="@color/WhiteColor" />
 </LinearLayout>

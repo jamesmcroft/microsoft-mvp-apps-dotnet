@@ -1,4 +1,5 @@
 using System;
+
 using Com.Telerik.Widget.Chart.Engine.Databinding;
 
 namespace MVP.App.Common.Charting

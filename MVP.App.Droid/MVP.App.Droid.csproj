@@ -31,6 +31,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidSupportedAbis />
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -99,6 +101,16 @@
     <Reference Include="Telerik.Xamarin.Android.Common">
       <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Xamarin.Android.Data, Version=2017.2.614.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Xamarin.Android.Input">
+      <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Xamarin.Android.List">
+      <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.List.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Xamarin.Android.Primitives">
       <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.Primitives.dll</HintPath>
     </Reference>
@@ -156,8 +168,11 @@
     <Compile Include="Application.cs" />
     <Compile Include="Common\BaseActivity.cs" />
     <Compile Include="Common\BaseActivityViewModel.cs" />
+    <Compile Include="Common\Charting\ChartCollection.cs" />
     <Compile Include="Common\Charting\ChartDataItemBinding.cs" />
     <Compile Include="Common\Charting\ChartDataItemViewModel.cs" />
+    <Compile Include="Common\Charting\ChartHelpers.cs" />
+    <Compile Include="Common\Charting\CustomBarRenderer.cs" />
     <Compile Include="Common\Charting\LabelValueConverter.cs" />
     <Compile Include="Common\Networking\NetworkStatusManager.cs" />
     <Compile Include="Extensions\Extensions.Storage.cs" />
@@ -248,7 +263,9 @@
     <AndroidResource Include="Resources\values\GenericStyles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values-v21\style.xml" />
+    <AndroidResource Include="Resources\values-v21\style.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

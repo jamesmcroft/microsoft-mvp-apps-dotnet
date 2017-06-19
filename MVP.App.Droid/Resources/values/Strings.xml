@@ -2,4 +2,5 @@
 <resources>
   <string name="ApplicationName">MVP Community App</string>
   <string name="title_activity_webview">Log In</string>
+  <string name="GroupBySpinnerHeader">Insights</string>
 </resources>
