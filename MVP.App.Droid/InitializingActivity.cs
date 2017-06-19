@@ -11,8 +11,7 @@ namespace MVP.App
     [Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/Icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public partial class InitializingActivity : BaseActivity<InitializingActivityViewModel>
     {
-        public override InitializingActivityViewModel ViewModel => App.Application.Locator.InitializingActivityViewModel
-        ;
+        public override InitializingActivityViewModel ViewModel => App.Application.Locator.InitializingActivityViewModel;
 
         public override void OnCreated(Bundle bundle)
         {

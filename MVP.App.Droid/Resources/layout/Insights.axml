@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/MvpBlueColor"
+    android:minWidth="25px"
+    android:minHeight="25px" >
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <com.telerik.widget.primitives.legend.RadLegendView
+        android:id="@+id/pie_legend"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp">
+
+      </com.telerik.widget.primitives.legend.RadLegendView>
+
+      <com.telerik.widget.chart.visualization.pieChart.RadPieChartView
+        android:id="@+id/pie_chart"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp" />
+
+      <com.telerik.widget.chart.visualization.cartesianChart.RadCartesianChartView
+                android:id="@+id/bar_chart"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp" />
+
+    </LinearLayout>
+  </ScrollView>
+  
+  
+  <ProgressBar
+    android:id="@+id/loading_progressring"
+    style="@style/Base.Widget.AppCompat.ProgressBar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:indeterminate="true"
+    android:visibility="visible"
+    android:layout_marginTop="20dp"
+    android:indeterminateTint="#ffffffff" />
+  <TextView
+    android:id="@+id/loading_progress"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxLines="2"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    style="@style/SubtitleTextViewStyle"
+    android:gravity="center_horizontal"
+    android:ellipsize="end"
+    android:textColor="@color/WhiteColor" />
+
+</LinearLayout>

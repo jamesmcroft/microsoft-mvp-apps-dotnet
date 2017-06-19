@@ -34,7 +34,7 @@
             style="@style/SubtitleTextViewStyle"
             android:gravity="center_horizontal"
             android:ellipsize="end"
-            android:textColor="@color/WhiteColor"/>
+            android:textColor="@color/WhiteColor" />
         <Button
             style="@style/MvpSigninButtonStyle"
             android:text="Sign in with MVP account"
@@ -43,6 +43,6 @@
             android:id="@+id/signin_button"
             android:layout_height="60dp"
             android:background="@color/MvpBlueLightColor"
-            android:textColor="@color/WhiteColor"/>
+            android:textColor="@color/WhiteColor" />
     </LinearLayout>
 </RelativeLayout>

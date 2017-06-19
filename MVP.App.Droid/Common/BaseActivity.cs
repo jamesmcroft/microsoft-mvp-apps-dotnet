@@ -15,12 +15,7 @@ namespace MVP.App.Common
 
             this.OnCreated(bundle);
 
-            if (this.ViewModel == null)
-            {
-                return;
-            }
-
-            this.ViewModel.OnActivityCreated(bundle);
+            ViewModel?.OnActivityCreated(bundle);
         }
 
         public abstract void OnCreated(Bundle bundle);

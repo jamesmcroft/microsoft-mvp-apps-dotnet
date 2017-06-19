@@ -37,6 +37,14 @@ namespace MVP.App
             }
         }
 
+        public InsightsActivityViewModel InsightsActivityViewModel
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<InsightsActivityViewModel>();
+            }
+        }
+
         private void RegisterServices()
         {
             SimpleIoc.Default.Register<IMessenger, Messenger>();
@@ -53,6 +61,7 @@ namespace MVP.App
         {
             SimpleIoc.Default.Register<InitializingActivityViewModel>();
             SimpleIoc.Default.Register<MainActivityViewModel>();
+            SimpleIoc.Default.Register<InsightsActivityViewModel>();
         }
     }
 }
