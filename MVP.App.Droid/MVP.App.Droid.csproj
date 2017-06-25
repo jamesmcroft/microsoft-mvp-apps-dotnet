@@ -15,8 +15,8 @@
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -33,6 +33,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <AndroidSupportedAbis />
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
+    <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,21 +75,6 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PCLCrypto, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d4421c8a4786956c, processorArchitecture=MSIL">
-      <HintPath>..\packages\PCLCrypto.2.0.147\lib\MonoAndroid23\PCLCrypto.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.BCrypt, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\PInvoke.BCrypt.0.3.2\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.BCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Kernel32, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\PInvoke.Kernel32.0.3.2\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Kernel32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.NCrypt, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\PInvoke.NCrypt.0.3.2\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.NCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Windows.Core, Version=0.3.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\PInvoke.Windows.Core.0.3.2\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Windows.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Json" />
@@ -114,42 +100,69 @@
     <Reference Include="Telerik.Xamarin.Android.Primitives">
       <HintPath>C:\Program Files (x86)\Telerik\UI for Xamarin R2 2017\Binaries\Android\Telerik.Xamarin.Android.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Validation, Version=2.2.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Validation.2.2.8\lib\dotnet\Validation.dll</HintPath>
-    </Reference>
     <Reference Include="WinUX.Common, Version=2.4.17005.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WinUX.Common.2.4.17005.1\lib\portable-net451+win81+MonoAndroid10+xamarinios10+MonoTouch10\WinUX.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Animated.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.Animated.Vector.Drawable.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Animated.Vector.Drawable.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Android.Support.CustomTabs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.CustomTabs.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.CustomTabs.dll</HintPath>
+    <Reference Include="Xamarin.Android.Support.Design, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.Design.23.4.0.1\lib\MonoAndroid43\Xamarin.Android.Support.Design.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.v7.AppCompat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v8.RenderScript, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.v8.RenderScript.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v8.RenderScript.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\lib\MonoAndroid403\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Auth, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Auth.1.5.0.2\lib\MonoAndroid10\Xamarin.Auth.dll</HintPath>
+    <Reference Include="XPlat.Core, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Core.1.2.17139.2\lib\portable-net451+win81+MonoAndroid10+xamarinios10+MonoTouch10\XPlat.Core.dll</HintPath>
     </Reference>
-    <Reference Include="XPlat.API.Android, Version=1.2.17078.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.2.17078.2-prerelease\lib\MonoAndroid10\XPlat.API.Android.dll</HintPath>
+    <Reference Include="XPlat.Device.Display.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Display.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Display.Common.dll</HintPath>
     </Reference>
-    <Reference Include="XPlat.API.Common, Version=1.2.17078.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XPlatApis.1.2.17078.2-prerelease\lib\MonoAndroid10\XPlat.API.Common.dll</HintPath>
+    <Reference Include="XPlat.Device.Display.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Display.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Display.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Device.Geolocation.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Geolocation.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Geolocation.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Device.Geolocation.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Geolocation.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Geolocation.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Device.Power.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Power.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Power.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Device.Power.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Device.Power.1.2.17139.2\lib\MonoAndroid10\XPlat.Device.Power.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Media.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Media.1.2.17139.2\lib\MonoAndroid10\XPlat.Media.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Media.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Media.1.2.17139.2\lib\MonoAndroid10\XPlat.Media.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Storage.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Storage.1.2.17139.2\lib\MonoAndroid10\XPlat.Storage.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.Storage.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.Storage.1.2.17139.2\lib\MonoAndroid10\XPlat.Storage.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.UI.Core.Common, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.UI.Core.1.2.17139.2\lib\MonoAndroid10\XPlat.UI.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="XPlat.UI.Core.Droid, Version=1.2.17139.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XPlat.UI.Core.1.2.17139.2\lib\MonoAndroid10\XPlat.UI.Core.Droid.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -268,12 +281,12 @@
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
+  <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Android.Support.Vector.Drawable.23.4.0.1\build\Xamarin.Android.Support.Vector.Drawable.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

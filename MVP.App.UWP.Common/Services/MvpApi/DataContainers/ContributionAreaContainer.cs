@@ -11,7 +11,7 @@
     using MVP.Api.Models;
 
 #if ANDROID
-    using XPlat.API.Storage;
+    using XPlat.Storage;
 #elif WINDOWS_UWP
     using Windows.Storage;
     using Windows.UI.Popups;

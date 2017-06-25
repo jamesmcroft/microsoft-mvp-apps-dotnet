@@ -4,7 +4,7 @@ namespace MVP.App
 
     using WinUX.Data.Serialization;
 
-    using XPlat.API.Storage;
+    using XPlat.Storage;
 
     public static partial class Extensions
     {

@@ -8,7 +8,7 @@
     using WinUX.Messaging.Dialogs;
     using Windows.UI.Popups;
 #elif ANDROID
-    using XPlat.API.Storage;
+    using XPlat.Storage;
 #endif
 
     using System;
