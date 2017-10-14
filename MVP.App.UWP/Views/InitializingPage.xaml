@@ -8,45 +8,89 @@
     DataContext="{Binding InitializingPageViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
 
-    <RelativePanel Background="{ThemeResource MvpBlueThemeBrush}">
-        <StackPanel
-            RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.AlignLeftWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignVerticalCenterWithPanel="True">
+    <RelativePanel x:Name="OuterContainer" Background="{ThemeResource MvpAcrylicBrush}">
+        <RelativePanel.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromVerticalOffset="480" />
+            </TransitionCollection>
+        </RelativePanel.ChildrenTransitions>
 
-            <Image
-                x:Name="MvpLogo"
-                Width="90"
-                Source="../Assets/MVPLogo.png" />
+        <RelativePanel
+            x:Name="Container"
+            Padding="20"
+            Background="{ThemeResource MvpBlueThemeBrush}"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True">
+            <RelativePanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="480" />
+                </TransitionCollection>
+            </RelativePanel.ChildrenTransitions>
 
-            <ProgressRing
-                x:Name="LoadingProgressRing"
-                Width="50"
-                Height="50"
-                Margin="0,20"
-                Foreground="#FFFFFFFF"
-                IsActive="True"
-                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <StackPanel
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True">
 
-            <TextBlock
-                x:Name="LoadingProgress"
-                Margin="20,0"
-                FontWeight="Light"
-                MaxLines="2"
-                Style="{StaticResource SubtitleTextBlockStyle}"
-                Text="{x:Bind ViewModel.LoadingProgress, Mode=OneWay, FallbackValue='Loading...'}"
-                TextAlignment="Center"
-                TextWrapping="WrapWholeWords"
-                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <Image
+                    x:Name="MvpLogo"
+                    Width="90"
+                    Source="../Assets/MVPLogo.png" />
 
-            <Button
-                Margin="0,20"
-                HorizontalAlignment="Center"
-                Command="{x:Bind ViewModel.SigninCommand, Mode=OneWay}"
-                Content="Sign in with MVP account"
-                Style="{StaticResource MvpSigninButtonStyle}"
-                Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-        </StackPanel>
+                <ProgressRing
+                    x:Name="LoadingProgressRing"
+                    Width="50"
+                    Height="50"
+                    Margin="0,20"
+                    Foreground="#FFFFFFFF"
+                    IsActive="True"
+                    Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <TextBlock
+                    x:Name="LoadingProgress"
+                    Margin="20,0"
+                    FontWeight="Light"
+                    MaxLines="2"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.LoadingProgress, Mode=OneWay, FallbackValue='Loading...'}"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWholeWords"
+                    Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <Button
+                    Margin="0,20"
+                    HorizontalAlignment="Center"
+                    Command="{x:Bind ViewModel.SigninCommand, Mode=OneWay}"
+                    Content="Sign in with MVP account"
+                    Style="{StaticResource MvpSigninButtonStyle}"
+                    Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+
+            </StackPanel>
+        </RelativePanel>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Container.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="Container.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Container.Width" Value="500" />
+                        <Setter Target="Container.(RelativePanel.AlignVerticalCenterWithPanel)" Value="True" />
+                        <Setter Target="Container.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </RelativePanel>
 </views:PageBase>

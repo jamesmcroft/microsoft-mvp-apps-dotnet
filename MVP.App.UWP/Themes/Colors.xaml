@@ -51,4 +51,28 @@
     <Color x:Key="WordColor">#FF2A5699</Color>
     <SolidColorBrush x:Key="WordThemeBrush" Color="{StaticResource WordColor}" />
 
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <AcrylicBrush
+                x:Key="MvpAcrylicBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#FF00467A"
+                TintColor="#FF00467A"
+                TintOpacity="0.6" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="HighContrast">
+            <SolidColorBrush x:Key="MvpAcrylicBrush" Color="{ThemeResource SystemColorWindowColor}" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+            <AcrylicBrush
+                x:Key="MvpAcrylicBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#FF00467A"
+                TintColor="#FF00467A"
+                TintOpacity="0.6" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
 </ResourceDictionary>
