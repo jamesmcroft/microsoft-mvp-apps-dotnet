@@ -1,13 +1,14 @@
 ﻿namespace MVP.App.Views
 {
-    using MVP.App.ViewModels;
+    using Windows.UI;
+    using Windows.UI.Xaml.Hosting;
 
-    using WinUX.MvvmLight.Xaml.Views;
+    using MVP.App.ViewModels;
 
     /// <summary>
     /// Defines a page for the main application.
     /// </summary>
-    public sealed partial class MainPage : PageBase
+    public sealed partial class MainPage
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MainPage"/> class.

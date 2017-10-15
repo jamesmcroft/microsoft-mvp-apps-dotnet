@@ -13,16 +13,16 @@
 
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Activation;
-    using Windows.ApplicationModel.Core;
     using Windows.ApplicationModel.VoiceCommands;
-    using Windows.Foundation;
     using Windows.Foundation.Metadata;
-    using Windows.UI;
+    using Windows.Media.SpeechRecognition;
+    using Windows.Storage;
     using Windows.UI.ViewManagement;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 
-    using WinUX;
+    using MVP.App.Helpers;
+
     using WinUX.ApplicationModel.Lifecycle;
     using WinUX.Diagnostics;
     using WinUX.Diagnostics.Tracing;
@@ -33,7 +33,7 @@
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public sealed partial class App : Application
+    public sealed partial class App
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -69,30 +69,28 @@
             switch (args.Kind)
             {
                 case ActivationKind.Protocol:
-                    var protocolArgs = args as ProtocolActivatedEventArgs;
-                    if (protocolArgs != null)
+                    if (args is ProtocolActivatedEventArgs protocolArgs)
                     {
                         activationArgs = new ActivationArgs(protocolArgs.Uri);
                     }
+
                     break;
                 case ActivationKind.VoiceCommand:
-                    var voiceArgs = args as VoiceCommandActivatedEventArgs;
-                    if (voiceArgs != null)
+                    if (args is VoiceCommandActivatedEventArgs voiceArgs)
                     {
-                        var result = voiceArgs.Result;
-                        var voiceCommand = result.RulePath[0];
+                        SpeechRecognitionResult result = voiceArgs.Result;
+                        string voiceCommand = result.RulePath[0];
 
-                        var speechCommand = new SpeechCommand(result, new List<string>());
+                        SpeechCommand speechCommand = new SpeechCommand(result, new List<string>());
 
                         // Switch on the voice command string to determine function
-
                         activationArgs = new ActivationArgs(speechCommand);
                     }
+
                     break;
             }
 
-            var rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame))
             {
                 await this.LaunchApplicationAsync(activationArgs);
             }
@@ -106,12 +104,11 @@
 
         private async Task LaunchApplicationAsync(object launchArgs)
         {
-            SetupTitleBar();
+            TitleBarHelper.ExtendToTitleBar(true);
             await SetupStatusBarAsync();
             await SetupCortanaVoiceCommandsAsync();
 
-            var rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 rootFrame = new Frame();
 
@@ -132,7 +129,7 @@
         {
             try
             {
-                var commandFile = await Package.Current.InstalledLocation.GetFileAsync("VoiceCommands.xml");
+                StorageFile commandFile = await Package.Current.InstalledLocation.GetFileAsync("VoiceCommands.xml");
                 await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(commandFile);
             }
             catch (Exception ex)
@@ -145,37 +142,11 @@
         {
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                var statusBar = StatusBar.GetForCurrentView();
+                StatusBar statusBar = StatusBar.GetForCurrentView();
                 if (statusBar != null)
                 {
                     await statusBar.HideAsync();
                 }
-            }
-        }
-
-        private static void SetupTitleBar()
-        {
-            if (!ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
-            {
-                return;
-            }
-
-            if (!ApiInformation.IsTypePresent("Windows.ApplicationModel.Core.CoreApplication"))
-            {
-                return;
-            }
-
-            CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
-            if (coreApplicationView?.TitleBar != null)
-            {
-                coreApplicationView.TitleBar.ExtendViewIntoTitleBar = true;
-            }
-
-            ApplicationView applicationView = ApplicationView.GetForCurrentView();
-            if (applicationView?.TitleBar != null)
-            {
-                applicationView.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-                applicationView.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             }
         }
 

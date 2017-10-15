@@ -1,22 +1,27 @@
 ﻿namespace MVP.App.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
 
-    using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
 
     using MVP.App.Events;
     using MVP.App.Views;
 
-    using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Navigation;
 
-    using WinUX.MvvmLight.Common.ViewModels;
-    using WinUX.Xaml.Controls;
+    using WinUX.Common;
+    using WinUX.MvvmLight.Xaml.Views;
 
-    public class AppShellPageViewModel : CoreViewModelBase
+    public class AppShellPageViewModel : PageBaseViewModel
     {
-        private bool isInitialized;
+        private const string MyProfileTag = "profile";
+
+        private const string AllContributionsTag = "contributions";
+
+        private const string AboutAppTag = "about";
 
         private bool isPaneOpen;
 
@@ -25,6 +30,8 @@
         private string busyMessage;
 
         private bool isBusyMessageBlocking;
+
+        private NavigationViewItem selectedNavigationItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppShellPageViewModel"/> class.
@@ -35,119 +42,46 @@
         public AppShellPageViewModel(IMessenger messenger)
             : base(messenger)
         {
-            this.PrimaryMenuButtons = new ObservableCollection<AppMenuButton>();
-            this.SecondaryMenuButtons = new ObservableCollection<AppMenuButton>();
-            this.FlyoutMenuButtons = new ObservableCollection<FlyoutAppMenuButton>();
+            this.InitializeNavigationItems();
 
-            this.Initialize();
+            this.PropertyChanged += this.OnPropertyChanged;
+            this.NavigationService.Frame.Navigated += this.OnFrameNavigated;
 
             this.MessengerInstance.Register<UpdateBusyIndicatorMessage>(
                 this,
                 x => this.UpdateBusyIndicator(x.IsBusy, x.BusyMessage, x.IsBlocking));
         }
 
-        /// <summary>
-        /// Gets the primary menu buttons displayed at the top of the app menu.
-        /// </summary>
-        public ObservableCollection<AppMenuButton> PrimaryMenuButtons { get; }
+        public ObservableCollection<NavigationViewItem> NavigationItems { get; private set; }
 
-        /// <summary>
-        /// Gets the secondary menu buttons displayed at the bottom of the app menu.
-        /// </summary>
-        public ObservableCollection<AppMenuButton> SecondaryMenuButtons { get; }
-
-        /// <summary>
-        /// Gets the flyout menu buttons displayed above the secondary menu buttons.
-        /// </summary>
-        public ObservableCollection<FlyoutAppMenuButton> FlyoutMenuButtons { get; }
+        public NavigationViewItem SelectedNavigationItem
+        {
+            get => this.selectedNavigationItem;
+            set => this.Set(() => this.SelectedNavigationItem, ref this.selectedNavigationItem, value);
+        }
 
         public bool IsPaneOpen
         {
-            get
-            {
-                return this.isPaneOpen;
-            }
-            set
-            {
-                this.Set(() => this.IsPaneOpen, ref this.isPaneOpen, value);
-            }
+            get => this.isPaneOpen;
+            set => this.Set(() => this.IsPaneOpen, ref this.isPaneOpen, value);
         }
 
         public string BusyMessage
         {
-            get
-            {
-                return this.busyMessage;
-            }
-            set
-            {
-                this.Set(() => this.BusyMessage, ref this.busyMessage, value);
-            }
+            get => this.busyMessage;
+            set => this.Set(() => this.BusyMessage, ref this.busyMessage, value);
         }
 
         public bool IsBusyMessageBlocking
         {
-            get
-            {
-                return this.isBusyMessageBlocking;
-            }
-            set
-            {
-                this.Set(() => this.IsBusyMessageBlocking, ref this.isBusyMessageBlocking, value);
-            }
+            get => this.isBusyMessageBlocking;
+            set => this.Set(() => this.IsBusyMessageBlocking, ref this.isBusyMessageBlocking, value);
         }
 
         public bool IsBusyMessageVisible
         {
-            get
-            {
-                return this.isBusyMessageVisible;
-            }
-            set
-            {
-                this.Set(() => this.IsBusyMessageVisible, ref this.isBusyMessageVisible, value);
-            }
-        }
-
-        public void Initialize()
-        {
-            if (this.isInitialized)
-            {
-                return;
-            }
-
-            this.isInitialized = true;
-
-            this.PrimaryMenuButtons.Clear();
-            this.SecondaryMenuButtons.Clear();
-            this.FlyoutMenuButtons.Clear();
-
-            this.PrimaryMenuButtons.Add(CreateHomeButton());
-            this.PrimaryMenuButtons.Add(CreateContributionsButton());
-            this.SecondaryMenuButtons.Add(this.CreateRefreshButton());
-            this.SecondaryMenuButtons.Add(this.CreateAboutButton());
-        }
-
-        private AppMenuButton CreateRefreshButton()
-        {
-            var btn = new AppMenuButton
-                          {
-                              ButtonType = AppMenuButtonType.Command,
-                              Command = new RelayCommand(this.RefreshData),
-                              Content = GenerateButtonContent(Symbol.Refresh, "Refresh"),
-                              IsGrouped = false,
-                              ToolTip = "Refresh data"
-                          };
-
-            return btn;
-        }
-
-        private void RefreshData()
-        {
-            this.MessengerInstance.Send(new RefreshDataMessage(RefreshDataMode.All));
-            this.IsPaneOpen = false;
-
-            this.UpdateBusyIndicator("Refreshing...");
+            get => this.isBusyMessageVisible;
+            set => this.Set(() => this.IsBusyMessageVisible, ref this.isBusyMessageVisible, value);
         }
 
         public void UpdateBusyIndicator(string message)
@@ -181,58 +115,140 @@
             }
         }
 
-        private static AppMenuButton CreateHomeButton()
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var btn = new AppMenuButton
-                          {
-                              ClearNavigationStack = true,
-                              Content = GenerateButtonContent(Symbol.Contact, "Profile"),
-                              IsGrouped = true,
-                              Page = typeof(MainPage),
-                              ToolTip = "View my profile"
-                          };
-            return btn;
-        }
-
-        private AppMenuButton CreateContributionsButton()
-        {
-            var btn = new AppMenuButton
-                          {
-                              Content = GenerateButtonContent(Symbol.Library, "Contributions"),
-                              IsGrouped = true,
-                              Page = typeof(ContributionsPage),
-                              ToolTip = "View my current community activity contributions"
-                          };
-            return btn;
-        }
-
-        private AppMenuButton CreateAboutButton()
-        {
-            var btn = new AppMenuButton
+            if (e.PropertyName == nameof(this.SelectedNavigationItem))
             {
-                Content = GenerateButtonContent(Symbol.Help, "About"),
-                IsGrouped = true,
-                Page = typeof(AboutPage),
-                ToolTip = "View the app info and links"
-            };
-            return btn;
+                this.UpdateFrame();
+            }
         }
 
-        private static UIElement GenerateButtonContent(Symbol symbol, string content)
+        private void UpdateFrame()
         {
-            var container = new StackPanel { Orientation = Orientation.Horizontal };
-            var icon = new SymbolIcon(symbol) { Width = 48, Height = 48 };
-            var label = new TextBlock
-                            {
-                                Margin = new Thickness(12, 0, 0, 0),
-                                VerticalAlignment = VerticalAlignment.Center,
-                                Text = content
-                            };
+            if (this.SelectedNavigationItem == null)
+            {
+                return;
+            }
 
-            container.Children.Add(icon);
-            container.Children.Add(label);
+            if (this.SelectedNavigationItem.Tag.Equals(MyProfileTag))
+            {
+                if (this.NavigationService.CurrentPageType != typeof(MainPage))
+                {
+                    this.NavigationService.Navigate(typeof(MainPage));
+                }
+            }
+            else if (this.SelectedNavigationItem.Tag.Equals(AllContributionsTag))
+            {
+                if (this.NavigationService.CurrentPageType != typeof(ContributionsPage))
+                {
+                    this.NavigationService.Navigate(typeof(ContributionsPage));
+                }
+            }
+            else if (this.SelectedNavigationItem.Tag.Equals(AboutAppTag))
+            {
+                if (this.NavigationService.CurrentPageType != typeof(AboutPage))
+                {
+                    this.NavigationService.Navigate(typeof(AboutPage));
+                }
+            }
+        }
 
-            return container;
+        private void InitializeNavigationItems()
+        {
+            if (this.NavigationItems == null)
+            {
+                this.NavigationItems = new ObservableCollection<NavigationViewItem>
+                                           {
+                                               new NavigationViewItem()
+                                                   {
+                                                       Content
+                                                           = "My profile",
+                                                       Icon
+                                                           = new
+                                                               SymbolIcon(
+                                                                   Symbol
+                                                                       .Contact),
+                                                       Tag
+                                                           = MyProfileTag
+                                                   },
+                                               new NavigationViewItem()
+                                                   {
+                                                       Content
+                                                           = "All contributions",
+                                                       Icon
+                                                           = new
+                                                               SymbolIcon(
+                                                                   Symbol
+                                                                       .Library),
+                                                       Tag
+                                                           = AllContributionsTag
+                                                   },
+                                               new NavigationViewItem()
+                                                   {
+                                                       Content
+                                                           = "About app",
+                                                       Icon
+                                                           = new
+                                                               SymbolIcon(
+                                                                   Symbol
+                                                                       .Help),
+                                                       Tag
+                                                           = AboutAppTag
+                                                   }
+                                           };
+            }
+        }
+
+        private void OnFrameNavigated(object sender, NavigationEventArgs e)
+        {
+            if (e.SourcePageType == typeof(MainPage))
+            {
+                this.SelectedNavigationItem = this.NavigationItems.FirstOrDefault(x => x.Tag.Equals(MyProfileTag));
+            }
+            else if (e.SourcePageType == typeof(ContributionsPage))
+            {
+                this.SelectedNavigationItem =
+                    this.NavigationItems.FirstOrDefault(x => x.Tag.Equals(AllContributionsTag));
+            }
+            else if (e.SourcePageType == typeof(AboutPage))
+            {
+                this.SelectedNavigationItem = this.NavigationItems.FirstOrDefault(x => x.Tag.Equals(AboutAppTag));
+            }
+            else
+            {
+                this.SelectedNavigationItem = null;
+            }
+        }
+
+        public override void OnPageNavigatedTo(NavigationEventArgs args)
+        {
+            if (args.NavigationMode != NavigationMode.New && args.NavigationMode != NavigationMode.Forward)
+            {
+                return;
+            }
+
+            if (!(args.Parameter is bool))
+            {
+                return;
+            }
+
+            bool shouldNavigateToHome = ParseHelper.SafeParseBool(args.Parameter);
+            if (!shouldNavigateToHome)
+            {
+                // First page navigation is being handled by another provider.
+                return;
+            }
+
+            this.NavigationService.ClearNavigationHistory();
+            this.NavigationService.Navigate(typeof(MainPage));
+        }
+
+        public override void OnPageNavigatedFrom(NavigationEventArgs args)
+        {
+        }
+
+        public override void OnPageNavigatingFrom(NavigatingCancelEventArgs args)
+        {
         }
     }
 }

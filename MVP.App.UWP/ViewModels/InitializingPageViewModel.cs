@@ -6,8 +6,8 @@
     using GalaSoft.MvvmLight.Command;
 
     using MVP.App.Common;
+    using MVP.App.Events;
     using MVP.App.Services.Initialization;
-    using MVP.App.Services.MvpApi.DataContainers;
     using MVP.App.Views;
 
     using Windows.UI.Xaml;
@@ -29,8 +29,6 @@
 
         private bool isLoading;
 
-        private readonly IProfileDataContainer profileData;
-
         private ActivationArgs activationArgs;
 
         /// <summary>
@@ -39,13 +37,9 @@
         /// <param name="initializer">
         /// The application initializer.
         /// </param>
-        /// <param name="profileData">
-        /// The profile Data.
-        /// </param>
-        public InitializingPageViewModel(IAppInitializer initializer, IProfileDataContainer profileData)
+        public InitializingPageViewModel(IAppInitializer initializer)
         {
             this.initializer = initializer;
-            this.profileData = profileData;
 
             this.SigninCommand = new RelayCommand(async () => await this.SignInAsync());
 
@@ -67,14 +61,9 @@
         /// </summary>
         public bool IsLoading
         {
-            get
-            {
-                return this.isLoading;
-            }
-            set
-            {
-                this.Set(() => this.IsLoading, ref this.isLoading, value);
-            }
+            get => this.isLoading;
+
+            set => this.Set(() => this.IsLoading, ref this.isLoading, value);
         }
 
         /// <summary>
@@ -82,14 +71,9 @@
         /// </summary>
         public string LoadingProgress
         {
-            get
-            {
-                return this.loadingProgress;
-            }
-            set
-            {
-                this.Set(() => this.LoadingProgress, ref this.loadingProgress, value);
-            }
+            get => this.loadingProgress;
+
+            set => this.Set(() => this.LoadingProgress, ref this.loadingProgress, value);
         }
 
         /// <inheritdoc />
@@ -99,25 +83,20 @@
 
             this.IsLoading = true;
 
-            var initializeSuccess = await this.initializer.InitializeAsync();
+            bool initializeSuccess = await this.initializer.InitializeAsync();
             if (initializeSuccess)
             {
-                var activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
-                if (!activated)
-                {
-                    this.NavigateToHome();
-                }
-
-                NavigateToShell();
+                bool activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
+                NavigateToShell(!activated);
             }
 
             this.IsLoading = false;
         }
 
-        private static void NavigateToShell()
+        private static void NavigateToShell(bool navigateToHome)
         {
-            var rootFrame = Window.Current.Content as Frame;
-            rootFrame?.Navigate(typeof(AppShellPage));
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame?.Navigate(typeof(AppShellPage), navigateToHome);
         }
 
         /// <inheritdoc />
@@ -140,20 +119,15 @@
             this.LoadingProgress = "Signing in...";
             this.IsLoading = true;
 
-            var authMsg = await this.initializer.AuthenticateAsync();
+            AuthenticationMessage authMsg = await this.initializer.AuthenticateAsync();
 
             if (authMsg.IsSuccess)
             {
-                var initialized = await this.initializer.InitializeAsync();
+                bool initialized = await this.initializer.InitializeAsync();
                 if (initialized)
                 {
-                    var activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
-                    if (!activated)
-                    {
-                        this.NavigateToHome();
-                    }
-
-                    NavigateToShell();
+                    bool activated = await ActivationLauncher.RunActivationProcedureAsync(this.activationArgs);
+                    NavigateToShell(!activated);
                 }
             }
             else
@@ -165,12 +139,6 @@
             }
 
             this.IsLoading = false;
-        }
-
-        private void NavigateToHome()
-        {
-            // Get profile and pass onto main page.
-            this.NavigationService.Navigate(typeof(MainPage), this.profileData.Profile);
         }
     }
 }
