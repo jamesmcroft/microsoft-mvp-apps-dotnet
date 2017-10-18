@@ -1,17 +1,19 @@
-﻿using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
-namespace MVP.App.Views
+﻿namespace MVP.App.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+    using MVP.App.ViewModels;
+
+    using Windows.UI.Xaml.Controls;
+
     public sealed partial class TestPage : Page
     {
         public TestPage()
         {
             this.InitializeComponent();
         }
+
+        /// <summary>
+        /// Gets the view-model for the page.
+        /// </summary>
+        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }

@@ -49,15 +49,10 @@
             OffsetY="3.0"
             ShadowOpacity="0.3"
             Color="Black">
-            <Grid
+            <StackPanel
+                x:Name="ProfileStackPanel"
                 Width="200"
-                RelativePanel.AlignLeftWithPanel="True"
-                RelativePanel.AlignTopWithPanel="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
+                Orientation="Vertical">
                 <Image
                     Width="200"
                     Height="200"
@@ -81,7 +76,7 @@
                         Text="{x:Bind ViewModel.Profile.YearsAsMvp, Mode=OneWay}" />
 
                 </StackPanel>
-            </Grid>
+            </StackPanel>
         </uwpControls:DropShadowPanel>
 
         <ScrollViewer
@@ -90,7 +85,8 @@
             Margin="0,0,50,20"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.Below="HeaderPanel"
-            RelativePanel.RightOf="ProfilePanel">
+            RelativePanel.RightOf="ProfilePanel"
+            Visibility="{x:Bind ViewModel.Profile.Biography, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}">
             <TextBlock
                 FontSize="16"
                 FontWeight="Normal"
@@ -131,5 +127,22 @@
             RelativePanel.RightOf="ProfilePanel"
             SelectionMode="None"
             Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates">
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </RelativePanel>
 </views:PageBase>
