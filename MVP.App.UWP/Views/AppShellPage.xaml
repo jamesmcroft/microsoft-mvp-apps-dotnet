@@ -8,6 +8,12 @@
     DataContext="{Binding AppShellPageViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
 
+    <views:PageBase.Resources>
+        <DataTemplate x:Key="NavigationViewHeaderTemplate">
+            <Grid />
+        </DataTemplate>
+    </views:PageBase.Resources>
+
     <Grid Background="{ThemeResource LightGrayThemeBrush}">
         <NavigationView
             x:Name="AppMenu"
@@ -16,7 +22,9 @@
             IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}"
             IsSettingsVisible="False"
             MenuItemsSource="{x:Bind ViewModel.NavigationItems, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.SelectedNavigationItem, Mode=TwoWay}" />
+            OpenPaneLength="240"
+            SelectedItem="{x:Bind ViewModel.SelectedNavigationItem, Mode=TwoWay}"
+            Style="{StaticResource HeaderlessNavigationViewStyle}" />
 
         <!--<controls:AppMenu
             x:Name="AppMenu"

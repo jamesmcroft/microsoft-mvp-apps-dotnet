@@ -21,34 +21,34 @@
     <SolidColorBrush x:Key="MvpBlueDarkThemeBrush" Color="{StaticResource MvpBlueDarkColor}" />
     <SolidColorBrush x:Key="MvpBlueDarkerThemeBrush" Color="{StaticResource MvpBlueDarkerColor}" />
 
-    <Color x:Key="DefaultOpacityColor">#800078D7</Color>
+    <Color x:Key="DefaultOpacityColor">#330078D7</Color>
     <SolidColorBrush x:Key="DefaultOpacityThemeBrush" Color="{StaticResource DefaultOpacityColor}" />
 
-    <Color x:Key="AccessOpacityColor">#80A33639</Color>
+    <Color x:Key="AccessOpacityColor">#33A33639</Color>
     <SolidColorBrush x:Key="AccessOpacityThemeBrush" Color="{StaticResource AccessOpacityColor}" />
 
-    <Color x:Key="ExcelOpacityColor">#80207245</Color>
+    <Color x:Key="ExcelOpacityColor">#33207245</Color>
     <SolidColorBrush x:Key="ExcelOpacityThemeBrush" Color="{StaticResource ExcelOpacityColor}" />
 
-    <Color x:Key="OfficeOpacityColor">#80EB3C00</Color>
+    <Color x:Key="OfficeOpacityColor">#33EB3C00</Color>
     <SolidColorBrush x:Key="OfficeOpacityThemeBrush" Color="{StaticResource OfficeOpacityColor}" />
 
-    <Color x:Key="OneNoteOpacityColor">#80844180</Color>
+    <Color x:Key="OneNoteOpacityColor">#33844180</Color>
     <SolidColorBrush x:Key="OneNoteOpacityThemeBrush" Color="{StaticResource OneNoteOpacityColor}" />
 
-    <Color x:Key="OutlookOpacityColor">#800072C6</Color>
+    <Color x:Key="OutlookOpacityColor">#330072C6</Color>
     <SolidColorBrush x:Key="OutlookOpacityThemeBrush" Color="{StaticResource OutlookOpacityColor}" />
 
-    <Color x:Key="PowerPointOpacityColor">#80D24625</Color>
+    <Color x:Key="PowerPointOpacityColor">#33D24625</Color>
     <SolidColorBrush x:Key="PowerPointOpacityThemeBrush" Color="{StaticResource PowerPointOpacityColor}" />
 
-    <Color x:Key="VisioOpacityColor">#8039559F</Color>
+    <Color x:Key="VisioOpacityColor">#3339559F</Color>
     <SolidColorBrush x:Key="VisioOpacityThemeBrush" Color="{StaticResource VisioOpacityColor}" />
 
-    <Color x:Key="VisualStudioOpacityColor">#80681B7B</Color>
+    <Color x:Key="VisualStudioOpacityColor">#33681B7B</Color>
     <SolidColorBrush x:Key="VisualStudioOpacityThemeBrush" Color="{StaticResource VisualStudioOpacityColor}" />
 
-    <Color x:Key="WordOpacityColor">#802A5699</Color>
+    <Color x:Key="WordOpacityColor">#332A5699</Color>
     <SolidColorBrush x:Key="WordOpacityThemeBrush" Color="{StaticResource WordOpacityColor}" />
 
     <Color x:Key="DefaultColor">#FF0078D7</Color>

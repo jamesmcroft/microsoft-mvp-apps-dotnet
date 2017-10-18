@@ -137,4 +137,188 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="HeaderlessNavigationViewStyle" TargetType="NavigationView">
+        <Setter Property="PaneToggleButtonStyle" Value="{StaticResource PaneToggleButtonStyle}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="NavigationView">
+                    <Grid x:Name="RootGrid">
+                        <Grid
+                            Width="{StaticResource PaneToggleButtonSize}"
+                            Margin="0,0,0,8"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Canvas.ZIndex="100">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="TogglePaneTopPadding" />
+                            <Button
+                                x:Name="TogglePaneButton"
+                                Grid.Row="1"
+                                AutomationProperties.LandmarkType="Navigation"
+                                Style="{TemplateBinding PaneToggleButtonStyle}" />
+                        </Grid>
+                        <SplitView
+                            x:Name="RootSplitView"
+                            Background="{TemplateBinding Background}"
+                            CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                            DisplayMode="Inline"
+                            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            IsTabStop="False"
+                            OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                            PaneBackground="{ThemeResource NavigationViewDefaultPaneBackground}">
+                            <SplitView.Pane>
+                                <Grid x:Name="PaneContentGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition x:Name="PaneContentGridToggleButtonRow" Height="56" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="8" />
+                                    </Grid.RowDefinitions>
+                                    <Grid x:Name="ContentPaneTopPadding" />
+                                    <Grid
+                                        x:Name="AutoSuggestArea"
+                                        Grid.Row="2"
+                                        Height="40"
+                                        VerticalAlignment="Center">
+                                        <ContentControl
+                                            x:Name="PaneAutoSuggestBoxPresenter"
+                                            Margin="12,0,12,0"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Center"
+                                            Content="{TemplateBinding AutoSuggestBox}"
+                                            IsTabStop="False" />
+                                        <Button
+                                            x:Name="PaneAutoSuggestButton"
+                                            Width="{TemplateBinding CompactPaneLength}"
+                                            MinHeight="40"
+                                            Content="&#xE11A;"
+                                            Style="{TemplateBinding PaneToggleButtonStyle}"
+                                            Visibility="Collapsed" />
+                                    </Grid>
+                                    <NavigationViewList
+                                        x:Name="MenuItemsHost"
+                                        Grid.Row="3"
+                                        Margin="0,0,0,20"
+                                        IsItemClickEnabled="True"
+                                        ItemContainerStyle="{TemplateBinding MenuItemContainerStyle}"
+                                        ItemContainerStyleSelector="{TemplateBinding MenuItemContainerStyleSelector}"
+                                        ItemTemplate="{TemplateBinding MenuItemTemplate}"
+                                        ItemTemplateSelector="{TemplateBinding MenuItemTemplateSelector}"
+                                        ItemsSource="{TemplateBinding MenuItemsSource}"
+                                        SelectedItem="{TemplateBinding SelectedItem}"
+                                        SelectionMode="Single" />
+                                    <Border
+                                        x:Name="FooterContentBorder"
+                                        Grid.Row="4"
+                                        Child="{TemplateBinding PaneFooter}" />
+                                    <NavigationViewItem x:Name="SettingsNavPaneItem" Grid.Row="5">
+                                        <NavigationViewItem.Icon>
+                                            <SymbolIcon Symbol="Setting" />
+                                        </NavigationViewItem.Icon>
+                                    </NavigationViewItem>
+                                </Grid>
+                            </SplitView.Pane>
+                            <Grid x:Name="ContentGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ContentControl
+                                    x:Name="HeaderContent"
+                                    MinHeight="48"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    Content="{TemplateBinding Header}"
+                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    IsTabStop="False"
+                                    Visibility="Collapsed" />
+                                <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                            </Grid>
+                        </SplitView>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="DisplayModeGroup">
+                                <VisualState x:Name="Compact" />
+                                <VisualState x:Name="Expanded">
+                                    <VisualState.Setters>
+                                        <Setter Target="RootSplitView.PaneBackground" Value="{ThemeResource NavigationViewExpandedPaneBackground}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Minimal">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContent.Margin" Value="48,0,0,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="TogglePaneGroup">
+                                <VisualState x:Name="TogglePaneButtonVisible" />
+                                <VisualState x:Name="TogglePaneButtonCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="TogglePaneButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="PaneContentGridToggleButtonRow.Height" Value="4" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="HeaderGroup">
+                                <VisualState x:Name="HeaderVisible" />
+                                <VisualState x:Name="HeaderCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="HeaderContent.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SettingsGroup">
+                                <VisualState x:Name="SettingsVisible" />
+                                <VisualState x:Name="SettingsCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="SettingsNavPaneItem.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="AutoSuggestGroup">
+                                <VisualState x:Name="AutoSuggestBoxVisible" />
+                                <VisualState x:Name="AutoSuggestBoxCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="AutoSuggestArea.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="PaneStateGroup">
+                                <VisualState x:Name="NotClosedCompact" />
+                                <VisualState x:Name="ClosedCompact">
+                                    <VisualState.Setters>
+                                        <Setter Target="PaneAutoSuggestBoxPresenter.Visibility" Value="Collapsed" />
+                                        <Setter Target="PaneAutoSuggestButton.Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="TitleBarVisibilityGroup">
+                                <VisualState x:Name="TitleBarVisible" />
+                                <VisualState x:Name="TitleBarCollapsed">
+                                    <VisualState.Setters>
+                                        <Setter Target="PaneButtonGrid.Margin" Value="0,32,0,0" />
+                                        <Setter Target="PaneContentGrid.Margin" Value="0,32,0,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

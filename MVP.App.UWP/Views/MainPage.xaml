@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:WinUX.Xaml.Controls"
+    xmlns:controls1="using:MVP.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:listViewBase="using:WinUX.Controls.ListViewBase"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,33 +14,41 @@
     mc:Ignorable="d">
 
     <RelativePanel Background="{ThemeResource LightGrayThemeBrush}">
-        <StackPanel
+        <uwpControls:DropShadowPanel
             x:Name="HeaderPanel"
-            Margin="0,0,0,20"
-            Padding="300,50,50,20"
-            Background="{ThemeResource MvpBlueThemeBrush}"
+            Margin="0"
+            HorizontalContentAlignment="Stretch"
+            BlurRadius="6.0"
+            OffsetX="0.0"
+            OffsetY="3.0"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.AlignTopWithPanel="True"
-            RequestedTheme="Dark">
-            <TextBlock
-                x:Name="ProfileName"
-                FontSize="46"
-                FontWeight="Light"
-                MaxLines="1"
-                Style="{StaticResource SubheaderTextBlockStyle}"
-                Text="{x:Bind ViewModel.Profile.DisplayName, Mode=OneWay}"
-                TextTrimming="CharacterEllipsis" />
+            ShadowOpacity="0.3"
+            Color="Black">
+            <StackPanel
+                Padding="300,50,50,20"
+                Background="{ThemeResource MvpBlueThemeBrush}"
+                RequestedTheme="Dark">
+                <TextBlock
+                    x:Name="ProfileName"
+                    FontSize="46"
+                    FontWeight="Light"
+                    MaxLines="1"
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.DisplayName, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis" />
 
-            <TextBlock
-                x:Name="CategoryName"
-                FontSize="16"
-                FontWeight="Normal"
-                MaxLines="1"
-                Style="{StaticResource SubtitleTextBlockStyle}"
-                Text="{x:Bind ViewModel.Profile.AwardCategoryDisplay, Mode=OneWay}"
-                TextTrimming="CharacterEllipsis" />
-        </StackPanel>
+                <TextBlock
+                    x:Name="CategoryName"
+                    FontSize="16"
+                    FontWeight="Normal"
+                    MaxLines="1"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.AwardCategoryDisplay, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </uwpControls:DropShadowPanel>
 
         <uwpControls:DropShadowPanel
             x:Name="ProfilePanel"
@@ -49,20 +58,24 @@
             OffsetY="3.0"
             ShadowOpacity="0.3"
             Color="Black">
-            <StackPanel
-                x:Name="ProfileStackPanel"
-                Width="200"
-                Orientation="Vertical">
+            <RelativePanel Width="200">
                 <Image
+                    x:Name="ProfileImage"
                     Width="200"
                     Height="200"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
                     Source="{x:Bind ViewModel.ProfileImage, Mode=OneWay, FallbackValue='../Assets/MVPPerson.png'}"
                     Stretch="Uniform" />
 
                 <StackPanel
-                    Grid.Row="1"
                     Padding="20"
-                    Background="{StaticResource MvpBlueDarkThemeBrush}">
+                    Background="{StaticResource MvpBlueDarkThemeBrush}"
+                    RelativePanel.AlignBottomWithPanel="True"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.Below="ProfileImage">
                     <controls:HeaderedTextBlock
                         Margin="0,0,0,10"
                         Foreground="White"
@@ -74,59 +87,106 @@
                         Header="Number of awards"
                         Style="{StaticResource LightHeaderedTextBlockStyle}"
                         Text="{x:Bind ViewModel.Profile.YearsAsMvp, Mode=OneWay}" />
-
                 </StackPanel>
-            </StackPanel>
+            </RelativePanel>
         </uwpControls:DropShadowPanel>
 
         <ScrollViewer
-            x:Name="BiographyContainer"
-            Height="110"
-            Margin="0,0,50,20"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.Below="HeaderPanel"
-            RelativePanel.RightOf="ProfilePanel"
-            Visibility="{x:Bind ViewModel.Profile.Biography, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}">
-            <TextBlock
-                FontSize="16"
-                FontWeight="Normal"
-                Style="{ThemeResource SubtitleTextBlockStyle}"
-                Text="{x:Bind ViewModel.Profile.Biography, Converter={StaticResource EmptyStringFormatConverter}}" />
-        </ScrollViewer>
-
-        <StackPanel
-            x:Name="RecentActivities"
-            Margin="0,0,50,10"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.Below="BiographyContainer"
-            RelativePanel.RightOf="ProfilePanel">
-            <TextBlock
-                FontSize="24"
-                FontWeight="SemiLight"
-                Style="{StaticResource HeaderedTextBlockHeaderStyle}"
-                Text="Recent activities" />
-
-            <TextBlock
-                Style="{StaticResource HeaderedTextBlockTextStyle}"
-                Text="No recent activity"
-                Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-        </StackPanel>
-
-        <ListView
-            x:Name="Items"
-            Margin="0,0,50,50"
-            listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ActivityClickedCommand, Mode=OneWay}"
-            IsItemClickEnabled="True"
-            ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
-            ItemTemplate="{StaticResource ContributionListTileTemplate}"
-            ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
-            ItemsSource="{x:Bind ViewModel.RecentContributions, Mode=OneWay}"
+            x:Name="ContentScroller"
+            Padding="0,0,50,0"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.Below="RecentActivities"
-            RelativePanel.RightOf="ProfilePanel"
-            SelectionMode="None"
-            Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            RelativePanel.Below="HeaderPanel"
+            RelativePanel.RightOf="ProfilePanel">
+            <RelativePanel Margin="0,20,0,50">
+                <TextBlock
+                    x:Name="BiographyHeader"
+                    FontSize="24"
+                    FontWeight="SemiLight"
+                    MaxLines="1"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.AlignTopWithPanel="True"
+                    Style="{StaticResource HeaderedTextBlockHeaderStyle}"
+                    Text="Biography"
+                    TextTrimming="CharacterEllipsis" />
+                <TextBlock
+                    x:Name="Biography"
+                    Margin="0,10,0,0"
+                    FontSize="16"
+                    FontWeight="Normal"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.Below="BiographyHeader"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Profile.Biography, Converter={StaticResource EmptyStringFormatConverter}}" />
+
+                <TextBlock
+                    x:Name="RecentActivityHeader"
+                    Margin="0,10,0,0"
+                    FontSize="24"
+                    FontWeight="SemiLight"
+                    MaxLines="1"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.Below="Biography"
+                    Style="{StaticResource HeaderedTextBlockHeaderStyle}"
+                    Text="Recent activities"
+                    TextTrimming="CharacterEllipsis" />
+
+                <TextBlock
+                    x:Name="NoRecentActivityMessage"
+                    Margin="0,10,0,0"
+                    FontSize="16"
+                    MaxLines="1"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.Below="RecentActivityHeader"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="No recent activity"
+                    TextTrimming="CharacterEllipsis"
+                    Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+
+                <ListView
+                    x:Name="Items"
+                    Margin="0,10,0,0"
+                    listViewBase:Extensions.ItemClickCommand="{x:Bind ViewModel.ActivityClickedCommand, Mode=OneWay}"
+                    IsItemClickEnabled="True"
+                    ItemContainerStyle="{StaticResource BaseSelectorItemStyle}"
+                    ItemTemplate="{StaticResource ContributionListTileTemplate}"
+                    ItemsPanel="{StaticResource ItemsStackPanelTemplate}"
+                    ItemsSource="{x:Bind ViewModel.RecentContributions, Mode=OneWay}"
+                    RelativePanel.AlignBottomWithPanel="True"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    RelativePanel.Below="RecentActivityHeader"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.HorizontalScrollMode=" Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollMode=" Disabled"
+                    ScrollViewer.ZoomMode="Disabled"
+                    SelectionMode="None"
+                    Visibility="{x:Bind ViewModel.IsRecentActivitiesVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </RelativePanel>
+        </ScrollViewer>
+
+        <controls1:ItemFlyoutControl
+            Title="{x:Bind ViewModel.ContributionFlyoutViewModel.Item.Title, Mode=OneWay}"
+            CanDelete="{x:Bind ViewModel.ContributionFlyoutViewModel.CanDelete, Mode=OneWay}"
+            CanEdit="{x:Bind ViewModel.ContributionFlyoutViewModel.CanEdit, Mode=OneWay}"
+            CloseCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.CloseCommand, Mode=OneWay}"
+            DataContext="{Binding ContributionFlyoutViewModel, Mode=OneWay}"
+            DeleteCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.DeleteCommand, Mode=OneWay}"
+            EditCommand="{x:Bind ViewModel.ContributionFlyoutViewModel.EditCommand, Mode=OneWay}"
+            EditContentTemplate="{StaticResource EditableContributionFlyoutTemplate}"
+            IsInEdit="{x:Bind ViewModel.ContributionFlyoutViewModel.IsInEdit, Mode=TwoWay}"
+            ReadonlyContentTemplate="{StaticResource ContributionFlyoutTemplate}"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True"
+            RelativePanel.AlignRightWithPanel="True"
+            RelativePanel.AlignTopWithPanel="True"
+            SaveCommand="{x:Bind ViewModel.SaveContributionCommand, Mode=OneWay}"
+            Visibility="{x:Bind ViewModel.ContributionFlyoutViewModel.IsFlyoutVisible, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates">
