@@ -43,6 +43,19 @@
         VisualStudioBrush="{StaticResource VisualStudioThemeBrush}"
         WordBrush="{StaticResource WordThemeBrush}" />
 
+    <localConverters:AwardCategoryToColorBrushConverter
+        x:Key="AwardCategoryToOpacityColorBrushConverter"
+        AccessBrush="{StaticResource AccessOpacityThemeBrush}"
+        DefaultBrush="{StaticResource DefaultOpacityThemeBrush}"
+        ExcelBrush="{StaticResource ExcelOpacityThemeBrush}"
+        OfficeBrush="{StaticResource OfficeOpacityThemeBrush}"
+        OneNoteBrush="{StaticResource OneNoteOpacityThemeBrush}"
+        OutlookBrush="{StaticResource OutlookOpacityThemeBrush}"
+        PowerPointBrush="{StaticResource PowerPointOpacityThemeBrush}"
+        VisioBrush="{StaticResource VisioOpacityThemeBrush}"
+        VisualStudioBrush="{StaticResource VisualStudioOpacityThemeBrush}"
+        WordBrush="{StaticResource WordOpacityThemeBrush}" />
+
     <validation:ValidationRules x:Key="UrlValidationRules">
         <validation:ValidationRules.Rules>
             <rules:UrlValidationRule ErrorMessage="The value is not a valid URL." />
@@ -56,6 +69,7 @@
     </validation:ValidationRules>
 
     <Style x:Key="BaseSelectorItemStyle" TargetType="SelectorItem">
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0,10,0,0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -254,8 +268,8 @@
                 Margin="0,0,0,10"
                 DisplayMemberPath="Name"
                 Header="Activity type"
-                IsEnabled="{Binding CanDelete, Converter={StaticResource InverseBooleanConverter}}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
+                IsEnabled="{Binding CanDelete, Converter={StaticResource InverseBooleanConverter}}"
                 ItemsSource="{Binding Types, Mode=OneWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
@@ -306,9 +320,9 @@
                 x:Name="ContributionUrl"
                 Margin="0,0,0,10"
                 Header="URL"
-                IsMandatory="{Binding Item.IsReferenceUrlMandatory, Mode=TwoWay}"
                 HeaderTemplate="{StaticResource StandardHeaderTemplate}"
                 IsInvalid="{Binding Item.IsReferenceUrlInvalid, Mode=TwoWay}"
+                IsMandatory="{Binding Item.IsReferenceUrlMandatory, Mode=TwoWay}"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="ContributionTitle"
@@ -398,11 +412,14 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ContributionListTileTemplate" x:DataType="apiModels:Contribution">
-        <RelativePanel x:Name="TileContainer" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
-            <Grid x:Name="ContributionImage" Padding="10,10,5,10">
+        <RelativePanel x:Name="TileContainer" Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToOpacityColorBrushConverter}}">
+            <Grid
+                x:Name="ContributionImage"
+                Padding="15,15,15,15"
+                Background="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToColorBrushConverter}}">
                 <Image
-                    Width="50"
-                    Height="50"
+                    Width="35"
+                    Height="35"
                     Source="{Binding Technology, Mode=OneWay, Converter={StaticResource AwardCategoryToIconConverter}}"
                     Stretch="UniformToFill" />
             </Grid>
@@ -410,6 +427,7 @@
             <TextBlock
                 x:Name="Title"
                 Margin="10,10,10,0"
+                FontSize="16"
                 Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignRightWithPanel="True"
@@ -423,7 +441,7 @@
                 x:Name="Date"
                 Margin="10,0,0,10"
                 VerticalAlignment="Bottom"
-                FontSize="14"
+                FontSize="12"
                 Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
                 MaxLines="1"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -436,6 +454,7 @@
             <TextBlock
                 x:Name="Type"
                 Margin="10,0,10,10"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 FontSize="12"
                 Foreground="{Binding Background, ElementName=TileContainer, Converter={StaticResource BackgroundToForegroundBrushConverter}}"
@@ -444,7 +463,6 @@
                 RelativePanel.AlignRightWithPanel="True"
                 RelativePanel.Below="Title"
                 RelativePanel.RightOf="Date"
-                HorizontalAlignment="Right"
                 Style="{StaticResource HeaderedTextBlockSubheaderStyle}"
                 Text="{Binding Type.Name, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis" />
