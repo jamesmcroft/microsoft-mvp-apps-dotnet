@@ -116,15 +116,9 @@
         /// </summary>
         public bool CanEdit
         {
-            get
-            {
-                return (bool)this.GetValue(CanEditProperty);
-            }
+            get => (bool)this.GetValue(CanEditProperty);
 
-            set
-            {
-                this.SetValue(CanEditProperty, value);
-            }
+            set => this.SetValue(CanEditProperty, value);
         }
 
         /// <summary>
@@ -132,15 +126,9 @@
         /// </summary>
         public ICommand DeleteCommand
         {
-            get
-            {
-                return (ICommand)this.GetValue(DeleteCommandProperty);
-            }
+            get => (ICommand)this.GetValue(DeleteCommandProperty);
 
-            set
-            {
-                this.SetValue(DeleteCommandProperty, value);
-            }
+            set => this.SetValue(DeleteCommandProperty, value);
         }
 
         /// <summary>
@@ -148,15 +136,9 @@
         /// </summary>
         public bool CanDelete
         {
-            get
-            {
-                return (bool)this.GetValue(CanDeleteProperty);
-            }
+            get => (bool)this.GetValue(CanDeleteProperty);
 
-            set
-            {
-                this.SetValue(CanDeleteProperty, value);
-            }
+            set => this.SetValue(CanDeleteProperty, value);
         }
 
         /// <summary>
@@ -164,15 +146,9 @@
         /// </summary>
         public ICommand EditCommand
         {
-            get
-            {
-                return (ICommand)this.GetValue(EditCommandProperty);
-            }
+            get => (ICommand)this.GetValue(EditCommandProperty);
 
-            set
-            {
-                this.SetValue(EditCommandProperty, value);
-            }
+            set => this.SetValue(EditCommandProperty, value);
         }
 
         /// <summary>
@@ -180,15 +156,9 @@
         /// </summary>
         public DataTemplate EditContentTemplate
         {
-            get
-            {
-                return (DataTemplate)this.GetValue(EditContentTemplateProperty);
-            }
+            get => (DataTemplate)this.GetValue(EditContentTemplateProperty);
 
-            set
-            {
-                this.SetValue(EditContentTemplateProperty, value);
-            }
+            set => this.SetValue(EditContentTemplateProperty, value);
         }
 
         /// <summary>
@@ -196,15 +166,9 @@
         /// </summary>
         public DataTemplate ReadonlyContentTemplate
         {
-            get
-            {
-                return (DataTemplate)this.GetValue(ReadonlyContentTemplateProperty);
-            }
+            get => (DataTemplate)this.GetValue(ReadonlyContentTemplateProperty);
 
-            set
-            {
-                this.SetValue(ReadonlyContentTemplateProperty, value);
-            }
+            set => this.SetValue(ReadonlyContentTemplateProperty, value);
         }
 
         /// <summary>
@@ -212,15 +176,9 @@
         /// </summary>
         public string Title
         {
-            get
-            {
-                return (string)this.GetValue(TitleProperty);
-            }
+            get => (string)this.GetValue(TitleProperty);
 
-            set
-            {
-                this.SetValue(TitleProperty, value);
-            }
+            set => this.SetValue(TitleProperty, value);
         }
 
         /// <summary>
@@ -228,15 +186,9 @@
         /// </summary>
         public ICommand CloseCommand
         {
-            get
-            {
-                return (ICommand)this.GetValue(CloseCommandProperty);
-            }
+            get => (ICommand)this.GetValue(CloseCommandProperty);
 
-            set
-            {
-                this.SetValue(CloseCommandProperty, value);
-            }
+            set => this.SetValue(CloseCommandProperty, value);
         }
 
         /// <summary>
@@ -244,15 +196,9 @@
         /// </summary>
         public ICommand SaveCommand
         {
-            get
-            {
-                return (ICommand)this.GetValue(SaveCommandProperty);
-            }
+            get => (ICommand)this.GetValue(SaveCommandProperty);
 
-            set
-            {
-                this.SetValue(SaveCommandProperty, value);
-            }
+            set => this.SetValue(SaveCommandProperty, value);
         }
 
         /// <summary>
@@ -260,15 +206,9 @@
         /// </summary>
         public bool IsInEdit
         {
-            get
-            {
-                return (bool)this.GetValue(IsInEditProperty);
-            }
+            get => (bool)this.GetValue(IsInEditProperty);
 
-            set
-            {
-                this.SetValue(IsInEditProperty, value);
-            }
+            set => this.SetValue(IsInEditProperty, value);
         }
     }
 }

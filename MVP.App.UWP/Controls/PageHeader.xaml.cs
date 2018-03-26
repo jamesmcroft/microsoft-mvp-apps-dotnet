@@ -30,15 +30,9 @@
         /// </summary>
         public string Title
         {
-            get
-            {
-                return (string)this.GetValue(TitleProperty);
-            }
+            get => (string)this.GetValue(TitleProperty);
 
-            set
-            {
-                this.SetValue(TitleProperty, value);
-            }
+            set => this.SetValue(TitleProperty, value);
         }
     }
 }

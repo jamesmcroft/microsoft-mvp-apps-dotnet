@@ -32,7 +32,7 @@
 
             await this.InitializeServicesAsync();
 
-            var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
+            AppServiceTriggerDetails triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
 
             if (triggerDetails != null && triggerDetails.Name == nameof(VoiceCommandService))
             {
@@ -43,7 +43,7 @@
 
                     this.voiceServiceConnection.VoiceCommandCompleted += this.OnVoiceCommandCompleted;
 
-                    var voiceCommand = await this.voiceServiceConnection.GetVoiceCommandAsync();
+                    VoiceCommand voiceCommand = await this.voiceServiceConnection.GetVoiceCommandAsync();
 
                     if (voiceCommand.CommandName.ToLower().Contains("contribution"))
                     {
@@ -114,8 +114,8 @@
 
         private async Task LaunchAppForVoiceAsync(string v)
         {
-            var message = new VoiceCommandUserMessage {SpokenMessage = "Opening the MVP community app"};
-            var response = VoiceCommandResponse.CreateResponse(message);
+            VoiceCommandUserMessage message = new VoiceCommandUserMessage {SpokenMessage = "Opening the MVP community app"};
+            VoiceCommandResponse response = VoiceCommandResponse.CreateResponse(message);
             response.AppLaunchArgument = v;
 
             await this.voiceServiceConnection.RequestAppLaunchAsync(response);

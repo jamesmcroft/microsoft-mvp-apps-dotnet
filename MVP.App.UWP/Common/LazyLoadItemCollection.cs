@@ -128,7 +128,7 @@
                     EventLogger.Current.WriteDebug(ex.Message);
                 }
 
-                var items = containerItems as IList<TItem> ?? containerItems.ToList();
+                IList<TItem> items = containerItems as IList<TItem> ?? containerItems.ToList();
                 if (items != null && items.Any() && !this.cancellationToken.IsCancellationRequested)
                 {
                     resultCount = (uint)items.Count;
@@ -136,7 +136,7 @@
                     await UIDispatcher.RunAsync(
                         () =>
                             {
-                                foreach (var item in items)
+                                foreach (TItem item in items)
                                 {
                                     this.Add(item);
                                 }

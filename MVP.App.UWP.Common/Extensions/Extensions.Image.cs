@@ -10,9 +10,9 @@
     {
         public static async Task<BitmapImage> ToImageSourceAsync(this string base64)
         {
-            var bitmapImage = new BitmapImage();
+            BitmapImage bitmapImage = new BitmapImage();
 
-            using (var stream = new MemoryStream(Convert.FromBase64String(base64.Replace("\"", ""))))
+            using (MemoryStream stream = new MemoryStream(Convert.FromBase64String(base64.Replace("\"", ""))))
             {
                 await bitmapImage.SetSourceAsync(stream.AsRandomAccessStream());
             }

@@ -4,11 +4,10 @@
     using System.Threading.Tasks;
 
     using MVP.App.Common;
-
-    using Windows.ApplicationModel.Activation;
-
     using MVP.App.Models;
     using MVP.App.Views;
+
+    using Windows.ApplicationModel.Activation;
 
     using WinUX;
     using WinUX.Input.Speech;
@@ -53,7 +52,7 @@
 
             if (activationProtocolUri != null)
             {
-                var assistanceLaunchQuery = string.Empty;
+                string assistanceLaunchQuery = string.Empty;
 
                 if (activationProtocolUri.Scheme.Equals("windows.personalassistantlaunch"))
                 {
@@ -62,7 +61,7 @@
 
                 if (activationProtocolUri.Host.Equals("contribution") || assistanceLaunchQuery.Equals("contribution"))
                 {
-                    var contribution = new ContributionViewModel();
+                    ContributionViewModel contribution = new ContributionViewModel();
                     contribution.Populate(activationProtocolUri);
 
                     return NavigationService.Current.Navigate(typeof(ContributionsPage), contribution);

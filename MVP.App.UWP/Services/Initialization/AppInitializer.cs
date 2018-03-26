@@ -57,7 +57,7 @@
         /// <inheritdoc />
         public async Task<bool> InitializeAsync()
         {
-            var isSuccess = true;
+            bool isSuccess = true;
 
             this.SendLoadingProgress("Attempting login...");
             if (!await this.AttemptAuthenticationAsync())
@@ -81,8 +81,8 @@
 
         public async Task<AuthenticationMessage> AuthenticateAsync()
         {
-            var success = true;
-            var errorMessage = string.Empty;
+            bool success = true;
+            string errorMessage = string.Empty;
 
             if (!NetworkStatusManager.Current.IsConnected())
             {
@@ -91,7 +91,7 @@
 
             try
             {
-                var scopes = new List<MSAScope>
+                List<MSAScope> scopes = new List<MSAScope>
                                  {
                                      MSAScope.Basic,
                                      MSAScope.Emails,
@@ -99,9 +99,9 @@
                                      MSAScope.SignIn
                                  };
 
-                var authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
+                string authUri = this.apiClient.RetrieveAuthenticationUri(scopes);
 
-                var result = await WebAuthenticationBroker.AuthenticateAsync(
+                WebAuthenticationResult result = await WebAuthenticationBroker.AuthenticateAsync(
                                  WebAuthenticationOptions.None,
                                  new Uri(authUri),
                                  new Uri(ApiClient.RedirectUri));
@@ -110,16 +110,16 @@
                 {
                     if (!string.IsNullOrWhiteSpace(result.ResponseData))
                     {
-                        var responseUri = new Uri(result.ResponseData);
+                        Uri responseUri = new Uri(result.ResponseData);
                         if (responseUri.LocalPath.StartsWith("/oauth20_desktop.srf", StringComparison.OrdinalIgnoreCase))
                         {
-                            var error = responseUri.ExtractQueryValue("error");
+                            string error = responseUri.ExtractQueryValue("error");
 
                             if (string.IsNullOrWhiteSpace(error))
                             {
-                                var authCode = responseUri.ExtractQueryValue("code");
+                                string authCode = responseUri.ExtractQueryValue("code");
 
-                                var msa = await this.apiClient.ExchangeAuthCodeAsync(authCode);
+                                MSACredentials msa = await this.apiClient.ExchangeAuthCodeAsync(authCode);
                                 if (msa != null)
                                 {
                                     await this.profileData.SetAccountAsync(msa);
@@ -168,11 +168,11 @@
             if (NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Disconnected
                 || NetworkStatusManager.Current.CurrentConnectionType != NetworkConnectionType.Unknown)
             {
-                var profile = await this.TestApiEndpointAsync();
+                MVPProfile profile = await this.TestApiEndpointAsync();
                 if (profile == null)
                 {
                     // Attempt refresh token exchange.
-                    var exchangeErrored = false;
+                    bool exchangeErrored = false;
 
                     try
                     {

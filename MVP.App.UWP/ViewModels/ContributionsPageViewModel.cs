@@ -62,21 +62,15 @@
 
         public bool IsContributionsVisible
         {
-            get
-            {
-                return this.isContributionsVisible;
-            }
-            set
-            {
-                this.Set(() => this.IsContributionsVisible, ref this.isContributionsVisible, value);
-            }
+            get => this.isContributionsVisible;
+            set => this.Set(() => this.IsContributionsVisible, ref this.isContributionsVisible, value);
         }
 
         public ICommand ContributionClickedCommand { get; }
 
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
-            var newContribution = args.Parameter as ContributionViewModel;
+            ContributionViewModel newContribution = args.Parameter as ContributionViewModel;
             if (newContribution != null)
             {
                 this.EditableContributionFlyoutViewModel.ShowNewForEdit(newContribution);
@@ -114,7 +108,7 @@
         {
             if (this.EditableContributionFlyoutViewModel != null && this.EditableContributionFlyoutViewModel.IsValid())
             {
-                var contribution = this.EditableContributionFlyoutViewModel.Item.Save();
+                Contribution contribution = this.EditableContributionFlyoutViewModel.Item.Save();
 
                 if (contribution != null)
                 {

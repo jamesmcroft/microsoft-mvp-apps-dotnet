@@ -154,7 +154,7 @@
 
             try
             {
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                                FileName,
                                CreationCollisionOption.OpenIfExists);
 

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
 
     using MVP.Api.Models;
     using MVP.App.Services.MvpApi.DataContainers;
@@ -13,7 +13,7 @@
     {
         public static ContributionTechnology ToContributionTechnology(this ActivityTechnology technology)
         {
-            var contributionTechnology = new ContributionTechnology
+            ContributionTechnology contributionTechnology = new ContributionTechnology
                                              {
                                                  Id = technology.Id,
                                                  AwardCategory = technology.AwardCategory,

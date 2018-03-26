@@ -2,11 +2,11 @@
 {
     using System.Windows.Input;
 
+    using CommonServiceLocator;
+
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Ioc;
     using GalaSoft.MvvmLight.Messaging;
-
-    using Microsoft.Practices.ServiceLocation;
 
     using Windows.System;
     using Windows.UI.Core;
@@ -49,14 +49,8 @@
 
         public TItem Item
         {
-            get
-            {
-                return this.item;
-            }
-            set
-            {
-                this.Set(() => this.Item, ref this.item, value);
-            }
+            get => this.item;
+            set => this.Set(() => this.Item, ref this.item, value);
         }
 
         public ICommand EditCommand { get; }
@@ -68,50 +62,26 @@
         /// </summary>
         public string Title
         {
-            get
-            {
-                return this.title;
-            }
-            set
-            {
-                this.Set(() => this.Title, ref this.title, value);
-            }
+            get => this.title;
+            set => this.Set(() => this.Title, ref this.title, value);
         }
 
         public bool IsInEdit
         {
-            get
-            {
-                return this.isInEdit;
-            }
-            set
-            {
-                this.Set(() => this.IsInEdit, ref this.isInEdit, value);
-            }
+            get => this.isInEdit;
+            set => this.Set(() => this.IsInEdit, ref this.isInEdit, value);
         }
 
         public bool CanDelete
         {
-            get
-            {
-                return this.canDelete;
-            }
-            set
-            {
-                this.Set(() => this.CanDelete, ref this.canDelete, value);
-            }
+            get => this.canDelete;
+            set => this.Set(() => this.CanDelete, ref this.canDelete, value);
         }
 
         public bool CanEdit
         {
-            get
-            {
-                return this.canEdit;
-            }
-            set
-            {
-                this.Set(() => this.CanEdit, ref this.canEdit, value);
-            }
+            get => this.canEdit;
+            set => this.Set(() => this.CanEdit, ref this.canEdit, value);
         }
 
         /// <summary>

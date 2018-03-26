@@ -88,7 +88,7 @@
         {
             if (this.ContributionFlyoutViewModel != null && this.ContributionFlyoutViewModel.IsValid())
             {
-                var contribution = this.ContributionFlyoutViewModel.Item.Save();
+                Contribution contribution = this.ContributionFlyoutViewModel.Item.Save();
                 if (contribution != null)
                 {
                     this.MessengerInstance.Send(new UpdateBusyIndicatorMessage(true, "Sending contribution...", true));
@@ -156,15 +156,9 @@
         /// </summary>
         public MVPProfile Profile
         {
-            get
-            {
-                return this.profile;
-            }
+            get => this.profile;
 
-            set
-            {
-                this.Set(() => this.Profile, ref this.profile, value);
-            }
+            set => this.Set(() => this.Profile, ref this.profile, value);
         }
 
         /// <summary>
@@ -172,21 +166,15 @@
         /// </summary>
         public BitmapSource ProfileImage
         {
-            get
-            {
-                return this.profileImage;
-            }
+            get => this.profileImage;
 
-            set
-            {
-                this.Set(() => this.ProfileImage, ref this.profileImage, value);
-            }
+            set => this.Set(() => this.ProfileImage, ref this.profileImage, value);
         }
 
         /// <inheritdoc />
         public override void OnPageNavigatedTo(NavigationEventArgs args)
         {
-            var mvpProfile = args.Parameter as MVPProfile ?? this.profileData.Profile;
+            MVPProfile mvpProfile = args.Parameter as MVPProfile ?? this.profileData.Profile;
             this.OnProfileUpdated(mvpProfile);
         }
 
@@ -213,7 +201,7 @@
 
                     try
                     {
-                        var newProfile = await this.apiClient.GetMyProfileAsync();
+                        MVPProfile newProfile = await this.apiClient.GetMyProfileAsync();
                         if (newProfile != null)
                         {
                             await this.profileData.SetProfileAsync(newProfile);
@@ -264,15 +252,9 @@
         /// </summary>
         public bool IsRecentActivitiesVisible
         {
-            get
-            {
-                return this.isRecentActivitiesVisible;
-            }
+            get => this.isRecentActivitiesVisible;
 
-            set
-            {
-                this.Set(() => this.IsRecentActivitiesVisible, ref this.isRecentActivitiesVisible, value);
-            }
+            set => this.Set(() => this.IsRecentActivitiesVisible, ref this.isRecentActivitiesVisible, value);
         }
 
         public ICommand ActivityClickedCommand { get; }
@@ -300,7 +282,7 @@
 
             try
             {
-                var recentContributions = await this.apiClient.GetContributionsAsync(0, 10);
+                Contributions recentContributions = await this.apiClient.GetContributionsAsync(0, 10);
                 if (recentContributions?.Items != null)
                 {
                     this.RecentContributions.Clear();
@@ -349,7 +331,7 @@
 
                 try
                 {
-                    var image = await this.apiClient.GetMyProfileImageAsync();
+                    string image = await this.apiClient.GetMyProfileImageAsync();
                     await this.SetProfileImageSourceAsync(image);
                     await this.profileData.SetProfileImageAsync(image);
                 }

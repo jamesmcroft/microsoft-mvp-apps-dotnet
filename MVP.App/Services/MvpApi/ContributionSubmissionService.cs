@@ -31,7 +31,7 @@
                 return await this.client.UpdateContributionAsync(contribution);
             }
 
-            var c = await this.client.AddContributionAsync(contribution);
+            Contribution c = await this.client.AddContributionAsync(contribution);
             return c != null;
         }
     }

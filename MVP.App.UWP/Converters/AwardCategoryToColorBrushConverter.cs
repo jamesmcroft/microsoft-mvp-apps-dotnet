@@ -82,11 +82,11 @@
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var technology = value as ContributionTechnology;
+            ContributionTechnology technology = value as ContributionTechnology;
 
             if (this.AreaContainer != null && technology?.Id != null)
             {
-                var area = this.Areas.GetActivityTechnologyById(technology.Id.Value);
+                ActivityTechnology area = this.Areas.GetActivityTechnologyById(technology.Id.Value);
                 if (area != null)
                 {
                     if (area.AwardName.Equals("Access"))

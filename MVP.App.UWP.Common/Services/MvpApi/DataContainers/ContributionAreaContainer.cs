@@ -121,7 +121,7 @@ namespace MVP.App.Services.MvpApi.DataContainers
 
             try
             {
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                     FileName,
                     CreationCollisionOption.OpenIfExists);
 
@@ -204,9 +204,9 @@ namespace MVP.App.Services.MvpApi.DataContainers
 
         public IEnumerable<ActivityTechnology> GetMyAreaTechnologies()
         {
-            var area = this.contributionAreas.ContributionAreas.FirstOrDefault();
+            AwardContribution area = this.contributionAreas.ContributionAreas.FirstOrDefault();
 
-            var technologies = area?.Areas.SelectMany(x => x.Items);
+            IEnumerable<ActivityTechnology> technologies = area?.Areas.SelectMany(x => x.Items);
             return technologies;
         }
     }

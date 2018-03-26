@@ -4,7 +4,9 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
+
+    using GalaSoft.MvvmLight.Ioc;
 
     using MVP.Api;
     using MVP.Api.Models;
@@ -30,21 +32,36 @@
         /// <param name="client">
         /// The MVP API client.
         /// </param>
+        [PreferredConstructor]
         public ContributionItemLoader(ApiClient client)
         {
             this.client = client;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets more items from the data source asynchronously.
+        /// </summary>
+        /// <param name="offset">
+        /// The initial offset (index) point to get data from.
+        /// </param>
+        /// <param name="limit">
+        /// The limit of items to retrieve.
+        /// </param>
+        /// <param name="ct">
+        /// A cancellation token to be used if required.
+        /// </param>
+        /// <returns>
+        /// When this method completes, it returns a collection of <see cref="Contribution"/> objects.
+        /// </returns>
         public async Task<IEnumerable<Contribution>> GetMoreItemsAsync(
             uint offset,
             uint limit,
             CancellationToken ct = new CancellationToken())
         {
-            var contributions = await this.client.GetContributionsAsync(
-                                    (int)offset,
-                                    (int)limit,
-                                    CancellationTokenSource.CreateLinkedTokenSource(ct));
+            Contributions contributions = await this.client.GetContributionsAsync(
+                                              (int)offset,
+                                              (int)limit,
+                                              CancellationTokenSource.CreateLinkedTokenSource(ct));
 
             return contributions?.Items ?? new List<Contribution>();
         }

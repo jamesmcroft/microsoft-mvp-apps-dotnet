@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Net.Http;
 
-    using GalaSoft.MvvmLight.Ioc;
+    using CommonServiceLocator;
 
-    using Microsoft.Practices.ServiceLocation;
+    using GalaSoft.MvvmLight.Ioc;
 
     using MVP.Api;
     using MVP.Api.Models;
@@ -125,14 +125,14 @@
             this.CanDelete = false;
             this.CanEdit = false;
 
-            var contributionViewModel = new ContributionViewModel();
+            ContributionViewModel contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(this.Types.FirstOrDefault(), this.Areas.FirstOrDefault(), this.Visibilities.FirstOrDefault());
             this.Show(contributionViewModel);
         }
 
         public void ShowEdit(Contribution model)
         {
-            var contributionViewModel = new ContributionViewModel();
+            ContributionViewModel contributionViewModel = new ContributionViewModel();
             contributionViewModel.Populate(model);
 
             this.Title = contributionViewModel.Title;

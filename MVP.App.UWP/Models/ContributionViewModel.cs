@@ -1,6 +1,7 @@
 ﻿namespace MVP.App.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using MVP.Api.Models;
@@ -45,104 +46,59 @@
 
         public int? Id
         {
-            get
-            {
-                return this.id;
-            }
+            get => this.id;
 
-            set
-            {
-                this.Set(() => this.Id, ref this.id, value);
-            }
+            set => this.Set(() => this.Id, ref this.id, value);
         }
 
         public string TypeName
         {
-            get
-            {
-                return this.typeName;
-            }
+            get => this.typeName;
 
-            set
-            {
-                this.Set(() => this.TypeName, ref this.typeName, value);
-            }
+            set => this.Set(() => this.TypeName, ref this.typeName, value);
         }
 
         public ContributionType Type
         {
-            get
-            {
-                return this.type;
-            }
+            get => this.type;
 
-            set
-            {
-                this.Set(() => this.Type, ref this.type, value);
-            }
+            set => this.Set(() => this.Type, ref this.type, value);
         }
 
         public ActivityTechnology Technology
         {
-            get
-            {
-                return this.technology;
-            }
+            get => this.technology;
 
-            set
-            {
-                this.Set(() => this.Technology, ref this.technology, value);
-            }
+            set => this.Set(() => this.Technology, ref this.technology, value);
         }
 
 
         public DateTime? StartDate
         {
-            get
-            {
-                return this.startDate;
-            }
+            get => this.startDate;
 
-            set
-            {
-                this.Set(() => this.StartDate, ref this.startDate, value);
-            }
+            set => this.Set(() => this.StartDate, ref this.startDate, value);
         }
 
         public string Title
         {
-            get
-            {
-                return this.title;
-            }
+            get => this.title;
 
-            set
-            {
-                this.Set(() => this.Title, ref this.title, value);
-            }
+            set => this.Set(() => this.Title, ref this.title, value);
         }
 
         public string Description
         {
-            get
-            {
-                return this.description;
-            }
+            get => this.description;
 
-            set
-            {
-                this.Set(() => this.Description, ref this.description, value);
-            }
+            set => this.Set(() => this.Description, ref this.description, value);
         }
 
         public int? AnnualQuantity { get; set; }
 
         public string AnnualQuantityValue
         {
-            get
-            {
-                return this.annualQuantityValue;
-            }
+            get => this.annualQuantityValue;
 
             set
             {
@@ -163,10 +119,7 @@
 
         public string SecondAnnualQuantityValue
         {
-            get
-            {
-                return this.secondAnnualQuantityValue;
-            }
+            get => this.secondAnnualQuantityValue;
             set
             {
                 this.Set(() => this.SecondAnnualQuantityValue, ref this.secondAnnualQuantityValue, value);
@@ -186,10 +139,7 @@
 
         public string AnnualReachValue
         {
-            get
-            {
-                return this.annualReachValue;
-            }
+            get => this.annualReachValue;
             set
             {
                 this.Set(() => this.AnnualReachValue, ref this.annualReachValue, value);
@@ -207,40 +157,22 @@
 
         public string ReferenceUrl
         {
-            get
-            {
-                return this.referenceUrl;
-            }
+            get => this.referenceUrl;
 
-            set
-            {
-                this.Set(() => this.ReferenceUrl, ref this.referenceUrl, value);
-            }
+            set => this.Set(() => this.ReferenceUrl, ref this.referenceUrl, value);
         }
 
         public string VisibilityValue
         {
-            get
-            {
-                return this.visibilityValue;
-            }
-            set
-            {
-                this.Set(() => this.VisibilityValue, ref this.visibilityValue, value);
-            }
+            get => this.visibilityValue;
+            set => this.Set(() => this.VisibilityValue, ref this.visibilityValue, value);
         }
 
         public ItemVisibility Visibility
         {
-            get
-            {
-                return this.visibility;
-            }
+            get => this.visibility;
 
-            set
-            {
-                this.Set(() => this.Visibility, ref this.visibility, value);
-            }
+            set => this.Set(() => this.Visibility, ref this.visibility, value);
         }
 
         public void Populate(
@@ -258,7 +190,7 @@
         /// <inheritdoc />
         public override void Populate(Contribution model)
         {
-            var visibilities = ContributionVisibilities.GetItemVisibilities();
+            IEnumerable<ItemVisibility> visibilities = ContributionVisibilities.GetItemVisibilities();
 
             if (model != null)
             {
@@ -314,7 +246,7 @@
             }
             else
             {
-                var date = ParseHelper.SafeParseDateTime(activationProtocolUri.ExtractQueryValue("date"));
+                DateTime date = ParseHelper.SafeParseDateTime(activationProtocolUri.ExtractQueryValue("date"));
                 if (date.GreaterThan(DateTime.UtcNow) || date == DateTime.MinValue)
                 {
                     date = DateTime.UtcNow;
@@ -350,9 +282,9 @@
                 return null;
             }
 
-            var visibilities = ContributionVisibilities.GetItemVisibilities();
+            IEnumerable<ItemVisibility> visibilities = ContributionVisibilities.GetItemVisibilities();
 
-            var contribution = new Contribution
+            Contribution contribution = new Contribution
                                    {
                                        Id = this.Id,
                                        TypeName = this.TypeName,

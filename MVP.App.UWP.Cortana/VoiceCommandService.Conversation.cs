@@ -14,10 +14,10 @@ namespace MVP.App.UWP.Cortana
 
         private async Task ReportResultAsync(VoiceReportResult result, string message)
         {
-            var progress = new VoiceCommandUserMessage();
+            VoiceCommandUserMessage progress = new VoiceCommandUserMessage();
             progress.DisplayMessage = progress.SpokenMessage = message;
 
-            var response = VoiceCommandResponse.CreateResponse(progress);
+            VoiceCommandResponse response = VoiceCommandResponse.CreateResponse(progress);
 
             switch (result)
             {

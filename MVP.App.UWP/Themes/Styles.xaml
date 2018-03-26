@@ -6,16 +6,12 @@
     xmlns:appModels="using:MVP.App.Models"
     xmlns:controls="using:WinUX.Xaml.Controls"
     xmlns:converters="using:WinUX.Xaml.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ignore="http://www.ignore.com"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:localConverters="using:MVP.App.Converters"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:rules="using:WinUX.Data.Validation.Rules"
     xmlns:textBox="using:WinUX.Xaml.Behaviors.TextBox"
     xmlns:validation="using:WinUX.Data.Validation"
-    xmlns:validationRules="using:MVP.App.ValidationRules"
-    mc:Ignorable="d ignore">
+    xmlns:validationRules="using:MVP.App.ValidationRules">
 
     <localConverters:BackgroundToForegroundBrushConverter
         x:Key="BackgroundToForegroundBrushConverter"

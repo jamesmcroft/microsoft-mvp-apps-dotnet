@@ -41,192 +41,102 @@
 
         public bool IsTechnologyInvalid
         {
-            get
-            {
-                return this.isTechnologyInvalid;
-            }
+            get => this.isTechnologyInvalid;
 
-            set
-            {
-                this.Set(() => this.IsTechnologyInvalid, ref this.isTechnologyInvalid, value);
-            }
+            set => this.Set(() => this.IsTechnologyInvalid, ref this.isTechnologyInvalid, value);
         }
 
         public bool IsReferenceUrlMandatory
         {
-            get
-            {
-                return this.isReferenceUrlMandatory;
-            }
-            set
-            {
-                this.Set(() => this.IsReferenceUrlMandatory, ref this.isReferenceUrlMandatory, value);
-            }
+            get => this.isReferenceUrlMandatory;
+            set => this.Set(() => this.IsReferenceUrlMandatory, ref this.isReferenceUrlMandatory, value);
         }
 
         public bool IsStartDateInvalid
         {
-            get
-            {
-                return this.isStartDateInvalid;
-            }
+            get => this.isStartDateInvalid;
 
-            set
-            {
-                this.Set(() => this.IsStartDateInvalid, ref this.isStartDateInvalid, value);
-            }
+            set => this.Set(() => this.IsStartDateInvalid, ref this.isStartDateInvalid, value);
         }
 
         public bool IsTitleInvalid
         {
-            get
-            {
-                return this.isTitleInvalid;
-            }
+            get => this.isTitleInvalid;
 
-            set
-            {
-                this.Set(() => this.IsTitleInvalid, ref this.isTitleInvalid, value);
-            }
+            set => this.Set(() => this.IsTitleInvalid, ref this.isTitleInvalid, value);
         }
 
         public bool IsAnnualQuantityInvalid
         {
-            get
-            {
-                return this.isAnnualQuantityInvalid;
-            }
+            get => this.isAnnualQuantityInvalid;
 
-            set
-            {
-                this.Set(() => this.IsAnnualQuantityInvalid, ref this.isAnnualQuantityInvalid, value);
-            }
+            set => this.Set(() => this.IsAnnualQuantityInvalid, ref this.isAnnualQuantityInvalid, value);
         }
 
         public bool IsAnnualQuantityMandatory
         {
-            get
-            {
-                return this.isAnnualQuantityMandatory;
-            }
-            set
-            {
-                this.Set(() => this.IsAnnualQuantityMandatory, ref this.isAnnualQuantityMandatory, value);
-            }
+            get => this.isAnnualQuantityMandatory;
+            set => this.Set(() => this.IsAnnualQuantityMandatory, ref this.isAnnualQuantityMandatory, value);
         }
 
         public bool IsSecondAnnualQuantityInvalid
         {
-            get
-            {
-                return this.isSecondAnnualQuantityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsSecondAnnualQuantityInvalid, ref this.isSecondAnnualQuantityInvalid, value);
-            }
+            get => this.isSecondAnnualQuantityInvalid;
+            set => this.Set(() => this.IsSecondAnnualQuantityInvalid, ref this.isSecondAnnualQuantityInvalid, value);
         }
 
         public bool IsSecondAnnualQuantityMandatory
         {
-            get
-            {
-                return this.isSecondAnnualQuantityMandatory;
-            }
-            set
-            {
-                this.Set(() => this.IsSecondAnnualQuantityMandatory, ref this.isSecondAnnualQuantityMandatory, value);
-            }
+            get => this.isSecondAnnualQuantityMandatory;
+            set => this.Set(() => this.IsSecondAnnualQuantityMandatory, ref this.isSecondAnnualQuantityMandatory, value);
         }
 
         public bool IsSecondAnnualQuantityVisible
         {
-            get
-            {
-                return this.isSecondAnnualQuantityVisible;
-            }
-            set
-            {
-                this.Set(() => this.IsSecondAnnualQuantityVisible, ref this.isSecondAnnualQuantityVisible, value);
-            }
+            get => this.isSecondAnnualQuantityVisible;
+            set => this.Set(() => this.IsSecondAnnualQuantityVisible, ref this.isSecondAnnualQuantityVisible, value);
         }
 
         public bool IsAnnualReachInvalid
         {
-            get
-            {
-                return this.isAnnualReachInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsAnnualReachInvalid, ref this.isAnnualReachInvalid, value);
-            }
+            get => this.isAnnualReachInvalid;
+            set => this.Set(() => this.IsAnnualReachInvalid, ref this.isAnnualReachInvalid, value);
         }
 
         public bool IsReferenceUrlInvalid
         {
-            get
-            {
-                return this.isReferenceUrlInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsReferenceUrlInvalid, ref this.isReferenceUrlInvalid, value);
-            }
+            get => this.isReferenceUrlInvalid;
+            set => this.Set(() => this.IsReferenceUrlInvalid, ref this.isReferenceUrlInvalid, value);
         }
 
         public bool IsVisibilityInvalid
         {
-            get
-            {
-                return this.isVisibilityInvalid;
-            }
-            set
-            {
-                this.Set(() => this.IsVisibilityInvalid, ref this.isVisibilityInvalid, value);
-            }
+            get => this.isVisibilityInvalid;
+            set => this.Set(() => this.IsVisibilityInvalid, ref this.isVisibilityInvalid, value);
         }
 
         public string AnnualQuantityTitle
         {
-            get
-            {
-                return this.annualQuantityTitle;
-            }
-            set
-            {
-                this.Set(() => this.AnnualQuantityTitle, ref this.annualQuantityTitle, value);
-            }
+            get => this.annualQuantityTitle;
+            set => this.Set(() => this.AnnualQuantityTitle, ref this.annualQuantityTitle, value);
         }
 
         public string SecondAnnualQuantityTitle
         {
-            get
-            {
-                return this.secondAnnualQuantityTitle;
-            }
-            set
-            {
-                this.Set(() => this.SecondAnnualQuantityTitle, ref this.secondAnnualQuantityTitle, value);
-            }
+            get => this.secondAnnualQuantityTitle;
+            set => this.Set(() => this.SecondAnnualQuantityTitle, ref this.secondAnnualQuantityTitle, value);
         }
 
         public string AnnualReachTitle
         {
-            get
-            {
-                return this.annualReachTitle;
-            }
-            set
-            {
-                this.Set(() => this.AnnualReachTitle, ref this.annualReachTitle, value);
-            }
+            get => this.annualReachTitle;
+            set => this.Set(() => this.AnnualReachTitle, ref this.annualReachTitle, value);
         }
 
         /// <inheritdoc />
         public override bool IsValid()
         {
-            var isValid = true;
+            bool isValid = true;
 
             if (this.IsSecondAnnualQuantityVisible)
             {
@@ -248,7 +158,7 @@
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var propName = e.PropertyName;
+            string propName = e.PropertyName;
 
             if (propName == nameof(this.IsAnnualQuantityInvalid))
             {
@@ -275,7 +185,7 @@
             {
                 if (this.Type != null)
                 {
-                    var name = this.Type.Name ?? string.Empty;
+                    string name = this.Type.Name ?? string.Empty;
 
                     if (name.Equals("Article", StringComparison.CurrentCultureIgnoreCase))
                     {

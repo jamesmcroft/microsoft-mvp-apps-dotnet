@@ -1,63 +1,59 @@
 ﻿namespace MVP.App.Behaviors
 {
+    using System.Threading.Tasks;
+
     using Microsoft.Xaml.Interactivity;
 
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
-    using Windows.UI.Xaml.Media;
+    using Windows.UI.Xaml.Media.Imaging;
 
     /// <summary>
-    /// Defines a behavior for converting a base64 image string to an <see cref="ImageSource"/>.
+    /// Defines a behavior for converting a base64 image string to an ImageSource.
     /// </summary>
     public class Base64StringImageSourceBehavior : Behavior<Image>
     {
         /// <summary>
         /// Defines the dependency property for the <see cref="Base64String"/> property.
         /// </summary>
-        public static readonly DependencyProperty Base64StringProperty =
-            DependencyProperty.Register(
-                nameof(Base64String),
-                typeof(string),
-                typeof(Base64StringImageSourceBehavior),
-                new PropertyMetadata(
-                    string.Empty,
-                    (d, e) => ((Base64StringImageSourceBehavior)d).UpdateImageSource((string)e.NewValue)));
+        public static readonly DependencyProperty Base64StringProperty = DependencyProperty.Register(
+            nameof(Base64String),
+            typeof(string),
+            typeof(Base64StringImageSourceBehavior),
+            new PropertyMetadata(
+                string.Empty,
+                async (d, e) => await ((Base64StringImageSourceBehavior)d).UpdateImageSourceAsync((string)e.NewValue)));
 
         /// <summary>
         /// Gets or sets the base64 string to convert.
         /// </summary>
         public string Base64String
         {
-            get
-            {
-                return (string)this.GetValue(Base64StringProperty);
-            }
-
-            set
-            {
-                this.SetValue(Base64StringProperty, value);
-            }
+            get => (string)this.GetValue(Base64StringProperty);
+            set => this.SetValue(Base64StringProperty, value);
         }
 
-        /// <inheritdoc />
-        protected override void OnAttached()
+        /// <summary>
+        /// Called after the behavior is attached to the AssociatedObject.
+        /// </summary>
+        protected override async void OnAttached()
         {
             base.OnAttached();
 
             if (this.AssociatedObject != null)
             {
-                this.UpdateImageSource(this.Base64String);
+                await this.UpdateImageSourceAsync(this.Base64String);
             }
         }
 
-        private async void UpdateImageSource(string base64)
+        private async Task UpdateImageSourceAsync(string base64)
         {
             if (string.IsNullOrWhiteSpace(base64) || this.AssociatedObject == null)
             {
                 return;
             }
 
-            var source = await base64.ToImageSourceAsync();
+            BitmapImage source = await base64.ToImageSourceAsync();
             this.AssociatedObject.Source = source;
         }
     }

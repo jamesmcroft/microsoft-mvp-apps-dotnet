@@ -4,9 +4,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
 
     using MVP.App.Common;
+    using MVP.App.Helpers;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;
     using MVP.App.Views;
@@ -20,8 +21,6 @@
     using Windows.UI.ViewManagement;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
-
-    using MVP.App.Helpers;
 
     using WinUX.ApplicationModel.Lifecycle;
     using WinUX.Diagnostics;

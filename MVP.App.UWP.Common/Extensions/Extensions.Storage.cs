@@ -4,10 +4,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using Newtonsoft.Json;
+
     using Windows.Storage;
     using Windows.Storage.Streams;
-
-    using WinUX.Data.Serialization;
 
     using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
 
@@ -15,16 +15,15 @@
     {
         public static async Task<T> GetDataAsync<T>(this StorageFile storageFile)
         {
-            var dataString = await storageFile.GetDataAsStringAsync();
-
-            return SerializationService.Json.Deserialize<T>(dataString);
+            string dataString = await storageFile.GetDataAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(dataString);
         }
 
         public static async Task SaveDataAsync<T>(this StorageFile storageFile, T data)
         {
-            var encoding = Encoding.UTF8;
-            var json = SerializationService.Json.Serialize(data);
-            var bytes = encoding.GetBytes(json);
+            Encoding encoding = Encoding.UTF8;
+            string json = JsonConvert.SerializeObject(data);
+            byte[] bytes = encoding.GetBytes(json);
             await FileIO.WriteBytesAsync(storageFile, bytes);
         }
 

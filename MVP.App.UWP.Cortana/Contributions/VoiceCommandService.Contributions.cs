@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using MVP.Api.Models;
-
-namespace MVP.App.UWP.Cortana
+﻿namespace MVP.App.UWP.Cortana
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
+
+    using MVP.Api.Models;
 
     using Windows.ApplicationModel.VoiceCommands;
 
@@ -13,24 +14,24 @@ namespace MVP.App.UWP.Cortana
         private async Task HandleContributionCommand(VoiceCommand command)
         {
             // Step - Request type
-            var typeResponse = await ReportForContributionTypeAsync();
+            VoiceCommandDisambiguationResult typeResponse = await ReportForContributionTypeAsync();
             if (typeResponse != null)
             {
-                var selectedType = typeResponse.SelectedItem;
-                var type = selectedType?.AppContext as ContributionType;
+                VoiceCommandContentTile selectedType = typeResponse.SelectedItem;
+                ContributionType type = selectedType?.AppContext as ContributionType;
                 if (type != null)
                 {
                     // Step - Request area
-                    var areaResponse = await this.ReportForContributionAreaAsync();
+                    VoiceCommandDisambiguationResult areaResponse = await this.ReportForContributionAreaAsync();
                     if (areaResponse != null)
                     {
-                        var selectedArea = areaResponse.SelectedItem;
-                        var area = selectedArea?.AppContext as ActivityTechnology;
+                        VoiceCommandContentTile selectedArea = areaResponse.SelectedItem;
+                        ActivityTechnology area = selectedArea?.AppContext as ActivityTechnology;
 
                         if (area != null)
                         {
                             // Step - Request title (Blocked as this doesn't appear possible... sad times)
-                            var titleResponse = await this.ReportForContributionTitleAsync();
+                            VoiceCommandDisambiguationResult titleResponse = await this.ReportForContributionTitleAsync();
                             if (titleResponse != null)
                             {
 
@@ -51,38 +52,38 @@ namespace MVP.App.UWP.Cortana
 
         private async Task<VoiceCommandDisambiguationResult> ReportForContributionTitleAsync()
         {
-            var userPrompt = new VoiceCommandUserMessage();
+            VoiceCommandUserMessage userPrompt = new VoiceCommandUserMessage();
             userPrompt.DisplayMessage = userPrompt.SpokenMessage = "What is the title of this contribution?";
 
-            var repeatPrompt = new VoiceCommandUserMessage();
+            VoiceCommandUserMessage repeatPrompt = new VoiceCommandUserMessage();
             repeatPrompt.DisplayMessage = repeatPrompt.SpokenMessage = "Sorry, what would you like the title to be?";
 
-            var response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt);
+            VoiceCommandResponse response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt);
 
             return await voiceServiceConnection.RequestDisambiguationAsync(response);
         }
 
         private async Task<VoiceCommandDisambiguationResult> ReportForContributionAreaAsync()
         {
-            var allAreas = this.areaContainer.GetMyAreaTechnologies().ToList();
-            var areas = allAreas.Count > 10 ? allAreas.Take(10).ToList() : allAreas;
+            List<ActivityTechnology> allAreas = this.areaContainer.GetMyAreaTechnologies().ToList();
+            List<ActivityTechnology> areas = allAreas.Count > 10 ? allAreas.Take(10).ToList() : allAreas;
 
             if (areas.Any())
             {
-                var userPrompt = new VoiceCommandUserMessage();
+                VoiceCommandUserMessage userPrompt = new VoiceCommandUserMessage();
                 userPrompt.DisplayMessage = userPrompt.SpokenMessage = "Which area is it?";
 
-                var repeatPrompt = new VoiceCommandUserMessage();
+                VoiceCommandUserMessage repeatPrompt = new VoiceCommandUserMessage();
                 repeatPrompt.DisplayMessage = repeatPrompt.SpokenMessage = "Sorry, which area is it?";
 
-                var areaTiles = areas.Select(area => new VoiceCommandContentTile
+                List<VoiceCommandContentTile> areaTiles = areas.Select(area => new VoiceCommandContentTile
                 {
                     ContentTileType = VoiceCommandContentTileType.TitleOnly,
                     AppContext = area,
                     Title = area.Name
                 }).ToList();
 
-                var response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt, areaTiles);
+                VoiceCommandResponse response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt, areaTiles);
 
                 return await voiceServiceConnection.RequestDisambiguationAsync(response);
             }
@@ -92,24 +93,24 @@ namespace MVP.App.UWP.Cortana
 
         private async Task<VoiceCommandDisambiguationResult> ReportForContributionTypeAsync()
         {
-            var types = this.typeContainer.GetCommonTypes().ToList();
+            List<ContributionType> types = this.typeContainer.GetCommonTypes().ToList();
 
             if (types.Any())
             {
-                var userPrompt = new VoiceCommandUserMessage();
+                VoiceCommandUserMessage userPrompt = new VoiceCommandUserMessage();
                 userPrompt.DisplayMessage = userPrompt.SpokenMessage = "What type of contribution is it?";
 
-                var repeatPrompt = new VoiceCommandUserMessage();
+                VoiceCommandUserMessage repeatPrompt = new VoiceCommandUserMessage();
                 repeatPrompt.DisplayMessage = repeatPrompt.SpokenMessage = "Sorry, what type of contribution is it?";
 
-                var typeTiles = types.Select(type => new VoiceCommandContentTile
+                List<VoiceCommandContentTile> typeTiles = types.Select(type => new VoiceCommandContentTile
                 {
                     ContentTileType = VoiceCommandContentTileType.TitleOnly,
                     AppContext = type,
                     Title = type.Name
                 }).ToList();
 
-                var response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt, typeTiles);
+                VoiceCommandResponse response = VoiceCommandResponse.CreateResponseForPrompt(userPrompt, repeatPrompt, typeTiles);
 
                 return await voiceServiceConnection.RequestDisambiguationAsync(response);
             }

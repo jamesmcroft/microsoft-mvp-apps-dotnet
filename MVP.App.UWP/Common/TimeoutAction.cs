@@ -33,17 +33,17 @@
                 cts = new CancellationTokenSource();
             }
 
-            var token = cts.Token;
+            CancellationToken token = cts.Token;
 
-            var result = default(TValue);
+            TValue result = default(TValue);
 
-            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(10), token);
+            Task timeoutTask = Task.Delay(TimeSpan.FromSeconds(10), token);
 
             while (!token.IsCancellationRequested)
             {
                 try
                 {
-                    var task = await Task.WhenAny(taskToExecute, timeoutTask);
+                    Task task = await Task.WhenAny(taskToExecute, timeoutTask);
                     if (task == taskToExecute)
                     {
                         cts.Cancel();

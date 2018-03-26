@@ -1,7 +1,5 @@
 ﻿namespace MVP.App.Helpers
 {
-    using System;
-
     using Windows.ApplicationModel.Core;
     using Windows.Foundation.Metadata;
     using Windows.UI;

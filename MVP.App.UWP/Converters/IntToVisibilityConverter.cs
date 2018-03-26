@@ -18,15 +18,9 @@
 
         public bool SupportsZero
         {
-            get
-            {
-                return (bool)this.GetValue(SupportsZeroProperty);
-            }
+            get => (bool)this.GetValue(SupportsZeroProperty);
 
-            set
-            {
-                this.SetValue(SupportsZeroProperty, value);
-            }
+            set => this.SetValue(SupportsZeroProperty, value);
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -36,7 +30,7 @@
                 return Visibility.Collapsed;
             }
 
-            var val = ParseHelper.SafeParseInt(value);
+            int val = ParseHelper.SafeParseInt(value);
             return this.SupportsZero ? Visibility.Visible : (val == 0 ? Visibility.Collapsed : Visibility.Visible);
         }
 

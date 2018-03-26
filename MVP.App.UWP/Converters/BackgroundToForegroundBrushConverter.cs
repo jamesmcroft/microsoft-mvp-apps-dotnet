@@ -15,10 +15,10 @@
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var color = value as Color? ?? Colors.Transparent;
+            Color color = value as Color? ?? Colors.Transparent;
             if (color == Colors.Transparent)
             {
-                var solidColorBrush = value as SolidColorBrush;
+                SolidColorBrush solidColorBrush = value as SolidColorBrush;
                 if (solidColorBrush == null)
                 {
                     return this.DarkForegroundBrush;
@@ -27,7 +27,7 @@
                 color = solidColorBrush.Color;
             }
 
-            var brightness = color.PerceivedBrightness();
+            int brightness = color.PerceivedBrightness();
 
             return brightness > 130 ? this.DarkForegroundBrush : this.LightForegroundBrush;
         }

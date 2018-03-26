@@ -1,7 +1,5 @@
 ﻿namespace MVP.App.Services.Input
 {
-    using System;
-
     using GalaSoft.MvvmLight.Messaging;
 
     using Windows.UI.Core;

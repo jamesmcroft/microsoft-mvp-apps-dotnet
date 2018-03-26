@@ -15,7 +15,7 @@
                 return DateTimeOffset.MinValue;
             }
 
-            var dt = ParseHelper.SafeParseDateTime(value);
+            DateTime dt = ParseHelper.SafeParseDateTime(value);
             DateTimeOffset dto = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
             return dto;
         }
@@ -27,7 +27,7 @@
                 return DateTime.MinValue;
             }
 
-            var dto = ParseHelper.SafeParseDateTimeOffset(value);
+            DateTimeOffset dto = ParseHelper.SafeParseDateTimeOffset(value);
 
             return dto.Offset.Equals(TimeSpan.Zero)
                        ? dto.UtcDateTime

@@ -2,11 +2,11 @@
 {
     using System.Windows.Input;
 
+    using CommonServiceLocator;
+
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Ioc;
     using GalaSoft.MvvmLight.Messaging;
-
-    using Microsoft.Practices.ServiceLocation;
 
     using WinUX.MvvmLight.Common.ViewModels;
 
@@ -45,14 +45,8 @@
         /// </summary>
         public bool IsFlyoutVisible
         {
-            get
-            {
-                return this.isFlyoutVisible;
-            }
-            set
-            {
-                this.Set(() => this.IsFlyoutVisible, ref this.isFlyoutVisible, value);
-            }
+            get => this.isFlyoutVisible;
+            set => this.Set(() => this.IsFlyoutVisible, ref this.isFlyoutVisible, value);
         }
 
         /// <summary>

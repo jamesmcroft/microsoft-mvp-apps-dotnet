@@ -27,7 +27,7 @@
         public DataContainerManager(params IDataContainer[] newContainers)
         {
             this.containers = new List<IDataContainer>();
-            foreach (var container in newContainers)
+            foreach (IDataContainer container in newContainers)
             {
                 if (container != null)
                 {
@@ -76,7 +76,7 @@
 
             try
             {
-                foreach (var container in this.Containers)
+                foreach (IDataContainer container in this.Containers)
                 {
                     await container.LoadAsync().ConfigureAwait(false);
                 }
@@ -96,7 +96,7 @@
 
                 try
                 {
-                    foreach (var container in this.Containers)
+                    foreach (IDataContainer container in this.Containers)
                     {
                         await container.UpdateAsync().ConfigureAwait(false);
                     }

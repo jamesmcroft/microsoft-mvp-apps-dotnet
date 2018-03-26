@@ -1,11 +1,10 @@
 ﻿namespace MVP.App
 {
+    using CommonServiceLocator;
+
     using GalaSoft.MvvmLight.Ioc;
     using GalaSoft.MvvmLight.Messaging;
 
-    using Microsoft.Practices.ServiceLocation;
-
-    using MVP.Api;
     using MVP.App.Services.Data;
     using MVP.App.Services.Initialization;
     using MVP.App.Services.Input;

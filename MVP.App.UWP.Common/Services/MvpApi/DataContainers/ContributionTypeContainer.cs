@@ -127,7 +127,7 @@
 
             try
             {
-                var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
                                FileName,
                                CreationCollisionOption.OpenIfExists);
 
@@ -212,7 +212,7 @@
 
         public IEnumerable<ContributionType> GetCommonTypes()
         {
-            var items = new List<ContributionType>();
+            List<ContributionType> items = new List<ContributionType>();
 
             items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Blog Site")));
             items.AddRange(this.contributionTypes.ContributionTypes.Where(x => x.Name.Contains("Code")));
