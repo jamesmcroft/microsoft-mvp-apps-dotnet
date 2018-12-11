@@ -8,6 +8,14 @@
     <PackageReference Include="MVP.Api" Version="1.4.18304.5" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="XPlat.Core" Version="1.4.18299.4" />
+    <PackageReference Include="XPlat.Device.Display" Version="1.4.18299.4" />
+    <PackageReference Include="XPlat.Storage" Version="1.4.18299.4" />
+    <PackageReference Include="XPlat.UI.Core" Version="1.4.18299.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
