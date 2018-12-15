@@ -144,6 +144,36 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MADE.App">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Design">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Diagnostics">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Mvvm">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Networking">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Views">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Views.Controls.HeaderedTextBlock">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Views.Dialogs">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Views.Navigation">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
+    <PackageReference Include="MADE.App.Views.Navigation.MvvmLight">
+      <Version>0.1.18345.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.2</Version>
     </PackageReference>
