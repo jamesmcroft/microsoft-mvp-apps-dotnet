@@ -1,1 +1,0 @@
-MDPI is 1.333333333 times larger than LDPI

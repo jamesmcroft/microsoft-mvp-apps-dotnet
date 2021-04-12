@@ -1,47 +1,40 @@
-Microsoft MVP Applications
-===========
+# Community Microsoft MVP Apps
 
-This project is designed to create applications for UWP, Android and iOS (using Xamarin) that take advantage of the Microsoft MVP API.  
+The Microsoft MVP Apps are a community-built initiative to aid Microsoft MVPs to maintain their MVP profile.
 
-## Usage
-This app has been made for the purpose of use by current Microsoft MVPs who have an active profile. You will sign in using your MSA associated with your MVP profile.
+## Support the Community Microsoft MVP Apps ♥
 
-To submit a contribution via URI, the format is:
+As many developers know, projects like this are built and maintained in spare time. If you find this project useful, please **Star** the repo.
 
-```
-mvpapp://contribution?title={title}&date={date}&description={description}&quantity={quantity}&reach={reach}&url={url}
-```
+## Build Status
 
-The query parameters are optional and calling without them will start a new blank contribution.
+| Build | Status | Current Version |
+| ------ | ------ | ------ |
+| Windows | Coming Soon | [1.1.6](https://www.microsoft.com/en-us/store/p/mvp-community-app/9nm26mmrjbpf) |
+| Android | Coming Soon | Coming Soon |
+| iOS | Coming Soon | Coming Soon |
 
-## Contributing
-All MVPs are welcome to contribute towards these MVP applications. If you are an experienced native Xamarin developer, your expertise may be useful in fleshing out the iOS and Android applications!
+## Contributing 🚀
 
-You can take a look at the project backlogs here:
+All developers can contribute to the project. However, a Microsoft MVP profile is required to use the application. This may make it difficult to debug and test if you are not a current active Microsoft MVP.
 
-| Platform |
-| ------ |
-| [UWP](https://github.com/jamesmcroft/MS-MVP-Apps/projects/1) |
-| [Android](https://github.com/jamesmcroft/MS-MVP-Apps/projects/2) |
-| [iOS](https://github.com/jamesmcroft/MS-MVP-Apps/projects/3) |
+The application has been rebuilt on the [Uno Platform](https://platform.uno) to make it available on all platforms while taking advantage of Windows XAML.
 
-### Getting started
+Want to help us build? Take a look through our [contribution guidelines](CONTRIBUTING.md). We actively encourage you to jump in and help with any issues!
 
-To develop against this application, you will need to create an MSA Application (https://apps.dev.microsoft.com/). Both Converged and Live SDK are supported and you will define that in the API client settings. You will also need a subscription key for the Microsoft MVP API by registering on the Microsoft MVP API site. 
+### Getting started ⭐
 
-### Fixing issues
+To develop against this application, you will need to create a Microsoft Account Application (https://apps.dev.microsoft.com/). Both Converged and Live SDK are supported, and you will define that in the API client settings. You will also need a subscription key for the Microsoft MVP API by registering on the Microsoft MVP API site.
 
-When fixing issues in what is part of the current live application, please make these changes against the master branch. This is where our live code resides and will make it easier for us to release a hotfix for. If the issue is part of newer 'in-development' code, please fix those against the develop branch.
+## Building the Community Microsoft MVP Apps 🛠
 
-## Issue tracking
+You can build the solution using Visual Studio with the following workloads installed:
 
-If you find an issue in any variant of the applications, please could you raise it in the [issues](https://github.com/jamesmcroft/mvp-api-app/issues) section with appropriate tags and it would be fantastic if you could have a look at rectifying the issue and submitting a pull request too!
+- .NET desktop development
+- Universal Windows Platform development
+- Mobile Development with .NET
+- .NET Core cross-platform development
 
-## App Packages
+## License
 
-| Package | Version |
-| ------ | ------ |
-| UWP | [1.1.6](https://www.microsoft.com/en-us/store/p/mvp-community-app/9nm26mmrjbpf) |
-| Android | Coming soon. |
-| iOS | Coming soon. |
-
+Community Microsoft MVP Apps is made available under the terms and conditions of the [MIT license](LICENSE).
