@@ -1,7 +1,10 @@
 Microsoft MVP Applications
 ===========
 
-This project is designed to create applications for UWP, Android and iOS (using Xamarin) that take advantage of the Microsoft MVP API.  
+This project is designed to create applications for UWP, Android and iOS (using Xamarin) that take advantage of the Microsoft MVP API. 
+
+## Important notice
+On April 29th 2022, Microsoft announced the decommissioning of the Microsoft MVP Portal API. This library is archived to serve as a reference and will no longer be maintained.
 
 ## Usage
 This app has been made for the purpose of use by current Microsoft MVPs who have an active profile. You will sign in using your MSA associated with your MVP profile.
